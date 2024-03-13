@@ -33,7 +33,7 @@ const dirname = path.resolve();
 // app.use("/uploads", express.static('uploads'))
 
 // app.use('/api/users', userRoutes);
-app.use('/api/countries', countryRoutes);
+// app.use('/api/countries', countryRoutes);
 // app.use('/api/sites', siteRoutes);
 // app.use('/api/categories', categoryRoutes);
 // app.use('/api/companies', companyRoutes);
