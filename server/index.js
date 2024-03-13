@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const dirname = path.resolve();
+// const dirname = path.resolve();
 // app.use("/uploads", express.static('uploads'))
 
 // app.use('/api/users', userRoutes);
