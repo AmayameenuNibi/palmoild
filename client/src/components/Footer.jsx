@@ -6,7 +6,7 @@ const Footer = () => {
       <footer className="" style={{ backgroundColor: 'rgba(37, 38, 65, 1)'}}>
 		<div className="py-10">
 			<div className="text-center text-white">
-				<p className="my-3 text-gray-400 text-sm">© 2023 Palmoildirectory.com All Rights Reserved. Online payment services provided by 2Checkout.com, Inc.</p>
+				<p className="my-3 text-gray-400 text-sm">© 2024 Palmoildirectory.com All Rights Reserved. Online payment services provided by 2Checkout.com, Inc.</p>
 			</div>
 			<div className="flex items-center text-gray-400 text-sm justify-center">
 				<a href="/" className="pr-3">Home</a>
