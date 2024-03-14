@@ -71,7 +71,7 @@ const PayPalButton = () => {
     useEffect(() => {
         const fetchCountriesAndCategories = async () => {
             try {
-                const countriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
+                const countriesResponse = await axios.get(`${BACKEND_URL}api/countries`);
                 setCountries(countriesResponse.data);
             } catch (error) {
                 console.error('Error fetching countries and categories:', error);

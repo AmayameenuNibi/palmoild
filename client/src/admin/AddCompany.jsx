@@ -36,13 +36,13 @@ const AddCompany = () => {
 
     const fetchOptions = async () => {
         try {
-            const categoriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/categories`);
+            const categoriesResponse = await axios.get(`${BACKEND_URL}api/categories`);
             setCategories(categoriesResponse.data);
 
-            const countriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
+            const countriesResponse = await axios.get(`${BACKEND_URL}api/countries`);
             setCountries(countriesResponse.data);
 
-            const sitesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/sites`);
+            const sitesResponse = await axios.get(`${BACKEND_URL}api/sites`);
             setSites(sitesResponse.data);
         } catch (error) {
             console.error('Error fetching options:', error);
@@ -67,7 +67,7 @@ const AddCompany = () => {
 
     const fetchCompanyDetails = async (companyId) => {
         try {
-            const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies/single/${companyId}`);
+            const response = await axios.get(`${BACKEND_URL}api/companies/single/${companyId}`);
             const companyData = response.data; 
             setFormData(companyData);
         } catch (error) {
@@ -91,11 +91,11 @@ const AddCompany = () => {
                 formDataToSend.append(key, formData[key]);
             }
             if (companyId) {
-                const response = await axios.put(`https://palmoild-sand.vercel.app/api/companies/${companyId}`, formDataToSend);
+                const response = await axios.put(`${BACKEND_URL}api/companies/${companyId}`, formDataToSend);
                 const companyData = response.data; 
                 navigate(`/companies/${companyData.company_slug}`);
             } else {
-                const response =await axios.post(`https://palmoild-sand.vercel.app/api/companies`, formDataToSend);
+                const response =await axios.post(`${BACKEND_URL}api/companies`, formDataToSend);
                 const companyData = response.data; 
                 navigate(`/companies/${companyData.company_slug}`);
             }
@@ -139,7 +139,7 @@ const AddCompany = () => {
                     <>                    
                     </>:
                     <>
-                        <img src={`https://palmoild-sand.vercel.app/uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
+                        <img src={`${BACKEND_URL}uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
                     </>
                 }
                 <input 

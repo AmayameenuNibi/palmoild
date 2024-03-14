@@ -16,9 +16,9 @@ const CategoryScreen = () => {
 
   const fetchCategories = async () => {
     try {
-        const response = await axios.get(`https://palmoild-sand.vercel.app/api/categories`);
+        const response = await axios.get(`${BACKEND_URL}api/categories`);
         setCategories(response.data);
-        const site_response = await axios.get(`https://palmoild-sand.vercel.app/api/sites`);
+        const site_response = await axios.get(`${BACKEND_URL}api/sites`);
         setSites(site_response.data);
     } catch (error) {
         console.error('Error fetching categories:', error);
@@ -32,7 +32,7 @@ const CategoryScreen = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-        await axios.post(`https://palmoild-sand.vercel.app/api/categories`, categoryFormData);
+        await axios.post(`${BACKEND_URL}api/categories`, categoryFormData);
         openCatpopup();
         fetchCategories(); 
         setCategoryFormData({ name: '', site_id: '' }); 
@@ -54,7 +54,7 @@ const CategoryScreen = () => {
   const handleUpdateCategoryData = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`https://palmoild-sand.vercel.app/api/categories/${categoryFormData.id}`, {
+      await axios.put(`${BACKEND_URL}api/categories/${categoryFormData.id}`, {
         site_id: categoryFormData.site_id,
         name: categoryFormData.name,
       });
@@ -75,7 +75,7 @@ const CategoryScreen = () => {
     try {
         const confirmDelete = window.confirm('Are you sure you want to delete this category?');    
         if (confirmDelete) {
-          await axios.delete(`https://palmoild-sand.vercel.app/api/categories/${id}`);
+          await axios.delete(`${BACKEND_URL}api/categories/${id}`);
           fetchCategories(); 
         }        
         toast.success('Category Deleted successfully!');

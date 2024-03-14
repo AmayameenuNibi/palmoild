@@ -13,7 +13,7 @@ const CategorySingle = () => {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`https://palmoild-sand.vercel.app/api/categories/${categoryName}`);
+                const response = await fetch(`${BACKEND_URL}api/categories/${categoryName}`);
                 const data = await response.json();
                 setCompanies(data);
             } catch (error) {

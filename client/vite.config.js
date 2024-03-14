@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://palmoild-sand.vercel.app/',
+        target: '${BACKEND_URL}',
         changeOrigin: true,
       },
     },
