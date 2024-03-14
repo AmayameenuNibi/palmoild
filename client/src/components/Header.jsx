@@ -84,7 +84,7 @@ const Header = () => {
 
   const handleGoogleAuth = () => {
     try {
-      window.location.href = `${BACKEND_URL}/auth/google/callback`;
+      window.location.href = `${BACKEND_URL}auth/google/callback`;
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -92,7 +92,7 @@ const Header = () => {
 
   const handleFacebookAuth = () => {
     try {
-      window.location.href = `${BACKEND_URL}/auth/facebook`;
+      window.location.href = `${BACKEND_URL}auth/facebook`;
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
