@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useParams,useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from "../constans";
 
 const UserCompany = () => {
     const { userInfo } = useSelector((state) => state.auth);
@@ -160,7 +161,7 @@ const UserCompany = () => {
                     <img src={logoPreview} width="75px" height="55px" alt={formData.company} />                   
                 ) : null}
                 {statusData.status == '1' ? (
-                    <img src={`http://localhost:5000/uploads/${formData.logo}`} width="75px" height="55px" alt="Company Logo" />
+                    <img src={`${BACKEND_URL}/uploads/${formData.logo}`} width="75px" height="55px" alt="Company Logo" />
                 ) : null}
                 <input 
                     type="hidden"  id="user_id" name="user_id" value={formData.user_id}  onChange={handleInputChange}
