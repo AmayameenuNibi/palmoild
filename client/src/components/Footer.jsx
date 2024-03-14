@@ -9,9 +9,9 @@ const Footer = () => {
 				<p className="my-3 text-gray-400 text-sm">© 2023 Palmoildirectory.com All Rights Reserved. Online payment services provided by 2Checkout.com, Inc.</p>
 			</div>
 			<div className="flex items-center text-gray-400 text-sm justify-center">
-				<a href="index.html" className="pr-3">Home</a>
-				<a href="about.html" className="border-l border-gray-400 px-3">About us</a>
-				<a href="" className="border-l border-gray-400 px-3">Companies</a>
+				<a href="/" className="pr-3">Home</a>
+				<a href="/about" className="border-l border-gray-400 px-3">About us</a>
+				<a href="/companies" className="border-l border-gray-400 px-3">Companies</a>
 			</div>
 		</div>
 	</footer>
