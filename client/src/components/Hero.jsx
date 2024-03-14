@@ -48,7 +48,6 @@ const HomeScreen = () => {
                     <div className="flex flex-col w-full lg:w-6/12 justify-center lg:pt-24 items-start text-center lg:text-left mb-5 md:mb-0">
                         <h1 data-aos="fade-right" data-aos-once="true" className="my-4 text-5xl font-bold leading-tight text-darken aos-init aos-animate">
                             <span className="text-yellow-500">PalmOil</span> Directory
-                            {`${BACKEND_URL}api/categories/Associate`}
                         </h1>
                         <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" className="leading-normal text-2xl mb-8 aos-init aos-animate">Largest Marketplace of companies in Palm Oil Industry.
                             Buyers, Sellers, Traders, Brokers, Plantations, Organizations from around the world.</p>
