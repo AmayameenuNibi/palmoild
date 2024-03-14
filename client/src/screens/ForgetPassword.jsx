@@ -4,6 +4,7 @@ import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from "../constans";
 
 
 const ForgetPassword = () => {
@@ -33,7 +34,7 @@ const ForgetPassword = () => {
             return;
         }
         try {
-            const response = await axios.post('/api/users/forget-password', FormData);
+            const response = await axios.post(`${BACKEND_URL}/api/users/forget-password`, FormData);
             const { email, name, resetPasswordToken } = response.data;
             var templateParams = {
                 email: email,

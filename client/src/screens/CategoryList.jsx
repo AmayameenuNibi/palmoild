@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { BACKEND_URL } from "../constans";
 
 const CategoryList = () => {
   
@@ -10,7 +11,7 @@ const CategoryList = () => {
 
   const fetchCategories = async () => {
     try {
-        const response = await axios.get('/api/categories');
+        const response = await axios.get(`${BACKEND_URL}/api/categories`);
         setCategories(response.data);
     } catch (error) {
         console.error('Error fetching categories:', error);

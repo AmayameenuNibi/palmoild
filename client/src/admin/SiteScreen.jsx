@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from "../constans";
 
 const SiteScreen = () => {
   const [sites, setSites] = useState([]);
@@ -11,7 +12,7 @@ const SiteScreen = () => {
   });
   const fetchSites = async () => {
     try {
-      const response = await axios.get('/api/sites');
+      const response = await axios.get(`${BACKEND_URL}/api/sites`);
       setSites(response.data);
     } catch (error) {
       console.error('Error fetching sites:', error);
@@ -25,7 +26,7 @@ const SiteScreen = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();  
     try {
-      await axios.post('/api/sites', siteFormData); 
+      await axios.post(`${BACKEND_URL}/api/sites`, siteFormData); 
       fetchSites();
       closeSitePopup();
       setSiteFormData({ name: '' }); 
@@ -39,7 +40,7 @@ const SiteScreen = () => {
     try {
       const confirmDelete = window.confirm('Are you sure you want to delete this site?');    
       if (confirmDelete) {
-        await axios.delete(`/api/sites/${id}`);
+        await axios.delete(`${BACKEND_URL}/api/sites/${id}`);
         fetchSites();  
         toast.success('Site Deleted successfully!');
       }
@@ -67,7 +68,7 @@ const SiteScreen = () => {
   const handleUpdateSiteData = async (e) => {
     e.preventDefault(); 
     try {
-      await axios.put(`/api/sites/${siteFormData.id}`, {
+      await axios.put(`${BACKEND_URL}/api/sites/${siteFormData.id}`, {
         name: siteFormData.name,
       });
       fetchSites();  

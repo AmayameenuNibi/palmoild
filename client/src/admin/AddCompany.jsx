@@ -36,13 +36,13 @@ const AddCompany = () => {
 
     const fetchOptions = async () => {
         try {
-            const categoriesResponse = await axios.get('/api/categories');
+            const categoriesResponse = await axios.get(`${BACKEND_URL}/api/categories`);
             setCategories(categoriesResponse.data);
 
-            const countriesResponse = await axios.get('/api/countries');
+            const countriesResponse = await axios.get(`${BACKEND_URL}/api/countries`);
             setCountries(countriesResponse.data);
 
-            const sitesResponse = await axios.get('/api/sites');
+            const sitesResponse = await axios.get(`${BACKEND_URL}/api/sites`);
             setSites(sitesResponse.data);
         } catch (error) {
             console.error('Error fetching options:', error);
@@ -67,7 +67,7 @@ const AddCompany = () => {
 
     const fetchCompanyDetails = async (companyId) => {
         try {
-            const response = await axios.get(`/api/companies/single/${companyId}`);
+            const response = await axios.get(`${BACKEND_URL}/api/companies/single/${companyId}`);
             const companyData = response.data; 
             setFormData(companyData);
         } catch (error) {
@@ -91,11 +91,12 @@ const AddCompany = () => {
                 formDataToSend.append(key, formData[key]);
             }
             if (companyId) {
-                const response = await axios.put(`/api/companies/${companyId}`, formDataToSend);
+                const response = await axios.put(`${BACKEND_URL}/api/companies/${companyId}`, formDataToSend);
                 const companyData = response.data; 
                 navigate(`/companies/${companyData.company_slug}`);
             } else {
-                await axios.post('/api/companies', formDataToSend);
+                const response =await axios.post(`${BACKEND_URL}/api/companies`, formDataToSend);
+                const companyData = response.data; 
                 navigate(`/companies/${companyData.company_slug}`);
             }
             formdatavalue();

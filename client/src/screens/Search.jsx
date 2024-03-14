@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import '../css/spinner.css'
+import { BACKEND_URL } from "../constans";
 
 const Search = () => {
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ const Search = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`/api/companies/search?term=${searchTerm}`);
+      const response = await axios.get(`${BACKEND_URL}/api/companies/search?term=${searchTerm}`);
       setCompanies(response.data);
       setLoading(false); 
     } catch (error) {

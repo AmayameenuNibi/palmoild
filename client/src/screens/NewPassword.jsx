@@ -1,8 +1,7 @@
 import { useState, React} from 'react'
 import axios from 'axios';
 import { useParams,useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from "../constans";
 
 const NewPassword = () => {
     const { token } = useParams();     
@@ -14,7 +13,7 @@ const NewPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`/api/users/newpassword/${token}`, FormData);
+            await axios.post(`${BACKEND_URL}/api/users/newpassword/${token}`, FormData);
             
             navigate('/');          
         } catch (error) {

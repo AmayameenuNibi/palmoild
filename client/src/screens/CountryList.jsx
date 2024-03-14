@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import { BACKEND_URL } from "../constans";
 
 const CountryList = () => {
     const [countries, setCountries] = useState([]);
@@ -14,7 +15,7 @@ const CountryList = () => {
 
     const fetchCountries = async () => {
         try {
-            const response = await axios.get('/api/countries');
+            const response = await axios.get(`${BACKEND_URL}/api/countries`);
             setCountries(response.data);
         } catch (error) {
             console.error('Error fetching countries:', error);

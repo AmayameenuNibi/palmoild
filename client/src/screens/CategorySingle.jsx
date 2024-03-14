@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import { BACKEND_URL } from "../constans";
 
 const CategorySingle = () => {
     const { categoryName } = useParams();
@@ -12,7 +13,7 @@ const CategorySingle = () => {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`/api/categories/${categoryName}`);
+                const response = await fetch(`${BACKEND_URL}/api/categories/${categoryName}`);
                 const data = await response.json();
                 setCompanies(data);
             } catch (error) {

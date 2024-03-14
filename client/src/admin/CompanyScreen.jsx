@@ -14,7 +14,7 @@ const CompanyScreen = () => {
 
     const fetchCompanies = async () => {
         try {
-            const response = await axios.get('/api/companies');
+            const response = await axios.get(`${BACKEND_URL}/api/companies`);
             setCompanies(response.data);
             setLoading(false);
         } catch (error) {
@@ -31,7 +31,7 @@ const CompanyScreen = () => {
         try {
             const confirmDelete = window.confirm('Are you sure you want to delete this company?');
             if (confirmDelete) {
-                await axios.delete(`/api/companies/${id}`);
+                await axios.delete(`${BACKEND_URL}/api/companies/${id}`);
                 fetchCompanies(); 
             }
         } catch (error) {

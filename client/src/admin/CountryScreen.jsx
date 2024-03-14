@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from "../constans";
 
 const CountryScreen = () => {
   const [FormData, setFormData] = useState({
@@ -12,7 +13,7 @@ const CountryScreen = () => {
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get('/api/countries');
+      const response = await axios.get(`${BACKEND_URL}/api/countries`);
       setCountries(response.data);
     } catch (error) {
       console.error('Error fetching countries:', error);
@@ -26,7 +27,7 @@ const CountryScreen = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/countries', FormData);
+      await axios.post(`${BACKEND_URL}/api/countries`, FormData);
       fetchCountries(); 
       closeCountryPopup();
       setFormData({ name: '' }); 
@@ -48,7 +49,7 @@ const CountryScreen = () => {
     e.preventDefault(); 
     console.log("Updating country with data:", FormData);
     try {
-      await axios.put(`/api/countries/${FormData.id}`, {
+      await axios.put(`${BACKEND_URL}/api/countries/${FormData.id}`, {
         name: FormData.name,
       });
       fetchCountries();
@@ -64,7 +65,7 @@ const CountryScreen = () => {
     try {
       const confirmDelete = window.confirm('Are you sure you want to delete this country?');    
       if (confirmDelete) {
-        await axios.delete(`/api/countries/${id}`);
+        await axios.delete(`${BACKEND_URL}/api/countries/${id}`);
         fetchCountries();  
       }
       toast.success('Country Deleted successfully!');

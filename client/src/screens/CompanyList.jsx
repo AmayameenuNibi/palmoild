@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import '../css/spinner.css'
+import { BACKEND_URL } from "../constans";
 
 const CompanyList = () => {
     const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ const CompanyList = () => {
 
     const fetchCompanies = async () => {
         try {
-            const response = await axios.get('/api/companies');
+            const response = await axios.get(`${BACKEND_URL}/api/companies`);
             setCompanies(response.data);
             setLoading(false); 
         } catch (error) {

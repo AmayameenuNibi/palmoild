@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
-import default_img from '../images/default.jpg';
+import { BACKEND_URL } from "../constans";
 
 const CountrySingle = () => {
     const { countryName } = useParams();
@@ -13,7 +13,7 @@ const CountrySingle = () => {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`/api/countries/${countryName}`);
+                const response = await fetch(`${BACKEND_URL}/api/countries/${countryName}`);
                 const data = await response.json();
                 setCompanies(data);
             } catch (error) {

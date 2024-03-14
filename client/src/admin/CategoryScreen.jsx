@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from "../constans";
 
 const CategoryScreen = () => {
   const [categoryFormData, setCategoryFormData] = useState({
@@ -15,9 +16,9 @@ const CategoryScreen = () => {
 
   const fetchCategories = async () => {
     try {
-        const response = await axios.get('/api/categories');
+        const response = await axios.get(`${BACKEND_URL}/api/categories`);
         setCategories(response.data);
-        const site_response = await axios.get('/api/sites');
+        const site_response = await axios.get(`${BACKEND_URL}/api/sites`);
         setSites(site_response.data);
     } catch (error) {
         console.error('Error fetching categories:', error);
@@ -31,7 +32,7 @@ const CategoryScreen = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-        await axios.post('/api/categories', categoryFormData);
+        await axios.post(`${BACKEND_URL}/api/categories`, categoryFormData);
         openCatpopup();
         fetchCategories(); 
         setCategoryFormData({ name: '', site_id: '' }); 
@@ -53,7 +54,7 @@ const CategoryScreen = () => {
   const handleUpdateCategoryData = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/categories/${categoryFormData.id}`, {
+      await axios.put(`${BACKEND_URL}/api/categories/${categoryFormData.id}`, {
         site_id: categoryFormData.site_id,
         name: categoryFormData.name,
       });
@@ -74,7 +75,7 @@ const CategoryScreen = () => {
     try {
         const confirmDelete = window.confirm('Are you sure you want to delete this category?');    
         if (confirmDelete) {
-          await axios.delete(`/api/categories/${id}`);
+          await axios.delete(`${BACKEND_URL}/api/categories/${id}`);
           fetchCategories(); 
         }        
         toast.success('Category Deleted successfully!');

@@ -9,7 +9,7 @@ const CompanySingle = () => {
     useEffect(() => {
       const fetchCompanyDetails = async () => {
         try {
-          const response = await fetch(`/api/companies/${companyName}`);
+          const response = await fetch(`${BACKEND_URL}/api/companies/${companyName}`);
           const data = await response.json();
           setCompany(data);
         } catch (error) {
