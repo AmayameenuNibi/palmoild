@@ -43,7 +43,8 @@ app.use("/auth", authRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const server = http.createServer(app);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
