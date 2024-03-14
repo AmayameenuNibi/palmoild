@@ -2,6 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useParams,useNavigate} from 'react-router-dom';
+import { BACKEND_URL } from "../constans";
 
 const AddCompany = () => {
     const { userInfo } = useSelector((state) => state.auth);
@@ -137,7 +138,7 @@ const AddCompany = () => {
                     <>                    
                     </>:
                     <>
-                        <img src={`http://localhost:5000/uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
+                        <img src={`${BACKEND_URL}/uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
                     </>
                 }
                 <input 
