@@ -153,9 +153,9 @@ const Header = () => {
               </>
             ) : (
               <>
-                <Link to="/contact" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Contact</Link>
-                <Link to="/about" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">About Us</Link>
                 <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Home</Link>
+{/*                 <Link to="/contact" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Contact</Link> */}
+                <Link to="/about" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">About Us</Link>
                 <Link to="/register" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Register</Link>
                 <a className="popup px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 md:mt-5 md:ml-0" onClick={openPopup}>Login</a>
               </>
