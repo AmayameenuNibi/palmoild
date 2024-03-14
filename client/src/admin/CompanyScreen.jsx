@@ -4,6 +4,7 @@ import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import default_img from '../images/default.jpg';
 import '../css/spinner.css'
+import { BACKEND_URL } from "../constans";
 
 const CompanyScreen = () => {
     const [currentPage, setCurrentPage] = useState(0); 
@@ -75,7 +76,7 @@ const CompanyScreen = () => {
                                                     <img style={{ width:'80px', height:'50px' }} src={default_img} />
                                                 </>:
                                                 <>
-                                                    <img src={`http://localhost:5000/uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
+                                                    <img src={`${BACKEND_URL}/uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
                                                 </>
                                                 }
                                             </td>
