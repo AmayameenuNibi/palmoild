@@ -12,6 +12,7 @@ import companyRoutes from './routes/companyRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import passport from "./utils/passport.js";
 import path from 'path';
+import http from "http";
 import mongoose from "mongoose";
 
 dotenv.config();
