@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { BACKEND_URL } from "../constans";
+
 const CompanySingle = () => {
     const { companyName } = useParams();
     const [company, setCompany] = useState(null);
@@ -34,7 +36,7 @@ const CompanySingle = () => {
                               <div className="col-sm-12 col-md-4 bg-c-lite-green user-profile">
                                   <div className="card-block text-center text-white">
                                       <div className="m-b-25">
-                                          <img src={`http://localhost:5000/uploads/${company.logo}`} className="img-radius h-full" alt="User-Profile-Image"/>
+                                          <img src={`${BACKEND_URL}/uploads/${company.logo}`} className="img-radius h-full" alt="User-Profile-Image"/>
                                       </div>
                                       <h5 className="f-w-600">{company.company}</h5>
                                       <p>{company.categoryName}</p>
