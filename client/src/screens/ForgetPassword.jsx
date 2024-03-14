@@ -34,7 +34,7 @@ const ForgetPassword = () => {
             return;
         }
         try {
-            const response = await axios.post(`${BACKEND_URL}api/users/forget-password`, FormData);
+            const response = await axios.post(`https://palmoild-sand.vercel.app/api/users/forget-password`, FormData);
             const { email, name, resetPasswordToken } = response.data;
             var templateParams = {
                 email: email,

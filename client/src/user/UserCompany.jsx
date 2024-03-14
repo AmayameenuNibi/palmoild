@@ -42,13 +42,13 @@ const UserCompany = () => {
 
     const fetchOptions = async () => {
         try {
-            const categoriesResponse = await axios.get(`${BACKEND_URL}api/categories`);
+            const categoriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/categories`);
             setCategories(categoriesResponse.data);
 
-            const countriesResponse = await axios.get(`${BACKEND_URL}api/countries`);
+            const countriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
             setCountries(countriesResponse.data);
 
-            const sitesResponse = await axios.get(`${BACKEND_URL}api/sites`);
+            const sitesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/sites`);
             setSites(sitesResponse.data);
         } catch (error) {
             console.error('Error fetching options:', error);
@@ -75,7 +75,7 @@ const UserCompany = () => {
 
     const fetchCompanyDetails = async (userId) => {
         try {
-            const response = await axios.get(`${BACKEND_URL}api/companies/user/${userId}`);
+            const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies/user/${userId}`);
             const companyData = response.data; 
             setstatusData({
                 status: '1',
@@ -106,12 +106,12 @@ const UserCompany = () => {
                 formDataToSend.append(key, formData[key]);
             }
             if (statusData.status === '1') {
-                const response = await axios.put(`${BACKEND_URL}api/companies/${statusData.companyId}`, formDataToSend);
+                const response = await axios.put(`https://palmoild-sand.vercel.app/api/companies/${statusData.companyId}`, formDataToSend);
                 const companyData = response.data; 
                 navigate(`/companies/${companyData.company_slug}`);
                 toast.success("Company details Updated Successfully");
             } else {
-                const response = await axios.post(`${BACKEND_URL}api/companies`, formDataToSend);
+                const response = await axios.post(`https://palmoild-sand.vercel.app/api/companies`, formDataToSend);
                 const companyData = response.data;
                 navigate(`/companies/${companyData.company_slug}`);
                 toast.success("Company details Added Successfully");
@@ -161,7 +161,7 @@ const UserCompany = () => {
                     <img src={logoPreview} width="75px" height="55px" alt={formData.company} />                   
                 ) : null}
                 {statusData.status == '1' ? (
-                    <img src={`${BACKEND_URL}uploads/${formData.logo}`} width="75px" height="55px" alt="Company Logo" />
+                    <img src={`https://palmoild-sand.vercel.app/uploads/${formData.logo}`} width="75px" height="55px" alt="Company Logo" />
                 ) : null}
                 <input 
                     type="hidden"  id="user_id" name="user_id" value={formData.user_id}  onChange={handleInputChange}
