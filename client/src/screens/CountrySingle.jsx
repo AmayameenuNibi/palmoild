@@ -15,14 +15,21 @@ const CountrySingle = () => {
             try {
                 const response = await fetch(`https://palmoild-sand.vercel.app/api/countries/${countryName}`);
                 const data = await response.json();
-                setCompanies(data);
+                if (Array.isArray(data)) {
+                    setCompanies(data);
+                } else {
+                    console.error('Expected an array but received:', data);
+                    setCompanies([]);
+                }
             } catch (error) {
                 console.error('Error fetching countries:', error);
+                setCompanies([]);
             }
         };
-
+    
         fetchCompanies();
     }, [countryName]);
+    
 
     const handlePageChange = ({ selected }) => {
         setCurrentPage(selected);
@@ -60,8 +67,8 @@ const CountrySingle = () => {
                     {companies.length > itemsPerPage && (
                         <ReactPaginate
                             pageCount={Math.ceil(companies.length / itemsPerPage)}
-                            pageRangeDisplayed={5} // Number of pages to display
-                            marginPagesDisplayed={2} // Number of pages to display for margin
+                            pageRangeDisplayed={5} 
+                            marginPagesDisplayed={2} 
                             onPageChange={handlePageChange}
                             containerClassName={'pagination'}
                             activeClassName={'active'}
@@ -69,7 +76,7 @@ const CountrySingle = () => {
                     )}
                 </>
             ) : (
-                <p></p>
+                <p>No companies available.</p>
             )}
             </>
         </div>

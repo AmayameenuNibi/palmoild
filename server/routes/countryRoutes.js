@@ -12,8 +12,8 @@ const router = express.Router();
 
 // Routes for countries
 router.route('/').get(getCountries).post(createCountry);
-// router.route('/:id').delete(deleteCountry);
-// router.route('/:id').put(updateCountry);
-// router.get('/:countryName', getCountryCompanies);
+router.route('/:id').delete(deleteCountry);
+router.route('/:id').put(updateCountry);
+router.get('/:countryName', getCountryCompanies);
 
 export default router;

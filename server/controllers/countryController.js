@@ -67,6 +67,7 @@ export const updateCountry = asyncHandler(async (req, res) => {
 export const getCountryCompanies = async (req, res) => {
   try {
     const countryName = req.params.countryName;
+    console.log(countryName);
     const country = await Country.findOne({ name: countryName });
 
     if (!country) {
@@ -74,8 +75,7 @@ export const getCountryCompanies = async (req, res) => {
     }
 
     const companies = await Company.find({ country_id: country._id })
-      .populate('category_id', 'name'); // Populate the 'category_id' field with the 'name' field from the Category model
-
+      .populate('category_id', 'name'); 
     const formattedCompanies = companies.map(company => ({
       _id: company._id,
       name: company.company,

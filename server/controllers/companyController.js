@@ -140,33 +140,36 @@ export const getCompanies = asyncHandler(async (req, res) => {
 
 // @desc    Create a new Company
 export const createCompany = asyncHandler(async (req, res) => {
-  const {
-      user_id,
-      company,
-      category_id,
-      country_id,
-      website,
-      mobile,
-      profile,
-      title,
-      site_id,
-      address,
-      description,
-      status,
-      facebook_url,
-      twitter_url,
-      linkedin_url,
-      insta_url,
-      brochure_url,
-      featured,
-  } = req.body;
-  const companies = await Company.findOne({ company: company });
-  if (companies) {
-    res.status(400);
-    throw new Error("company already exists");
-  }
-  try {    
-      const newCompany = new Company({
+  try {
+      const {
+          user_id,
+          company,
+          category_id,
+          country_id,
+          website,
+          mobile,
+          profile,
+          title,
+          site_id,
+          address,
+          description,
+          status,
+          facebook_url,
+          twitter_url,
+          linkedin_url,
+          insta_url,
+          brochure_url,
+          featured,
+      } = req.body;
+
+      // Check for an existing company
+      const existingCompany = await Company.findOne({ company: company });
+      if (existingCompany) {
+        return res.status(400).json({ message: "Company already exists" });
+      }
+
+      // Create a new company
+      const newCompany = await Company.create({
           user_id,
           company,
           category_id,
@@ -188,13 +191,12 @@ export const createCompany = asyncHandler(async (req, res) => {
           featured,
           company_slug: convertToUrlFormat(company),
       });
-
-      await newCompany.save();
-      res.json(newCompany);
+      res.status(201).json(newCompany);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+      next(error);
   }
 });
+
 
 // @desc    Update a company
 export const updateCompany = asyncHandler(async (req, res) => {
