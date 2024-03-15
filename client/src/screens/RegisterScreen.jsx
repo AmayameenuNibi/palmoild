@@ -336,6 +336,8 @@ const RegisterScreen = () => {
           <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"type="submit">
             Sign In
           </button>
+        </form>
+        <div className="flex flex-col" >                  
           <button
             type="submit"
             className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-red-700">
@@ -351,7 +353,7 @@ const RegisterScreen = () => {
             className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-darkblue-700">
             Sign in with Facebook
           </button>
-        </form>
+        </div>
       </div>
     </div>  
   );
