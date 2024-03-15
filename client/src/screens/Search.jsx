@@ -118,43 +118,49 @@ const Search = () => {
             <button onClick={downloadSearchResultsAsExcel}>Excel</button>
           </div>
         </div>
-        {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
+        {loading ? (
+            <div className="spinner"></div> 
+        ) : (
           <>
-            {currentCompanies.map((company, index) => (
-              <div className="row listing row-tab" key={company._id}>
-                <div className="col-md-8">
-                  <div className="first_top">
-                    <span className="floater">{index + 1 + currentPage * itemsPerPage}</span>
-                    <div className="white_">
-                      <h3>
-                        <b>
-                          <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
-                        </b>
-                      </h3>
+            {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
+              <>
+                {currentCompanies.map((company, index) => (
+                  <div className="row listing row-tab" key={company._id}>
+                    <div className="col-md-8">
+                      <div className="first_top">
+                        <span className="floater">{index + 1 + currentPage * itemsPerPage}</span>
+                        <div className="white_">
+                          <h3>
+                            <b>
+                              <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
+                            </b>
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="second_left"></div>
+                      <div className="brown">
+                        <h3><b>{company.categoryName}</b></h3>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="second_left"></div>
-                  <div className="brown">
-                    <h3><b>{company.categoryName}</b></h3>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {companies.length > itemsPerPage && (
-              <ReactPaginate
-                pageCount={Math.ceil(companies.length / itemsPerPage)}
-                pageRangeDisplayed={5}
-                marginPagesDisplayed={2}
-                onPageChange={handlePageChange}
-                containerClassName={'pagination'}
-                activeClassName={'active'}
-              />
+                ))}
+                {companies.length > itemsPerPage && (
+                  <ReactPaginate
+                    pageCount={Math.ceil(companies.length / itemsPerPage)}
+                    pageRangeDisplayed={5}
+                    marginPagesDisplayed={2}
+                    onPageChange={handlePageChange}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                  />
+                )}
+              </>
+            ) : (
+              !loading && <div>No results found. Try a different search.</div>
             )}
           </>
-        ) : (
-          !loading && <div>No results found. Try a different search.</div>
         )}
         <div className="favourites-container">
           <h1 className="featured-companies">Featured Companies</h1>
