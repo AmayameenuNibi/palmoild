@@ -20,9 +20,7 @@ const CompanySingle = () => {
       fetchCompanyDetails();
     }, [companyName]);
   
-    if (!company) {
-      return <p>Loading...</p>; 
-    }
+    
     const createdAtDate = new Date(company.date_added);
     const createdAtDateString = createdAtDate.toLocaleDateString();
     return (

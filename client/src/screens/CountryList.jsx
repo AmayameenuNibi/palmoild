@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { BACKEND_URL } from "../constans";
+import '../css/spinner.css'
 
 const CountryList = () => {
     const [countries, setCountries] = useState([]);
@@ -35,38 +36,42 @@ const CountryList = () => {
     return (
         <div className='body-content'>
             <h1 className="country-list">Country List</h1>
-            <>
-            {Array.isArray(currentCountries) && currentCountries.length > 0 ? (
+            {loading ? (
+                <div className="spinner"></div> 
+            ) : (
                 <>
-                    {currentCountries.map((country, index) => (
-                        <div className="row listing">
-                            <div className="col-md-12">
-                                <div className="first_top">
-                                    <span className="floater singe">{index+1 + (currentPage* itemsPerPage)}</span>
-                                    <div className="white_">
-                                        <h3><b key={country._id}>
-                                        <Link to={`/countries/${country.name}`}>{country.name}</Link>
-                                        </b></h3>
+                    {Array.isArray(currentCountries) && currentCountries.length > 0 ? (
+                        <>
+                            {currentCountries.map((country, index) => (
+                                <div className="row listing">
+                                    <div className="col-md-12">
+                                        <div className="first_top">
+                                            <span className="floater singe">{index+1 + (currentPage* itemsPerPage)}</span>
+                                            <div className="white_">
+                                                <h3><b key={country._id}>
+                                                <Link to={`/countries/${country.name}`}>{country.name}</Link>
+                                                </b></h3>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    ))}
-                    {countries.length > itemsPerPage && (
-                        <ReactPaginate
-                            pageCount={Math.ceil(countries.length / itemsPerPage)}
-                            pageRangeDisplayed={5} // Number of pages to display
-                            marginPagesDisplayed={2} // Number of pages to display for margin
-                            onPageChange={handlePageChange}
-                            containerClassName={'pagination'}
-                            activeClassName={'active'}
-                        />
+                            ))}
+                            {countries.length > itemsPerPage && (
+                                <ReactPaginate
+                                    pageCount={Math.ceil(countries.length / itemsPerPage)}
+                                    pageRangeDisplayed={5} // Number of pages to display
+                                    marginPagesDisplayed={2} // Number of pages to display for margin
+                                    onPageChange={handlePageChange}
+                                    containerClassName={'pagination'}
+                                    activeClassName={'active'}
+                                />
+                            )}
+                        </>
+                    ) : (
+                        <p></p>
                     )}
                 </>
-            ) : (
-                <p></p>
             )}
-            </>
         </div>
     );
 };
