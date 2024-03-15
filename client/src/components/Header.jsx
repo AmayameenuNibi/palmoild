@@ -127,10 +127,10 @@ const Header = () => {
                   <>
                     <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Home</Link>
                     <Link to="/countries" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Countries</Link>
-                    <Link to="/categories" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Categories</Link>
+                    {/* <Link to="/categories" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Categories</Link> */}
                     <Link to="/search" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Search</Link>
                     <Link to="/company" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Company</Link>
-                    <Link to="/companies" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Companies</Link>
+                    {/* <Link to="/companies" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Companies</Link> */}
                     {userInfo.status === 0 ? <a href="/subscribe" className="moving-bt px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white md:mt-8 md:ml-4" >
                       <span></span> <span></span> <span></span> <span></span> Subscribe
                     </a> :''}

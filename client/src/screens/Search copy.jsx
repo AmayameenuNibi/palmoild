@@ -1,161 +1,124 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
-import * as XLSX from 'xlsx';
-import '../css/spinner.css';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import '../css/spinner.css'
+import { BACKEND_URL } from "../constans";
 
 const Search = () => {
   const [loading, setLoading] = useState(true);
   const [companies, setCompanies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage] = useState(10);
-  const [searchTerm, setSearchTerm] = useState('');
-
+  const [currentPage, setCurrentPage] = useState(0); 
+  const [itemsPerPage] = useState(10); 
   const indexOfLastItem = (currentPage + 1) * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentCompanies = companies.slice(indexOfFirstItem, indexOfLastItem);
-
-  const fetchCompanies = async () => {
-    try {
-      const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies`);
-      setCompanies(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching companies:', error);
-      setLoading(false);
-    }
-  };
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = async () => {
     try {
       const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies/search?term=${searchTerm}`);
       setCompanies(response.data);
-      setLoading(false);
+      setLoading(false); 
     } catch (error) {
       console.error('Error searching:', error);
-      setLoading(false);
+      setLoading(false); 
     }
   };
+
+  const fetchCompanies = async () => {
+      try {
+          const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies`);
+          setCompanies(response.data);
+          setLoading(false); 
+      } catch (error) {
+          console.error('Error fetching companies:', error);
+          setLoading(false); 
+      }
+  };
+
+  useEffect(() => {
+      fetchCompanies();
+  }, []);
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
 
-  const downloadSearchResultsAsExcel = async () => {
-    try {
-      if(searchTerm == '') {
-        const response = await axios.get('https://palmoild-sand.vercel.app/api/companies');
-        const allCompanies = response.data;  
-        const data = allCompanies.map((company, index) => ({
-          No: index + 1 + currentPage * itemsPerPage,
-          Company: company.company,
-          Category: company.categoryName,
-          Mobile: company.mobile,
-          Country: company.countryName,
-          Website: company.website,
-        }));
-    
-        const worksheet = XLSX.utils.json_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Search Results');
-        XLSX.writeFile(workbook, 'palmoilSearch.xlsx');    
-      }else{
-        const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies/search?term=${searchTerm}`);
-        const allCompanies = response.data;
-        const data = allCompanies.map((company, index) => ({
-          No: index + 1 + currentPage * itemsPerPage,
-          Company: company.company,
-          Category: company.categoryName,
-          Mobile: company.mobile,
-          Country: company.countryName,
-          Website: company.website,
-        }));
-    
-        const worksheet = XLSX.utils.json_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Search Results');
-        XLSX.writeFile(workbook, 'palmoilSearch.xlsx');
-      }
-    } catch (error) {
-      console.error('Error downloading Excel file:', error);
-    }
+  const downloadSearchResultsAsPDF = () => {
+    const doc = new jsPDF();
+    const columns = ["No", "Company"];
+    const data = currentCompanies.map((company, index) => [
+        index + 1 + (currentPage * itemsPerPage),
+        company.company
+    ]);
+    doc.text("Search Results", 20, 20);
+    doc.autoTable(columns, data, { startY: 30 });
+    doc.save("palmoilSearch.pdf");
   };
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    if(value === '') {
-      fetchCompanies();
-    }
-  };
-
-  useEffect(() => {
-    if(searchTerm === '') {
-      fetchCompanies();
-    }
-  }, []);
 
   return (
     <div>
       <div className="desktop-1">
         <div className="desktop-1-child"></div>
-        <div className="frame-a mb-10">
+        <div className="frame-a">
           <div className="frame-a-child"></div>
           <h1 className="products-companies">Products, Companies</h1>
-          <div className="frame-c">
-            <input
+          <div className="frame-c">            
+            <input 
               type="text"
               value={searchTerm}
-              onChange={handleInputChange}
-              placeholder="search ...."
-            />
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="search ...." />
             <div className="frame-c-child"></div>
-            <div className="frame-d"></div>
-            <button onClick={handleSearch}>
-              <i className="fa-brands fa-searchengin"></i>
-            </button>
-            <button onClick={downloadSearchResultsAsExcel}>Excel</button>
+            <div className="frame-d">              
+            </div>
+            <button onClick={handleSearch}><i className="fa-brands fa-searchengin"></i></button>
+            <button onClick={downloadSearchResultsAsPDF}>PDF</button>
           </div>
-        </div>
-        {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
-          <>
-            {currentCompanies.map((company, index) => (
-              <div className="row listing row-tab" key={company._id}>
-                <div className="col-md-8">
-                  <div className="first_top">
-                    <span className="floater">{index + 1 + currentPage * itemsPerPage}</span>
-                    <div className="white_">
-                      <h3>
-                        <b>
-                          <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
-                        </b>
-                      </h3>
+        </div>  
+            {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
+              <>
+                {currentCompanies.map((company, index) => (
+                  <div className="row listing row-tab" key={company._id}>
+                    <div className="col-md-8">
+                        <div className="first_top">
+                            <span className="floater">{index + 1 + (currentPage * itemsPerPage)}</span>
+                            <div className="white_">
+                                <h3>
+                                    <b>
+                                        <Link to={`/companies/${company.company_slug}`}>
+                                            {company.company}
+                                        </Link>
+                                    </b>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="second_left"></div>
+                        <div className="brown">
+                            <h3><b>{company.categoryName}</b></h3>
+                        </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="second_left"></div>
-                  <div className="brown">
-                    <h3><b>{company.categoryName}</b></h3>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {companies.length > itemsPerPage && (
-              <ReactPaginate
-                pageCount={Math.ceil(companies.length / itemsPerPage)}
-                pageRangeDisplayed={5}
-                marginPagesDisplayed={2}
-                onPageChange={handlePageChange}
-                containerClassName={'pagination'}
-                activeClassName={'active'}
-              />
+                ))}
+                {companies.length > itemsPerPage && (
+                  <ReactPaginate
+                    pageCount={Math.ceil(companies.length / itemsPerPage)}
+                    pageRangeDisplayed={5} 
+                    marginPagesDisplayed={2} 
+                    onPageChange={handlePageChange}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                  />
+                )}
+              </>
+            ) : (
+              !loading && <div>No results found. Try a different search.</div>
             )}
-          </>
-        ) : (
-          !loading && <div>No results found. Try a different search.</div>
-        )}
         <div className="favourites-container">
           <h1 className="featured-companies">Featured Companies</h1>
           <div className="child-frame-a">

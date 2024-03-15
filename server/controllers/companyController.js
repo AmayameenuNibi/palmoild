@@ -91,7 +91,15 @@ export const searchCompanies = asyncHandler(async (req, res) => {
         localField: 'category_id',
         foreignField: '_id',
         as: 'category',
-      },
+      }
+    },
+    {
+      $lookup: {
+        from: 'countries',
+        localField: 'country_id',
+        foreignField: '_id',
+        as: 'country',
+      }
     },
     {
       $project: {
@@ -105,9 +113,11 @@ export const searchCompanies = asyncHandler(async (req, res) => {
         profile: 1,
         title: 1,
         categoryName: { $arrayElemAt: ['$category.name', 0] },
+        countryName: { $arrayElemAt: ['$country.name', 0] },
       },
     },
   ];
+  
 
   const result = await Company.aggregate(pipeline);
   res.json(result);
@@ -119,14 +129,15 @@ export const searchCompanies = asyncHandler(async (req, res) => {
 
 export const getCompanies = asyncHandler(async (req, res) => {
   const companies = await Company.find()
-    .populate('category_id', 'name'); // Populate the 'category_id' field with the 'name' field from the Category model
+    .populate('category_id', 'name')
+    .populate('country_id', 'name');  // Populate the 'category_id' field with the 'name' field from the Category model
 
   const formattedCompanies = companies.map(company => ({
     _id: company._id,
     company: company.company,
     company_slug: company.company_slug,
     logo:company.logo,
-    country_id:company.country_id,
+    countryName:company.country_id.name,
     website:company.website,
     mobile:company.mobile,
     profile:company.profile,
@@ -302,7 +313,6 @@ export const deleteCompany = asyncHandler(async (req, res) => {
 export const getCompanyDetails = async (req, res) => {
   try {
     const companyName = req.params.companyName;
-    console.log(companyName);
     const company = await Company.findOne({ company_slug: companyName })
       .populate('category_id', 'name')
       .populate('country_id', 'name'); 
