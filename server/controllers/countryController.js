@@ -67,7 +67,6 @@ export const updateCountry = asyncHandler(async (req, res) => {
 export const getCountryCompanies = async (req, res) => {
   try {
     const countryName = req.params.countryName;
-    console.log(countryName);
     const country = await Country.findOne({ name: countryName });
 
     if (!country) {

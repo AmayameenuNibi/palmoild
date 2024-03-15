@@ -302,10 +302,10 @@ export const deleteCompany = asyncHandler(async (req, res) => {
 export const getCompanyDetails = async (req, res) => {
   try {
     const companyName = req.params.companyName;
+    console.log(companyName);
     const company = await Company.findOne({ company_slug: companyName })
       .populate('category_id', 'name')
-      .populate('country_id', 'name'); // Populate the 'country_id' field with the 'name' field from the Country model
-
+      .populate('country_id', 'name'); 
     if (!company) {
       return res.status(404).json({ error: 'Company not found' });
     }    

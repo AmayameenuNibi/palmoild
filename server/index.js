@@ -23,10 +23,7 @@ connectDB();
 const app = express();
 
 // Enable CORS for all routes
-app.use(cors({
-  origin: 'https://palmoild-directory.vercel.app/', // Replace with your actual frontend domain
-  credentials: true // Allow credentials (e.g., cookies, authorization headers)
-}));
+app.use(cors());
 passport(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -49,3 +46,4 @@ app.use(notFound);
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
+
