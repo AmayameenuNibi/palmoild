@@ -196,26 +196,28 @@ const Header = () => {
                 </div>
                 <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"type="submit">
                   Sign In
-                </button>
-                <label className="right-label" onClick={handleClick}>Forget password?</label>
-                <button
-                  type="submit"
-                  className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-red-700"
-                  onClick={handleGoogleAuth}>
-                  Sign in with Google
-                </button>
-                <button
-                  type="submit"
-                  className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-blue-700">
-                    Sign in with LinkedIn
-                </button>
-                <button
-                  type="submit"
-                  className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-darkblue-700"
-                  onClick={handleFacebookAuth}>
-                  Sign in with Facebook
-                </button>
+                </button>                
               </form>
+              <div className="flex flex-col">
+                <label className="mt-3 right-label" onClick={handleClick}>Forget password?</label>
+                <button
+                    type="submit"
+                    className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-red-700"
+                    onClick={handleGoogleAuth}>
+                    Sign in with Google
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-blue-700">
+                      Sign in with LinkedIn
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-darkblue-700"
+                    onClick={handleFacebookAuth}>
+                    Sign in with Facebook
+                  </button>
+                </div>
             </div>
           </div>
         </section>  
