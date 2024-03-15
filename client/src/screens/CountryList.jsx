@@ -9,6 +9,7 @@ const CountryList = () => {
     const [countries, setCountries] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); // Default page to 0
     const [itemsPerPage] = useState(10); // Number of items per page
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchCountries();
@@ -18,8 +19,10 @@ const CountryList = () => {
         try {
             const response = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
             setCountries(response.data);
+            setLoading(false); 
         } catch (error) {
             console.error('Error fetching countries:', error);
+            setLoading(false); 
         }
     };
 

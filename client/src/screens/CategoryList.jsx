@@ -9,13 +9,16 @@ const CategoryList = () => {
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); 
   const [itemsPerPage] = useState(10); 
+  const [loading, setLoading] = useState(true);
 
   const fetchCategories = async () => {
     try {
         const response = await axios.get(`https://palmoild-sand.vercel.app/api/categories`);
         setCategories(response.data);
+        setLoading(false);
     } catch (error) {
         console.error('Error fetching categories:', error);
+        setLoading(false); 
     }
   };  
   useEffect(() => {
