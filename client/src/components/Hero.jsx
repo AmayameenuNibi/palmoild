@@ -38,7 +38,7 @@ const HomeScreen = () => {
             }
         };            
         fetchCompanies();
-    });
+    }, []);
     
     return (
         <div>

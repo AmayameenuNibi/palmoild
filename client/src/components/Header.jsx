@@ -141,8 +141,6 @@ const Header = () => {
                     <Link to="/companies" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Companies</Link>
                     <Link to="/admin-users" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Users</Link>
                     <Link to="/search" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Search</Link>
-                    <Link to="/countries" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Countries</Link>
-                    <Link to="/categories" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Categories</Link>
                     <Link to="/admin-site" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Sites</Link>
                     <Link to="/admin-company" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Company</Link>
                     <Link to="/admin-country" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Country</Link>
@@ -154,7 +152,9 @@ const Header = () => {
             ) : (
               <>
                 <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Home</Link>
-{/*                 <Link to="/contact" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Contact</Link> */}
+                {/* <Link to="/contact" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Contact</Link> */}
+                <Link to="/countries" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Countries</Link>
+                <Link to="/categories" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Categories</Link>
                 <Link to="/about" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">About Us</Link>
                 <Link to="/register" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">Register</Link>
                 <a className="popup px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 md:mt-5 md:ml-0" onClick={openPopup}>Login</a>
