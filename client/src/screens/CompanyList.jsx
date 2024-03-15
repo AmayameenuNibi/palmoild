@@ -17,7 +17,7 @@ const CompanyList = () => {
 
     const fetchCompanies = async () => {
         try {
-            const response = await axios.get(`${BACKEND_URL}api/companies`);
+            const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies`);
             setCompanies(response.data);
             setLoading(false); 
         } catch (error) {

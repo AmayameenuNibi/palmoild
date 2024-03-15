@@ -13,7 +13,7 @@ const CountrySingle = () => {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`${BACKEND_URL}api/countries/${countryName}`);
+                const response = await fetch(`https://palmoild-sand.vercel.app/api/countries/${countryName}`);
                 const data = await response.json();
                 setCompanies(data);
             } catch (error) {

@@ -10,10 +10,10 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const activeResponse = await axios.get(`${BACKEND_URL}api/users/active`);
+        const activeResponse = await axios.get(`https://palmoild-sand.vercel.app/api/users/active`);
         setActiveUsers(activeResponse.data);
 
-        const inactiveResponse = await axios.get(`${BACKEND_URL}api/users/inactive`);
+        const inactiveResponse = await axios.get(`https://palmoild-sand.vercel.app/api/users/inactive`);
         setInactiveUsers(inactiveResponse.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -25,11 +25,11 @@ const Users = () => {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`${BACKEND_URL}api/users/${userId}`);
-      const activeResponse = await axios.get(`${BACKEND_URL}api/users/active`);
+      await axios.delete(`https://palmoild-sand.vercel.app/api/users/${userId}`);
+      const activeResponse = await axios.get(`https://palmoild-sand.vercel.app/api/users/active`);
       setActiveUsers(activeResponse.data);
 
-      const inactiveResponse = await axios.get(`${BACKEND_URL}api/users/inactive`);
+      const inactiveResponse = await axios.get(`https://palmoild-sand.vercel.app/api/users/inactive`);
       setInactiveUsers(inactiveResponse.data);
     } catch (error) {
       console.error('Error deleting user:', error);

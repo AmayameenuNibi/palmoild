@@ -128,7 +128,7 @@ const UserCompany = () => {
         <div>      
             <div className="relative bg-white  p-8 md:p-12 my-10">
                 {fetchedCompanyDetails && (
-                    <img src={`http://localhost:5000/uploads/${fetchedCompanyDetails.logo}`} alt="Company Logo" />
+                    <img src={`https://palmoild-sand.vercel.app/uploads/${fetchedCompanyDetails.logo}`} alt="Company Logo" />
                 )}
                 <form className="bg-white company-row" onSubmit={handleFormSubmit} encType="multipart/form-data">
                     <input type="hidden" id="user_id" name="user_id" value={formData.user_id} onChange={handleInputChange}/>

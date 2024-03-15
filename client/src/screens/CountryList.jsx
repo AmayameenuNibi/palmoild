@@ -15,7 +15,7 @@ const CountryList = () => {
 
     const fetchCountries = async () => {
         try {
-            const response = await axios.get(`${BACKEND_URL}api/countries`);
+            const response = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
             setCountries(response.data);
         } catch (error) {
             console.error('Error fetching countries:', error);

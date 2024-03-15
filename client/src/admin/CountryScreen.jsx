@@ -13,7 +13,7 @@ const CountryScreen = () => {
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}api/countries`);
+      const response = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
       setCountries(response.data);
     } catch (error) {
       console.error('Error fetching countries:', error);
@@ -27,7 +27,7 @@ const CountryScreen = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${BACKEND_URL}api/countries`, FormData);
+      await axios.post(`https://palmoild-sand.vercel.app/api/countries`, FormData);
       fetchCountries(); 
       closeCountryPopup();
       setFormData({ name: '' }); 
@@ -49,7 +49,7 @@ const CountryScreen = () => {
     e.preventDefault(); 
     console.log("Updating country with data:", FormData);
     try {
-      await axios.put(`${BACKEND_URL}api/countries/${FormData.id}`, {
+      await axios.put(`https://palmoild-sand.vercel.app/api/countries/${FormData.id}`, {
         name: FormData.name,
       });
       fetchCountries();
@@ -65,7 +65,7 @@ const CountryScreen = () => {
     try {
       const confirmDelete = window.confirm('Are you sure you want to delete this country?');    
       if (confirmDelete) {
-        await axios.delete(`${BACKEND_URL}api/countries/${id}`);
+        await axios.delete(`https://palmoild-sand.vercel.app/api/countries/${id}`);
         fetchCountries();  
       }
       toast.success('Country Deleted successfully!');
