@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import default_img from '../images/default.jpg';
-import '../css/spinner.css'
+import '../css/spinner.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BACKEND_URL } from "../constans";
 
 const CompanyScreen = () => {
@@ -49,63 +51,73 @@ const CompanyScreen = () => {
 
     return (
         <div>
-            <div className="relative block md:w-full justify-center px-10 mb-5 items-center bg-white" >
-                <Link className="create-company-btn" to={`/add-company`}>Create Company</Link> 
-                <div className="table-responsive">
-                    <table className="mt-4 w-3/4 border-collapse border border-gray-400">
-                        <thead>
-                            <tr>
-                                <th className="border border-gray-400 p-2">Logo</th>
-                                <th className="border border-gray-400 p-2">Company Name</th>
-                                <th className="border border-gray-400 p-2">Category</th>
-                                <th className="border border-gray-400 p-2">Country</th>
-                                <th className="border border-gray-400 p-2">Website</th>
-                                <th className="border border-gray-400 p-2">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loading ? (
-                                <div className="spinner"></div> 
-                            ) : (
-                                <>
-                                    {currentCompanies.map((company) => (
-                                        <tr key={company._id}>
-                                            <td className="border border-gray-400 p-2">
-                                                {!company.logo ? 
-                                                <>
-                                                    <img style={{ width:'80px', height:'50px' }} src={default_img} />
-                                                </>:
-                                                <>
-                                                    <img src={`https://palmoild-sand.vercel.app/uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
-                                                </>
-                                                }
-                                            </td>
-                                            <td className="border border-gray-400 p-2">{company.company}</td>
-                                            <td className="border border-gray-400 p-2">Category</td>
-                                            <td className="border border-gray-400 p-2">Country</td>
-                                            <td className="border border-gray-400 p-2">{company.website}</td>
-                                            <td className="border border-gray-400 p-2">
-                                            <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                                to={`/edit-company/${company._id}`}>Edit</Link> 
-                                            <button
-                                                onClick={() => handleDeleteCompany(company._id)}
-                                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</button>                               
-                                            </td>
+            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+            <div className="relative block w-3/4 justify-center px-10 mb-5 mt-5 items-center">        
+                <Link className="create-company-btn" to={`/add-company`}>Create Company</Link>  
+            </div>
+            <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center" >
+                {loading ? (
+                    <div className="flex justify-center items-center h-screen">
+                        <div className="spinner"></div> 
+                    </div>
+                ) : (
+                    <>
+                        {currentCompanies.length > 0 ? (
+                            <div className="table-responsive">
+                                <table className="mt-4 w-3/4 border-collapse border border-gray-400">
+                                    <thead>
+                                        <tr>
+                                            <th className="border border-gray-400 p-2">Logo</th>
+                                            <th className="border border-gray-400 p-2">Company Name</th>
+                                            <th className="border border-gray-400 p-2">Category</th>
+                                            <th className="border border-gray-400 p-2">Country</th>
+                                            <th className="border border-gray-400 p-2">Website</th>
+                                            <th className="border border-gray-400 p-2">Delete</th>
                                         </tr>
-                                    ))}
-                                </>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-                <ReactPaginate
-                    pageCount={Math.ceil(companies.length / itemsPerPage)}
-                    pageRangeDisplayed={5} 
-                    marginPagesDisplayed={2} 
-                    onPageChange={handlePageChange}
-                    containerClassName={'pagination'}
-                    activeClassName={'active'}
-                />                
+                                    </thead>
+                                    <tbody>
+                                        {currentCompanies.map((company) => (
+                                            <tr key={company._id}>
+                                                <td className="border border-gray-400 p-2">
+                                                    {!company.logo ? 
+                                                    <>
+                                                        <img style={{ width:'80px', height:'50px' }} src={default_img} />
+                                                    </>:
+                                                    <>
+                                                        <img src={`https://palmoild-sand.vercel.app/uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
+                                                    </>
+                                                    }
+                                                </td>
+                                                <td className="border border-gray-400 p-2">{company.company}</td>
+                                                <td className="border border-gray-400 p-2">Category</td>
+                                                <td className="border border-gray-400 p-2">Country</td>
+                                                <td className="border border-gray-400 p-2">{company.website}</td>
+                                                <td className="border border-gray-400 p-2">
+                                                <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                                                    to={`/edit-company/${company._id}`}>Edit</Link> 
+                                                <button
+                                                    onClick={() => handleDeleteCompany(company._id)}
+                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</button>                               
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ) : (
+                            <div className="text-center p-5">No companies found.</div>
+                        )}
+
+                        <ReactPaginate
+                            pageCount={Math.ceil(companies.length / itemsPerPage)}
+                            pageRangeDisplayed={5} 
+                            marginPagesDisplayed={2} 
+                            onPageChange={handlePageChange}
+                            containerClassName={'pagination'}
+                            activeClassName={'active'}
+                        />
+                    </>
+                )}        
             </div>
         </div>
     );

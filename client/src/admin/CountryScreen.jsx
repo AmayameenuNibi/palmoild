@@ -86,11 +86,13 @@ const CountryScreen = () => {
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-      <div className="relative block md:w-full justify-center px-10 mb-5 items-center bg-white">
+      <div className="relative block w-3/4 justify-center px-10 mb-5 mt-5 items-center">        
+        <button className="create-country-btn" onClick={openCountryPopup}>
+          Create Country
+        </button> 
+      </div>
+      <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center">
         <div className="table-responsive">
-          <button className="create-country-btn" onClick={openCountryPopup}>
-            Create Country
-          </button>        
           <table className="mt-4 w-3/4 border-collapse border border-gray-400">
             <thead>
               <tr>

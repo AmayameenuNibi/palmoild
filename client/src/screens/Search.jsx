@@ -63,18 +63,14 @@ const Search = () => {
             <button onClick={handleSearch}><i className="fa-brands fa-searchengin"></i></button>
             <button onClick={downloadSearchResultsAsPDF}>PDF</button>
           </div>
-        </div>        
-        {loading ? (
-            <div className="spinner"></div> 
-        ) : (
-          <>
+        </div>  
             {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
               <>
                 {currentCompanies.map((company, index) => (
                   <div className="row listing row-tab" key={company._id}>
                     <div className="col-md-8">
                         <div className="first_top">
-                            <span className="floater">{index+1 + (currentPage* itemsPerPage)}</span>
+                            <span className="floater">{index + 1 + (currentPage * itemsPerPage)}</span>
                             <div className="white_">
                                 <h3>
                                     <b>
@@ -106,10 +102,8 @@ const Search = () => {
                 )}
               </>
             ) : (
-              <p></p>
+              !loading && <div>No results found. Try a different search.</div>
             )}
-          </>
-        )}
         <div className="favourites-container">
           <h1 className="featured-companies">Featured Companies</h1>
           <div className="child-frame-a">
