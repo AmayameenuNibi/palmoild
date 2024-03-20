@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import * as XLSX from 'xlsx';
 import '../css/spinner.css';
@@ -11,6 +11,13 @@ const Search = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [favoriteCompanies, setFavoriteCompanies] = useState([]);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const indexOfLastItem = (currentPage + 1) * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -21,19 +28,12 @@ const Search = () => {
       const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies`);
       setCompanies(response.data);
       setLoading(false);
+      const cat_response = await axios.get(`https://palmoild-sand.vercel.app/api/categories`);
+      setCategories(cat_response.data);
+      const countriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
+      setCountries(countriesResponse.data);
     } catch (error) {
       console.error('Error fetching companies:', error);
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies/search?term=${searchTerm}`);
-      setCompanies(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error searching:', error);
       setLoading(false);
     }
   };
@@ -44,50 +44,49 @@ const Search = () => {
 
   const downloadSearchResultsAsExcel = async () => {
     try {
-      if(searchTerm == '') {
-        const response = await axios.get('https://palmoild-sand.vercel.app/api/companies');
-        const allCompanies = response.data;  
-        const data = allCompanies.map((company, index) => ({
-          No: index + 1 + currentPage * itemsPerPage,
-          Company: company.company,
-          Category: company.categoryName,
-          Mobile: company.mobile,
-          Country: company.countryName,
-          Website: company.website,
-        }));
-    
-        const worksheet = XLSX.utils.json_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Search Results');
-        XLSX.writeFile(workbook, 'palmoilSearch.xlsx');    
-      }else{
-        const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies/search?term=${searchTerm}`);
-        const allCompanies = response.data;
-        const data = allCompanies.map((company, index) => ({
-          No: index + 1 + currentPage * itemsPerPage,
-          Company: company.company,
-          Category: company.categoryName,
-          Mobile: company.mobile,
-          Country: company.countryName,
-          Website: company.website,
-        }));
-    
-        const worksheet = XLSX.utils.json_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Search Results');
-        XLSX.writeFile(workbook, 'palmoilSearch.xlsx');
-      }
+      const data = companies.map((company, index) => ({
+        No: index + 1 + currentPage * itemsPerPage,
+        Company: company.company,
+        Category: company.categoryName,
+        Mobile: company.mobile,
+        Country: company.countryName,
+        Website: company.website,
+      }));
+  
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Search Results');
+      XLSX.writeFile(workbook, 'palmoilSearch.xlsx');
     } catch (error) {
       console.error('Error downloading Excel file:', error);
     }
   };
-
-  const handleInputChange = (e) => {
+  
+  const handleInputChange = async (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    if(value === '') {
-      fetchCompanies();
+    if (value.trim() === '') { 
+      await handleSearch('', selectedCategories, selectedCountries); 
+    } else {
+      await handleSearch(value, selectedCategories, selectedCountries);
     }
+  };
+  
+  const handleCategoryChange = async (categoryId) => {
+    const updatedCategories = selectedCategories.includes(categoryId)
+      ? selectedCategories.filter(id => id !== categoryId)
+      : [...selectedCategories, categoryId];
+    setSelectedCategories(updatedCategories);
+    await handleSearch(searchTerm, updatedCategories, selectedCountries);
+  }; 
+  
+  
+  const handleCountryChange = async (countryId) => {
+    const updatedCountries = selectedCountries.includes(countryId)
+      ? selectedCountries.filter(id => id !== countryId)
+      : [...selectedCountries, countryId];
+    setSelectedCountries(updatedCountries);
+    await handleSearch(searchTerm, selectedCategories, updatedCountries);
   };
 
   useEffect(() => {
@@ -95,6 +94,63 @@ const Search = () => {
       fetchCompanies();
     }
   }, []);
+
+  const handleSearch = async (searchTerm, selectedCategories, selectedCountries) => {
+    try {
+      let url = `https://palmoild-sand.vercel.app/api/companies/search`;
+      const params = new URLSearchParams();      
+      params.append('term', searchTerm);
+      params.append('category_id', selectedCategories.join(','));
+      params.append('country_id', selectedCountries.join(','));
+      if (params.toString()) {
+        url += `?${params.toString()}`;
+      }
+      const response = await axios.get(url);
+      setCompanies(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error searching:', error);
+      setLoading(false);
+    }
+  };
+
+  const handleCompanyClick = (company) => {
+    setSelectedCompany(company);
+  };
+
+  const closeModal = () => {
+    setSelectedCompany(null);
+  };
+  
+
+  const isFavorite = async (companyId) => {
+    try {
+      const response = await axios.get(`https://palmoild-sand.vercel.app/api/favorites/check/${companyId}/${userInfo._id}`);
+      const result = response.data.isFavorite; 
+      if (result === "favorite") {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error('Error checking favorite:', error);
+      return false; 
+    }
+  };  
+
+  const handleAddRemoveFavorite = async (companyId) => {
+    try {
+      const isCompanyFavorite = await isFavorite(companyId, userInfo._id);  
+      if (isCompanyFavorite) {
+        await axios.delete(`https://palmoild-sand.vercel.app/api/favorites/delete/${companyId}/${userInfo._id}`);
+      } else {
+        await axios.post(`https://palmoild-sand.vercel.app/api/favorites/add/${companyId}/${userInfo._id}`);
+      }      
+      closeModal();
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
+  };
 
   return (
     <div>
@@ -112,149 +168,133 @@ const Search = () => {
             />
             <div className="frame-c-child"></div>
             <div className="frame-d"></div>
-            <button onClick={handleSearch}>
+            <button onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
               <i className="fa-brands fa-searchengin"></i>
             </button>
             <button onClick={downloadSearchResultsAsExcel}>Excel</button>
           </div>
         </div>
-        {loading ? (
-            <div className="spinner"></div> 
-        ) : (
-          <>
-            {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
-              <>
-                {currentCompanies.map((company, index) => (
-                  <div className="row listing row-tab" key={company._id}>
-                    <div className="col-md-8">
-                      <div className="first_top">
-                        <span className="floater">{index + 1 + currentPage * itemsPerPage}</span>
-                        <div className="white_">
-                          <h3>
-                            <b>
-                              <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
-                            </b>
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <div className="second_left"></div>
-                      <div className="brown">
-                        <h3><b>{company.categoryName}</b></h3>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {companies.length > itemsPerPage && (
-                  <ReactPaginate
-                    pageCount={Math.ceil(companies.length / itemsPerPage)}
-                    pageRangeDisplayed={5}
-                    marginPagesDisplayed={2}
-                    onPageChange={handlePageChange}
-                    containerClassName={'pagination'}
-                    activeClassName={'active'}
+        
+        <div className="row listing row-tab" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
+          <div className="col-md-3"> {/* This div takes up 1/4 of the width */}
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Categories:
+              </label>
+              <div key="AllCategories">
+                <input type="checkbox" id="AllCategories" name="AllCategories" checked={selectedCategories.includes("All")}
+                  onChange={() => handleCategoryChange("All")}
+                />
+                <label htmlFor="AllCategories">All Categories</label>
+              </div>
+              {categories.map((category) => (
+                <div key={category._id}>
+                  <input type="checkbox" id={category._id} name={category._id}
+                    checked={selectedCategories.includes(category._id)}
+                    onChange={() => handleCategoryChange(category._id)}
                   />
-                )}
-              </>
-            ) : (
-              !loading && <div>No results found. Try a different search.</div>
-            )}
-          </>
-        )}
-        <div className="favourites-container">
-          <h1 className="featured-companies">Featured Companies</h1>
-          <div className="child-frame-a">
-            <div className="eccelso-group">
-              <div className="eccelso-group-child"></div>
-              <h2 className="eccelso">Eccelso</h2>
-              <div className="company-frame-b">
-                <div className="company-frame-c">
-                  <div className="vector-set">
-                    <div className="vector-set-a">
-                      <div className="vector-set-b">
-                        <i className="fa-solid fa-user"></i>
-                        <div className="sumeetmandaleccelsocouk-group">
-                          <i className="fa-solid fa-envelopes-bulk"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="eccelsoframe">
-                      <div className="sumeet-mandal">Sumeet Mandal</div>
-                      <div className="sumeetmandaleccelsocouk">
-                        sumeet.mandal@eccelso.co.uk
-                      </div>
-                    </div>
-                  </div>
-                  <div className="favouritesframe">
-                    <div className="addtofav">
-                      <div className="addtofav-child"></div>
-                      <div className="add-to-favourites">Add to Favourites</div>
-                    </div>
-                  </div>
+                  <label htmlFor={category._id}>{category.name}</label>
                 </div>
-              </div>
+              ))}
             </div>
-            <div className="eccelso-group1">
-              <div className="eccelso-group-item"></div>
-              <h2 className="pt-ruby-privatindo">PT Ruby Privatindo</h2>
-              <div className="eccelso-group-inner">
-                <div className="frame-parent">
-                  <div className="frame-group">
-                    <div className="frame-wrapper">
-                      <div className="vector-parent">
-                        <i className="fa-solid fa-user"></i>
-                        <div className="vector-group">
-                          <i className="fa-solid fa-envelopes-bulk"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="sumeet-mandal-parent">
-                      <div className="sumeet-mandal1">Sumeet Mandal</div>
-                      <div className="sumeetmandaleccelsocouk1">
-                        sumeet.mandal@eccelso.co.uk
-                      </div>
-                    </div>
-                  </div>
-                  <div className="rectangle-parent">
-                    <div className="frame-child"></div>
-                    <div className="add-to-favourites1">Add to Favourites</div>
-                  </div>
-                </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Countries:
+              </label>
+              <div key="AllCountries">
+                <input type="checkbox" id="AllCountries" name="AllCountries" checked={selectedCountries.includes("All")}
+                  onChange={() => handleCountryChange("All")}
+                />
+                <label htmlFor="AllCountries">All Countries</label>
               </div>
-            </div>
-            <div className="eccelso-group2">
-              <div className="rectangle-div"></div>
-              <h2 className="ptdua-kuda-indonesia">PT.Dua Kuda Indonesia</h2>
-              <div className="frame-div">
-                <div className="frame-container">
-                  <div className="frame-parent1">
-                    <div className="frame-wrapper1">
-                      <div className="vector-container">
-                        <i className="fa-solid fa-user"></i>
-
-                        <div className="vector-parent1">
-                          <i className="fa-solid fa-envelopes-bulk"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="sumeet-mandal-group">
-                      <div className="sumeet-mandal2">Sumeet Mandal</div>
-                      <div className="sumeetmandaleccelsocouk2">
-                        sumeet.mandal@eccelso.co.uk
-                      </div>
-                    </div>
-                  </div>
-                  <div className="rectangle-group">
-                    <div className="frame-item"></div>
-                    <div className="add-to-favourites2">Add to Favourites</div>
-                  </div>
+              {countries.map((country) => (
+                <div key={country._id}>
+                  <input type="checkbox" id={country._id} name={country._id}
+                    checked={selectedCountries.includes(country._id)}
+                    onChange={() => handleCountryChange(country._id)}
+                  />
+                  <label htmlFor={country._id}>{country.name}</label>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
+          <div className="col-md-9"> {/* This div takes up 3/4 of the width */}
+            {loading ? (
+              <div className="spinner"></div> 
+            ) : (
+              <>
+                {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
+                  <>
+                    {currentCompanies.map((company, index) => (
+                      <div className="row listing row-tab" key={company._id}>
+                        <div className="col-md-8">
+                          <div className="first_top">
+                            <span className="floater">{index + 1 + currentPage * itemsPerPage}</span>
+                            <div className="white_">
+                              <h3>
+                                <b>
+                                  <button onClick={() => handleCompanyClick(company)}>
+                                    {company.company}
+                                  </button>
+                                </b>
+                              </h3>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="second_left"></div>
+                          <div className="brown">
+                            <h3><b>{company.categoryName}</b></h3>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {companies.length > itemsPerPage && (
+                      <ReactPaginate
+                        pageCount={Math.ceil(companies.length / itemsPerPage)}
+                        pageRangeDisplayed={5}
+                        marginPagesDisplayed={2}
+                        onPageChange={handlePageChange}
+                        containerClassName={'pagination'}
+                        activeClassName={'active'}
+                      />
+                    )}
+                  </>
+                ) : (
+                  !loading && <div>No results found. Try a different search.</div>
+                )}
+              </>
+            )}  
+          </div>
+        </div>              
       </div>
+
+      {selectedCompany && (
+        <div className="selectedCompany-modal">
+          <div className="selectedCompany-modal-content">
+            <span className="selectedCompany-close" onClick={closeModal}>&times;</span>
+            <h2>{selectedCompany.company}</h2>
+            <p>Category: {selectedCompany.categoryName}</p>
+            <p>Mobile: {selectedCompany.mobile}</p>
+            <p>Country: {selectedCompany.countryName}</p>
+            <p>Website: {selectedCompany.website}</p>
+            <p>Profile: {selectedCompany.profile}</p>
+            {selectedCompany.email !== '' && (
+              <p>Email: {selectedCompany.email}</p>
+            )}
+
+            {selectedCompany.twitter_url  !== '' && (<p>twitter_url: {selectedCompany.twitter_url}</p> )}
+            {selectedCompany.facebook_url !== '' && (<p>facebook_url: {selectedCompany.facebook_url}</p> )}
+            {selectedCompany.linkedin_url !== '' && (<p>linkedin_url: {selectedCompany.linkedin_url}</p> )}
+            {selectedCompany.insta_url !== ''&& (<p>insta_url: {selectedCompany.insta_url}</p> )}
+            <p>
+              <button onClick={() => handleAddRemoveFavorite(selectedCompany._id)}>
+                {isFavorite(selectedCompany._id) ? 'Remove from Favorites' : 'Add to Favorites'}
+              </button>
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

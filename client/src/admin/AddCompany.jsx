@@ -15,6 +15,7 @@ const AddCompany = () => {
         country_id: '', 
         website: '',
         mobile: '',
+        email:'',
         profile: '',
         title: '',
         logo:'',
@@ -112,6 +113,7 @@ const AddCompany = () => {
             country_id: '',
             website: '',
             mobile: '',
+            email:'',
             profile: '',
             logo: null,
             title: '',
@@ -236,6 +238,14 @@ const AddCompany = () => {
                     </label>
                     <input
                         type="text" id="mobile" name="mobile" value={formData.mobile} onChange={handleInputChange}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+                        Email:
+                    </label>
+                    <input
+                        type="text" id="email" name="email" value={formData.email} onChange={handleInputChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
                 </div>
                 <div className="mb-4">

@@ -13,6 +13,7 @@ const companySchema = new mongoose.Schema({
   site_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Site' },
   address: String,
   description: String,
+  email: String,
   status: String,
   date_added: { type: Date, default: Date.now },
   facebook_url: String,

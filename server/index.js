@@ -11,6 +11,7 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import companyRoutes from './routes/companyRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import passport from "./utils/passport.js";
+import FavoriteRoutes from './routes/favoriteRoutes.js'
 import path from 'path';
 import http from "http";
 
@@ -37,6 +38,7 @@ app.use('/api/countries', countryRoutes);
 app.use('/api/sites', siteRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/companies', companyRoutes);
+app.use('/api/favorites', FavoriteRoutes);
 app.use("/auth", authRoutes);
 
 app.use(notFound);
