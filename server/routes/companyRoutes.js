@@ -1,6 +1,5 @@
 import express from 'express';
 import multer from 'multer';
-import { protect } from '../middleware/authMiddleware.js';
 import { 
   createCompany, 
   getCompanies, 
@@ -30,9 +29,7 @@ const upload = multer({ storage: storage });
 router.post('/', upload.single('logo'), createCompany);
 router.get('/', getCompanies);
 router.get('/single/:companyId', getSingleCompanies);
-router
-  .route('/search')
-  .get(protect, searchCompanies);
+router.get('/search', searchCompanies);
 router.put('/:id', upload.single('logo'), updateCompany);
 router.delete('/:id', deleteCompany);
 router.get('/:companyName', getCompanyDetails);
