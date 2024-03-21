@@ -1,4 +1,5 @@
-import React from 'react'
+import { useEffect, useState,React }  from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import plseed_img from '../images/plseed.png'
 import vlo_img from '../images/vlo.jpg'
 import traders_img from '../images/traders.png'
@@ -10,7 +11,6 @@ import crude_oil from '../images/crude-oil.png'
 import refined_oil from '../images/refined-oil.png'
 import shipping from '../images/shipping.png'
 import suppliers from '../images/suppliers.png'
-import { useEffect, useState } from 'react';
 import { BACKEND_URL } from "../constans";
 
 const HomeScreen = () => {
@@ -154,7 +154,7 @@ const HomeScreen = () => {
                             <div className="contentBox T2">
                                 <h3>Ordinary</h3>
                                 {orcompanies.map(company => (
-                                    <p>{company.company}</p>
+                                     <p>{company.company}</p>
                                 ))}
                                 <a href="/categories/Ordinary"><span>View All</span></a>
                             </div>

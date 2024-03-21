@@ -67,26 +67,49 @@ export const updateCountry = asyncHandler(async (req, res) => {
 export const getCountryCompanies = async (req, res) => {
   try {
     const countryName = req.params.countryName;
+
+    // Find the country using the indexed 'name' field
     const country = await Country.findOne({ name: countryName });
 
     if (!country) {
       return res.status(404).json({ error: 'Country not found' });
     }
 
-    const companies = await Company.find({ country_id: country._id })
-      .populate('category_id', 'name'); 
-    const formattedCompanies = companies.map(company => ({
-      _id: company._id,
-      name: company.company,
-      company_slug: company.company_slug,
-      categoryName: company.category_id.name // Access the name field from the populated category
-    }));
-    res.status(200).json(formattedCompanies);
+    // Use aggregation pipeline for populating 'category_id' field
+    const companies = await Company.aggregate([
+      { 
+        $match: { country_id: country._id } // Filter companies by country_id
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category_id',
+          foreignField: '_id',
+          as: 'category'
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: '$company',
+          company_slug: 1,
+          categoryName: { $arrayElemAt: ['$category.name', 0] }
+        }
+      }
+    ]);
+
+    if (companies.length === 0) {
+      return res.status(404).json({ error: 'No companies found in the specified country' });
+    }
+
+    // Return the formatted companies
+    res.status(200).json(companies);
   } catch (error) {
-    console.error('Error fetching companies in category:', error);
+    console.error('Error fetching companies in country:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 

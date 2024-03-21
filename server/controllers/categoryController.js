@@ -17,13 +17,17 @@ export const createCategory = async (req, res) => {
 // Get all categories
 export const getCategories = async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().lean();
+    if (categories.length === 0) {
+      return res.status(404).json({ error: 'No categories found' });
+    }
     res.status(200).json(categories);
   } catch (error) {
     console.error('Error fetching categories:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 // Update a category
 export const updateCategory = async (req, res) => {
@@ -57,20 +61,35 @@ export const deleteCategory = async (req, res) => {
 export const getCategoryCompanies = async (req, res) => {
   try {
     const categoryName = req.params.categoryName;
-    const category = await Category.findOne({ name: categoryName });
-
-    if (!category) {
-      return res.status(404).json({ error: 'Category not found' });
+    const pipeline = [
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category_id",
+          foreignField: "_id",
+          as: "category"
+        }
+      },
+      {
+        $match: {
+          "category.name": categoryName 
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          company: 1,
+          company_slug: 1,
+        }
+      }
+    ];
+    const companies = await Company.aggregate(pipeline);
+    if (companies.length === 0) {
+      return res.status(404).json({ error: 'No companies found in this category' });
     }
-
-    const companies = await Company.find({ category_id: category._id });
     res.status(200).json(companies);
   } catch (error) {
     console.error('Error fetching companies in category:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-
-
-

@@ -322,17 +322,41 @@ export const searchCompanies = asyncHandler(async (req, res) => {
     {
       $lookup: {
         from: 'categories',
-        localField: 'category_id',
-        foreignField: '_id',
-        as: 'category',
+        let: { categoryId: '$category_id' },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ['$_id', '$$categoryId'] }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              name: 1
+            }
+          }
+        ],
+        as: 'category'
       }
     },
     {
       $lookup: {
         from: 'countries',
-        localField: 'country_id',
-        foreignField: '_id',
-        as: 'country',
+        let: { countryId: '$country_id' },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ['$_id', '$$countryId'] }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              name: 1
+            }
+          }
+        ],
+        as: 'country'
       }
     },
     {
@@ -344,20 +368,21 @@ export const searchCompanies = asyncHandler(async (req, res) => {
         country_id: 1,
         website: 1,
         mobile: 1,
-        facebook_url:1,
-        twitter_url:1,
-        linkedin_url:1,
-        insta_url:1,
-        brochure_url:1,
+        facebook_url: 1,
+        twitter_url: 1,
+        linkedin_url: 1,
+        insta_url: 1,
+        brochure_url: 1,
         profile: 1,
         title: 1,
         category_id: 1,
-        email:1,
+        email: 1,
         categoryName: { $arrayElemAt: ['$category.name', 0] },
         countryName: { $arrayElemAt: ['$country.name', 0] },
       },
     },
   ];
+  
 
   if (searchTerm !== '') {
     if (category_id !== '' && category_id !== 'All' && country_id !== '' && country_id !== 'All') {

@@ -233,9 +233,9 @@ const Search = () => {
                             <div className="white_">
                               <h3>
                                 <b>
-                                  <button onClick={() => handleCompanyClick(company)}>
-                                    {company.company}
-                                  </button>
+                                  <Link to={`/companies/${company.company_slug}`}>
+                                      {company.company}
+                                  </Link>
                                 </b>
                               </h3>
                             </div>
