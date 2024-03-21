@@ -275,14 +275,11 @@ const Search = () => {
             <span className="selectedCompany-close" onClick={closeModal}>&times;</span>
             <h2>{selectedCompany.company}</h2>
             <p>Category: {selectedCompany.categoryName}</p>
-            <p>Mobile: {selectedCompany.mobile}</p>
+            {selectedCompany.mobile !== '' && ( <p>Mobile: {selectedCompany.mobile}</p> )}
+            {selectedCompany.website !== '' && ( <p>Mobile: {selectedCompany.website}</p> )}
             <p>Country: {selectedCompany.countryName}</p>
-            <p>Website: {selectedCompany.website}</p>
             <p>Profile: {selectedCompany.profile}</p>
-            {selectedCompany.email !== '' && (
-              <p>Email: {selectedCompany.email}</p>
-            )}
-
+            {selectedCompany.email !== '' && ( <p>Email: {selectedCompany.email}</p> )}
             {selectedCompany.twitter_url  !== '' && (<p>twitter_url: {selectedCompany.twitter_url}</p> )}
             {selectedCompany.facebook_url !== '' && (<p>facebook_url: {selectedCompany.facebook_url}</p> )}
             {selectedCompany.linkedin_url !== '' && (<p>linkedin_url: {selectedCompany.linkedin_url}</p> )}
