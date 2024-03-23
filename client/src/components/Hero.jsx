@@ -1,5 +1,6 @@
 import { useEffect, useState,React }  from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import plseed_img from '../images/plseed.png'
 import vlo_img from '../images/vlo.jpg'
 import traders_img from '../images/traders.png'
@@ -17,19 +18,20 @@ const HomeScreen = () => {
     const [asscompanies, setAssCompanies] = useState([]);
     const [orcompanies, setOrCompanies] = useState([]);
     const [affcompanies, setAffCompanies] = useState([]);
+    const { userInfo } = useSelector((state) => state.auth);
     
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`https://palmoild-sand.vercel.app/api/categories/Associate`);
+                const response = await fetch(`${ BACKEND_URL }api/categories/Associate`);
                 const data = await response.json();
                 const limitedData = data.slice(0, 8);
                 setAssCompanies(limitedData);
-                const responses = await fetch(`https://palmoild-sand.vercel.app/api/categories/Ordinary`);
+                const responses = await fetch(`${ BACKEND_URL }api/categories/Ordinary`);
                 const datas = await responses.json();
                 const limitedDatas = datas.slice(0, 8);
                 setOrCompanies(limitedDatas);
-                const responsess = await fetch(`https://palmoild-sand.vercel.app/api/categories/Affiliate`);
+                const responsess = await fetch(`${ BACKEND_URL }api/categories/Affiliate`);
                 const datass = await responsess.json();
                 const limitedDatass = datass.slice(0, 8);
                 setAffCompanies(limitedDatass);
@@ -63,9 +65,8 @@ const HomeScreen = () => {
                         <img data-aos="fade-up" data-aos-once="true" className="w-10/12 mx-auto 2xl:-mb-20 floating-4 aos-init aos-animate" src={plseed_img} alt="Palm Seed" />
                     </div>
                 </div>
-                <div className="bg-white w-full h-20 -mt-px"></div>
             </div>
-            <div className="relative -mt-12 lg:-mt-24">
+            <div className="absolute w-full -mt-12 lg:-mt-24">
                 <svg viewBox="0 0 1428 174" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ background: '#f2f2f2' }}>
                     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                         <g transform="translate(-2.000000, 44.000000)" fill="#FFFFFF" fillRule="nonzero">
@@ -84,7 +85,7 @@ const HomeScreen = () => {
                     <div data-aos="fade-down" className="md:w-5/12 relative aos-init aos-animate">
                         <div style={{ background: '#33EFA0' }} className="w-32 h-32 rounded-full absolute z-0 left-4 -top-12 animate-pulse"></div>
                         <div style={{ background: '#33D9EF' }} className="w-5 h-5 rounded-full absolute z-0 left-36 -top-12 animate-ping"></div>
-                        <div className="frames">
+                        <div className="frames h-96 overflow-hidden">
                             <img className="floating" src={vlo_img} />
                         </div>
                         <div style={{ background: '#5B61EB' }} className="w-32 h-32 rounded-full absolute z-0 right-0 -bottom-10 animate-pulse"></div>
@@ -140,9 +141,13 @@ const HomeScreen = () => {
                             <div className="contentBox T1">
                                 <h3>Associate</h3>
                                 {asscompanies.map(company => (
-                                    <p>{company.company}</p>
+                                    (userInfo ? (
+                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
+                                    ) : (
+                                        <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                    ))
                                 ))}
-                                <a href="/categories/Associate"><span>View All</span></a>
+                                <a class="viewal" href="/categories/associate"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -154,9 +159,13 @@ const HomeScreen = () => {
                             <div className="contentBox T2">
                                 <h3>Ordinary</h3>
                                 {orcompanies.map(company => (
-                                     <p>{company.company}</p>
+                                    (userInfo ? (
+                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
+                                    ) : (
+                                        <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                    ))
                                 ))}
-                                <a href="/categories/Ordinary"><span>View All</span></a>
+                                <a class="viewal" href="/categories/ordinary"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -168,9 +177,13 @@ const HomeScreen = () => {
                             <div className="contentBox T3">
                                 <h3>Affiliate</h3>
                                 {affcompanies.map(company => (
-                                    <p>{company.company}</p>
+                                    (userInfo ? (
+                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
+                                    ) : (
+                                        <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                    ))
                                 ))}
-                                <a href="/categories/Affiliate"><span>View All</span></a>
+                                <a class="viewal" href="/categories/affiliate"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -190,7 +203,7 @@ const HomeScreen = () => {
                                 <p>FGV Iffco Oil Products Sdn Bhd</p>
                                 <p>PT Incasi Raya</p>
                                 <p>Lao Thong Seng Co. Ltd.</p>
-                                <a href="#"><span>View All</span></a>
+                                <a class="viewal" href="#"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -209,7 +222,7 @@ const HomeScreen = () => {
                                 <p>Orion Chemique Sdn Bhd</p>
                                 <p>P&g Chemicals</p>
                                 <p>Peter Cremer Central Europe S.r.o.</p>
-                                <a href="#"><span>View All</span></a>
+                                <a class="viewal" href="#"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -227,7 +240,7 @@ const HomeScreen = () => {
                                 <p>Grupo Jaremar</p>
                                 <p>Indupalma Ltda</p>
                                 <p>Ga Global Resources Sdn Bhd</p>
-                                <a href="#"><span>View All</span></a>
+                                <a class="viewal" href="#"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -247,7 +260,7 @@ const HomeScreen = () => {
                                 <p>Ngo Chew Hong Oils And Fats Sdn Bhd</p>
                                 <p>Continental Resources Sdn Bhd</p>
                                 <p>Intercontinental Specialty Fats Sdn Bhd</p>
-                                <a href="#"><span>View All</span></a>
+                                <a class="viewal" href="#"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -267,7 +280,7 @@ const HomeScreen = () => {
                                 <p>G.a. Chartering Pte Ltd</p>
                                 <p>Johann Logistics Sdn Bhd</p>
                                 <p>PT. Segara Transindo Mandiri</p>
-                                <a href="#"><span>View All</span></a>
+                                <a class="viewal" href="#"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -287,7 +300,7 @@ const HomeScreen = () => {
                                 <p>Containers Printers Pte Ltd</p>
                                 <p>Ireks Gmbh</p>
                                 <p>C&n Petroleum Equipment</p>
-                                <a href="#"><span>View All</span></a>
+                                <a class="viewal" href="#"><span>View All</span></a>
                             </div>
                         </div>
                     </div>

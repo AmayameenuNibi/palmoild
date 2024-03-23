@@ -1,49 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import { BACKEND_URL } from "../constans";
-import '../css/spinner.css'
 
-const CategorySingle = () => {
-    const { categoryName } = useParams();
-    const [companies, setCompanies] = useState([]);
+const CompanySingles = () => {
+    const { companyName } = useParams();
+    const [company, setCompany] = useState(null);
     const [categories, setCategories] = useState([]);
+    const [relatedCompanies, setRelatedCompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
     const [itemsPerPage] = useState(20); 
     const [loading, setLoading] = useState(true);
     const { userInfo } = useSelector((state) => state.auth);
 
-    useEffect(() => {
-        const fetchCompanies = async () => {
-            try {
-                const response = await fetch(`${ BACKEND_URL }api/categories/${categoryName}`);
-                const data = await response.json();
-                setCompanies(data);
-                const Catresponse = await axios.get(`${ BACKEND_URL }api/categories`);
-                setCategories(Catresponse.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-                setLoading(false);
+    const fetchCompanyDetails = async (companyName) => {
+        try {
+            const response = await fetch(`${ BACKEND_URL }api/companies/${companyName}`);
+            const data = await response.json();
+            setCompany(data);
+            const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
+            setCategories(cat_response.data);
+            if (data && data.category_id) {
+                const relatedCompaniesResponse = await axios.get(`${ BACKEND_URL }api/companies/category/${data.category_id}/${data._id}`);
+                setRelatedCompanies(relatedCompaniesResponse.data);
             }
-        };
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching company details:', error);
+            setLoading(false);
+        }
+    };
 
-        fetchCompanies();
-    }, [categoryName]);
-
+    useEffect(() => {   
+        fetchCompanyDetails(companyName);
+    }, [companyName]); 
+    
     const handlePageChange = ({ selected }) => {
         setCurrentPage(selected);
     };
 
-    let currentCompanies = [];
-    if (Array.isArray(companies) && companies.length > 0) {
-        const indexOfLastItem = (currentPage + 1) * itemsPerPage;
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-        currentCompanies = companies.slice(indexOfFirstItem, indexOfLastItem);
-    }
+    const indexOfLastItem = (currentPage + 1) * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentCompanies = relatedCompanies.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <div>
@@ -65,9 +65,14 @@ const CategorySingle = () => {
                         </div>
                     </div>
                     <div className="w-9/12">
-                        <label className="block text-gray-600 text-lg mb-2">
-                            {categoryName}
-                        </label>
+                        {company && (
+                            <label className="block text-gray-600 text-lg mb-2">
+                                <b>{company.company}</b>
+                                <p>
+                                <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in Palm Oil Industry.
+                                </p>
+                            </label>
+                        )}
                         {loading ? (
                             <div className="spinner"></div> 
                         ) : (
@@ -97,9 +102,9 @@ const CategorySingle = () => {
                                                 </div>
                                             </div>
                                         ))}
-                                        {companies.length > itemsPerPage && (
+                                        {relatedCompanies.length > itemsPerPage && (
                                         <ReactPaginate
-                                            pageCount={Math.ceil(companies.length / itemsPerPage)}
+                                            pageCount={Math.ceil(relatedCompanies.length / itemsPerPage)}
                                             pageRangeDisplayed={5}
                                             marginPagesDisplayed={2}
                                             onPageChange={handlePageChange}
@@ -120,4 +125,4 @@ const CategorySingle = () => {
     );
 };
 
-export default CategorySingle;
+export default CompanySingles;

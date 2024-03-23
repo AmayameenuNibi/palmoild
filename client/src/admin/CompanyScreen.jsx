@@ -10,13 +10,13 @@ import { BACKEND_URL } from "../constans";
 
 const CompanyScreen = () => {
     const [currentPage, setCurrentPage] = useState(0); 
-    const [itemsPerPage] = useState(10);  
+    const [itemsPerPage] = useState(20);  
     const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchCompanies = async () => {
         try {
-            const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies`);
+            const response = await axios.get(`${ BACKEND_URL }api/companies`);
             setCompanies(response.data);
             setLoading(false);
         } catch (error) {
@@ -33,7 +33,7 @@ const CompanyScreen = () => {
         try {
             const confirmDelete = window.confirm('Are you sure you want to delete this company?');
             if (confirmDelete) {
-                await axios.delete(`https://palmoild-sand.vercel.app/api/companies/${id}`);
+                await axios.delete(`${ BACKEND_URL }api/companies/${id}`);
                 fetchCompanies(); 
             }
         } catch (error) {
@@ -84,14 +84,14 @@ const CompanyScreen = () => {
                                                         <img style={{ width:'80px', height:'50px' }} src={default_img} />
                                                     </>:
                                                     <>
-                                                        <img src={`https://palmoild-sand.vercel.app/uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
+                                                        <img src={`${ BACKEND_URL }uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
                                                     </>
                                                     }
                                                 </td>
                                                 <td className="border border-gray-400 p-2">{company.company}</td>
-                                                <td className="border border-gray-400 p-2">Category</td>
-                                                <td className="border border-gray-400 p-2">Country</td>
-                                                <td className="border border-gray-400 p-2">{company.website}</td>
+                                                <td className="border border-gray-400 p-2">{company.categoryName}</td>
+                                                <td className="border border-gray-400 p-2">{company.countryName}</td>
+                                                <td className="border border-gray-400 p-2">{company.user_id}</td>
                                                 <td className="border border-gray-400 p-2">
                                                 <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
                                                     to={`/edit-company/${company._id}`}>Edit</Link> 

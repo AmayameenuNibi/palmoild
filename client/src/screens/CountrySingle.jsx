@@ -9,13 +9,13 @@ const CountrySingle = () => {
     const { countryName } = useParams();
     const [companies, setCompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
-    const [itemsPerPage] = useState(10); 
+    const [itemsPerPage] = useState(20); 
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`https://palmoild-sand.vercel.app/api/countries/${countryName}`);
+                const response = await fetch(`${ BACKEND_URL }api/countries/${countryName}`);
                 const data = await response.json();
                 if (Array.isArray(data)) {
                     setCompanies(data);

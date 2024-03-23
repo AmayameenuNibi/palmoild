@@ -21,7 +21,6 @@ const companySchema = new mongoose.Schema({
   linkedin_url: String,
   insta_url: String,
   brochure_url: String,
-  featured: Boolean,
   company_slug:String,
 });
 

@@ -213,7 +213,7 @@ const RegisterScreen = () => {
   useEffect(() => {
       const fetchCountriesAndCategories = async () => {
         try {
-            const countriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
+            const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
             setCountries(countriesResponse.data);
         } catch (error) {
             console.error('Error fetching countries and categories:', error);
@@ -229,133 +229,131 @@ const RegisterScreen = () => {
   }, [navigate, userInfo]);
 
   return (
-    <div className="relative bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+    <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-      <div>
-          <h3 className="font-bold text-2xl">Members Register</h3>
-      </div>	  
-      <div className="mt-10">
-        <form ref={form}  className="flex flex-col"  onSubmit={handleSubmit}>
-          <div className="mb-6 pt-3 rounded bg-gray-200">
-            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Contact Name" > Contact Name </label>
-            <input 
-              type="text"
-              name="name"
-              id="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3" />
-              {validationErrors.name && <p className="text-red-500 text-xs italic">{validationErrors.name}</p>}
-          </div>
-          <div className="mb-6 pt-3 rounded bg-gray-200">
-            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="email" >Email Address </label>
-            <input 
-              type="text" 
-              name="email" 
-              id="email" 
-              value={formData.email}
-              onChange={handleInputChange}
-              className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
-              {validationErrors.email && <p className="text-red-500 text-xs italic">{validationErrors.email}</p>}
-          </div>
-          <div className="mb-6 pt-3 rounded bg-gray-200">
-            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Company Name" > Company Name </label>
-            <input 
-              type="text" 
-              name="company" 
-              id="company" 
-              value={formData.company}
-              onChange={handleInputChange}
-              className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
-              {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
-          </div>
-          <div className="mb-6 pt-3 rounded bg-gray-200">
-            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Address" > Address </label>
-            <input 
-              type="text" 
-              name="address" 
-              id="address" 
-              value={formData.address}
-              onChange={handleInputChange}
-              className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
-              {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
-          </div>
-          <div className="mb-6 pt-3 rounded bg-gray-200">
-            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Country" > Country </label>
-            <select
-                id="country_id"
-                className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
+      <section class="bg-white">
+        <div class="container mx-auto my-0 w-8/12 pt-10">
+          <h2 class="text-xl text-gray-600 mb-10">Register</h2>
+          <form ref={form}  onSubmit={handleSubmit}>
+            <div class="w-6/12 inline-block pr-4 pb-4">
+              <label className="pb-2 block text-sm" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
+              <input 
                 type="text"
-                name="country_id"
-                value={formData.country_id}
-                onChange={handleInputChange} >
-                <option className="text-white" value="">
-                    Country *
-                </option>
-                {countries.map((country) => (
-                    <option key={country._id} value={country._id}>
-                    {country.name}
-                    </option>
-                ))}
-            </select>
-            {validationErrors.country_id && <p className="text-red-500 text-xs italic">{validationErrors.country_id}</p>}
+                name="name"
+                id="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                class="w-full rounded border h-10" />
+                {validationErrors.name && <p className="text-red-500 text-xs italic">{validationErrors.name}</p>}
+            </div>
+            <div class="w-6/12 inline-block pr-4 pb-4">
+              <label className="pb-2 block text-sm" htmlFor="email" >Email Address <span class="text-red-500 text-xs">*</span></label>
+              <input 
+                type="text" 
+                name="email" 
+                id="email" 
+                value={formData.email}
+                onChange={handleInputChange}
+                class="w-full rounded border h-10"/>
+                {validationErrors.email && <p className="text-red-500 text-xs italic">{validationErrors.email}</p>}
+            </div>
+            <div class="w-6/12 inline-block pr-4 pb-4">
+              <label className="pb-2 block text-sm" htmlFor="Company Name" > Company Name <span class="text-red-500 text-xs">*</span></label>
+              <input 
+                type="text" 
+                name="company" 
+                id="company" 
+                value={formData.company}
+                onChange={handleInputChange}
+                class="w-full rounded border h-10"/>
+                {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
+            </div>
+            <div class="w-6/12 inline-block pr-4 pb-4">
+              <label className="pb-2 block text-sm" htmlFor="Address" > Address <span class="text-red-500 text-xs">*</span></label>
+              <input 
+                type="text" 
+                name="address" 
+                id="address" 
+                value={formData.address}
+                onChange={handleInputChange}
+                class="w-full rounded border h-10"/>
+                {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
+            </div>
+            <div class="w-6/12 inline-block pr-4 pb-4">
+              <label className="pb-2 block text-sm" htmlFor="Country" > Country <span class="text-red-500 text-xs">*</span></label>
+              <select
+                  id="country_id"
+                  class="w-full rounded border h-10"
+                  type="text"
+                  name="country_id"
+                  value={formData.country_id}
+                  onChange={handleInputChange} >
+                  <option className="text-white" value="">
+                      Country *
+                  </option>
+                  {countries.map((country) => (
+                      <option key={country._id} value={country._id}>
+                      {country.name}
+                      </option>
+                  ))}
+              </select>
+              {validationErrors.country_id && <p className="text-red-500 text-xs italic">{validationErrors.country_id}</p>}
+            </div>
+            <div class="w-6/12 inline-block pr-4 pb-4">
+              <label className="pb-2 block text-sm" htmlFor="Mobile" > Mobile <span class="text-red-500 text-xs">*</span></label>
+              <input 
+                type="text" 
+                name="mobile" 
+                id="mobile"                           
+                value={formData.mobile}
+                onChange={handleInputChange}
+                class="w-full rounded border h-10"/>
+                {validationErrors.mobile && <p className="text-red-500 text-xs italic">{validationErrors.mobile}</p>}
+            </div>
+            <div class="w-6/12 inline-block pr-4 pb-4">
+              <label className="pb-2 block text-sm" htmlFor="password" > Password <span class="text-red-500 text-xs">*</span></label>
+              <input 
+                type="password" 
+                id="password" 
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                class="w-full rounded border h-10"/>
+                {validationErrors.password && <p className="text-red-500 text-xs italic">{validationErrors.password}</p>}
+            </div>
+            <div class="w-6/12 inline-block pr-4 pb-4">
+              <label className="pb-2 block text-sm" htmlFor="Confirm Password" > Confirm Password <span class="text-red-500 text-xs">*</span></label>
+              <input 
+                type="password" 
+                name="confirmPassword" 
+                id="confirmPassword" 
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                class="w-full rounded border h-10"/>
+                {validationErrors.confirmPassword && <p className="text-red-500 text-xs italic">{validationErrors.confirmPassword}</p>}
+            </div>
+            <div class="col-sm-5 mt-10"><input class="button nomargin" type="submit" name="yt0" value="Signup"></input></div>
+          </form>
+          <div className="flex flex-col" >                  
+            <button
+              type="submit"
+              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-red-700">
+              Sign in with Google
+            </button>
+            <button
+              type="submit"
+              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-blue-700">
+                Sign in with LinkedIn
+            </button>
+            <button
+              type="submit"
+              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-darkblue-700">
+              Sign in with Facebook
+            </button>
           </div>
-          <div className="mb-6 pt-3 rounded bg-gray-200">
-            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Mobile" > Mobile </label>
-            <input 
-              type="text" 
-              name="mobile" 
-              id="mobile"                           
-              value={formData.mobile}
-              onChange={handleInputChange}
-              className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
-              {validationErrors.mobile && <p className="text-red-500 text-xs italic">{validationErrors.mobile}</p>}
-          </div>
-          <div className="mb-6 pt-3 rounded bg-gray-200">
-            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="password" > Password </label>
-            <input 
-              type="password" 
-              id="password" 
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
-              {validationErrors.password && <p className="text-red-500 text-xs italic">{validationErrors.password}</p>}
-          </div>
-          <div className="mb-6 pt-3 rounded bg-gray-200">
-            <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Confirm Password" > Confirm Password  </label>
-            <input 
-              type="password" 
-              name="confirmPassword" 
-              id="confirmPassword" 
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
-              {validationErrors.confirmPassword && <p className="text-red-500 text-xs italic">{validationErrors.confirmPassword}</p>}
-          </div>
-          <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"type="submit">
-            Sign In
-          </button>
-        </form>
-        <div className="flex flex-col" >                  
-          <button
-            type="submit"
-            className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-red-700">
-            Sign in with Google
-          </button>
-          <button
-            type="submit"
-            className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-blue-700">
-              Sign in with LinkedIn
-          </button>
-          <button
-            type="submit"
-            className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-darkblue-700">
-            Sign in with Facebook
-          </button>
         </div>
-      </div>
-    </div>  
+      </section> 
+    </div> 
   );
 };
 

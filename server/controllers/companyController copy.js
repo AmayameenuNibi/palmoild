@@ -47,7 +47,6 @@ const searchCountry = async (searchTerm) => {
 export const searchCompanies = asyncHandler(async (req, res) => {
   const searchTerm = req.query.term;
   const category_id = req.query.category_id;
-  console.log(category_id)
   let matchingCategoryIds = await searchCategories(searchTerm);
   let matchingCountryIds = await searchCountry(searchTerm);
   matchingCategoryIds = matchingCategoryIds.map(id => mongoose.Types.ObjectId(id));

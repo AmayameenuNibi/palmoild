@@ -8,7 +8,7 @@ import '../css/spinner.css'
 const CountryList = () => {
     const [countries, setCountries] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); // Default page to 0
-    const [itemsPerPage] = useState(10); // Number of items per page
+    const [itemsPerPage] = useState(20); // Number of items per page
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const CountryList = () => {
 
     const fetchCountries = async () => {
         try {
-            const response = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
+            const response = await axios.get(`${ BACKEND_URL }api/countries`);
             setCountries(response.data);
             setLoading(false); 
         } catch (error) {

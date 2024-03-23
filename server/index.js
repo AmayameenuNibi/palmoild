@@ -12,6 +12,7 @@ import companyRoutes from './routes/companyRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import passport from "./utils/passport.js";
 import FavoriteRoutes from './routes/favoriteRoutes.js'
+import StaffRoutes from './routes/staffRoutes.js'
 import path from 'path';
 import http from "http";
 
@@ -39,6 +40,7 @@ app.use('/api/sites', siteRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/favorites', FavoriteRoutes);
+app.use('/api/staff', StaffRoutes);
 app.use("/auth", authRoutes);
 
 app.use(notFound);

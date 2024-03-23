@@ -38,7 +38,6 @@ router.get("/google", async (req, res) => {
     );
     res.send(response);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

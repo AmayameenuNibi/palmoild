@@ -1,9 +1,11 @@
 import asyncHandler from 'express-async-handler';
 import mongoose from 'mongoose'; // Import mongoose to convert string IDs to ObjectId
 import Company from '../models/company.js';
+import User from '../models/userModel.js';
 import Category from '../models/category.js';
 import Country from '../models/country.js';
 import path from 'path';
+import Staff from '../models/staff.js';
 
 //........Get all Companies............
 export const getCompanies = asyncHandler(async (req, res) => {
@@ -42,6 +44,7 @@ export const getCompanies = asyncHandler(async (req, res) => {
         title: 1,
         category_id: 1,
         email:1,
+        user_id:1,
         categoryName: { $arrayElemAt: ['$category.name', 0] },
         countryName: { $arrayElemAt: ['$country.name', 0] },
       }
@@ -74,7 +77,7 @@ export const createCompany = asyncHandler(async (req, res) => {
           linkedin_url,
           insta_url,
           brochure_url,
-          featured,
+          staff
       } = req.body;
 
       const existingCompany = await Company.findOne({ company: company });
@@ -102,9 +105,12 @@ export const createCompany = asyncHandler(async (req, res) => {
           linkedin_url,
           insta_url,
           brochure_url,
-          featured,
           company_slug: convertToUrlFormat(company),
       });
+      await Staff.insertMany(staff.map(staffMember => ({
+        company_id: newCompany._id,
+          ...staffMember
+      })));
       res.status(201).json(newCompany);
   } catch (error) {
       next(error);
@@ -133,7 +139,7 @@ export const updateCompany = asyncHandler(async (req, res) => {
             linkedin_url,
             insta_url,
             brochure_url,
-            featured,
+            staff
         } = req.body;
 
         const updateFields = {
@@ -154,7 +160,6 @@ export const updateCompany = asyncHandler(async (req, res) => {
             linkedin_url,
             insta_url,
             brochure_url,
-            featured,
             company_slug:convertToUrlFormat(company),
         };
 
@@ -170,6 +175,12 @@ export const updateCompany = asyncHandler(async (req, res) => {
             res.status(404).json({ error: 'Company not found' });
             return;
         }
+        await Staff.deleteMany({ company_id: companyId });
+        await Staff.insertMany(staff.map(staffMember => ({
+            company_id: companyId,
+            ...staffMember
+        })));
+
         res.json(updatedCompany);
     } catch (error) {
         console.error('Error updating company:', error);
@@ -228,6 +239,7 @@ export const getCompanyDetails = asyncHandler(async (req, res) => {
         email: 1,
         address: 1,
         description: 1,
+        category_id:1,
         status: 1,
         date_added: 1,
         facebook_url: 1,
@@ -285,11 +297,6 @@ export const searchCompanies = asyncHandler(async (req, res) => {
   const searchTerm = req.query.term;
   const category_id = req.query.category_id;
   const country_id = req.query.country_id;
-
-  console.log('searchTerm:', searchTerm); 
-  console.log('category_id:', category_id);
-  console.log('country_id:', country_id);  
-
   const pipeline = [
     {
       $search: {
@@ -361,7 +368,6 @@ export const searchCompanies = asyncHandler(async (req, res) => {
 
   if (searchTerm !== '') {
     if (category_id !== '' && category_id !== 'All' && country_id !== '' && country_id !== 'All') {
-        console.log("1");
         const categoryIds = category_id.split(',').map(id => id.trim()); // Split and trim the category_id string into an array
         const countryIds = country_id.split(',').map(id => id.trim()); // Split and trim the country_id string into an array
         const result = await Company.aggregate(pipeline);
@@ -388,7 +394,6 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             }));
         res.json(results);
     } else if (country_id !== '' && country_id !== 'All') {
-        console.log("2");
         const result = await Company.aggregate(pipeline);
         const results = result
             .filter(company => country_id.split(',').includes(String(company.country_id)))
@@ -412,7 +417,6 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             }));
         res.json(results);
     } else if (category_id !== '' && category_id !== 'All') {
-        console.log("3");
         const categoryIds = category_id.split(',').map(id => id.trim()); // Split and trim the category_id string into an array
         const result = await Company.aggregate(pipeline);
         const results = result
@@ -437,13 +441,11 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             }));
         res.json(results);
     } else {
-        console.log("4");
         const result = await Company.aggregate(pipeline);
         res.json(result);
     }    
   } else if (category_id !== '' && category_id !== 'All') {
       if (country_id !== '' && country_id !== 'All' && category_id !== '' && category_id !== 'All') {
-          console.log("5");
           const companies = await Company.find({ country_id: { $in: country_id.split(',').map(id => id.trim()) }, category_id: { $in: category_id.split(',').map(id => id.trim()) } })
               .populate('category_id', 'name')
               .populate('country_id', 'name'); 
@@ -491,7 +493,6 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           res.json(result);
       }    
   } else if (country_id !== '' && country_id !== 'All') {
-      console.log("6");
       const companies = await Company.find({ country_id: { $in: country_id.split(',').map(id => id.trim()) } })
           .populate('category_id', 'name')
           .populate('country_id', 'name'); 
@@ -515,7 +516,6 @@ export const searchCompanies = asyncHandler(async (req, res) => {
       }));
       res.json(result);
   } else if (country_id === 'All' && category_id === 'All') {
-      console.log("7");
       const companies = await Company.find()
           .populate('category_id', 'name')
           .populate('country_id', 'name'); 
@@ -555,6 +555,41 @@ export const getSingleCompanyDetails = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+export const getFeaturedCompanies = asyncHandler(async (req, res) => {
+  try {
+    const users = await User.find({ status: 1 });
+    const userIds = users.map(user => user._id);
+    const companies = await Company.find({ user_id: { $in: userIds } });
+    const shuffledCompanies = shuffle(companies);
+    const randomCompanies = shuffledCompanies.slice(0, 3);
+    res.status(200).json(randomCompanies);
+  } catch (error) {
+    console.error('Error fetching featured companies:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+export const getRelatedCompanies = async (req, res) => {
+  const categoryId = req.params.catID;
+  const companyIdToExclude = req.params.companyId; 
+  try {
+    const relatedCompanies = await Company.find({ category_id: categoryId, _id: { $ne: companyIdToExclude } });
+    res.status(200).json(relatedCompanies);
+  } catch (error) {
+    console.error('Error fetching related companies:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 
 

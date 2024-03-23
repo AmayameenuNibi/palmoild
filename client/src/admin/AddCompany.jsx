@@ -2,6 +2,8 @@ import React, { useState, useEffect  } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useParams,useNavigate} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BACKEND_URL } from "../constans";
 
 const AddCompany = () => {
@@ -28,22 +30,22 @@ const AddCompany = () => {
         linkedin_url: '',
         insta_url: '',
         brochure_url: '',
-        featured: 'false', 
     });
     const [categories, setCategories] = useState([]);
     const [countries, setCountries] = useState([]);
     const [sites, setSites] = useState([]);
+    const [staff, setStaff] = useState([]);
     
 
     const fetchOptions = async () => {
         try {
-            const categoriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/categories`);
+            const categoriesResponse = await axios.get(`${ BACKEND_URL }api/categories`);
             setCategories(categoriesResponse.data);
 
-            const countriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
+            const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
             setCountries(countriesResponse.data);
 
-            const sitesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/sites`);
+            const sitesResponse = await axios.get(`${ BACKEND_URL }api/sites`);
             setSites(sitesResponse.data);
         } catch (error) {
             console.error('Error fetching options:', error);
@@ -68,9 +70,18 @@ const AddCompany = () => {
 
     const fetchCompanyDetails = async (companyId) => {
         try {
-            const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies/single/${companyId}`);
+            const response = await axios.get(`${ BACKEND_URL }api/companies/single/${companyId}`);
             const companyData = response.data; 
             setFormData(companyData);
+            const staffresponse = await axios.get(`${ BACKEND_URL }api/staff/${companyData._id}`);
+            const staffData = staffresponse.data;
+            if (Array.isArray(staffData)) {
+                setStaff(staffData);
+            } else {
+                const staffArray = Object.values(staffData);
+                setStaff(staffArray);
+                console.error('Staff data is not an array:', staffData);
+            }
         } catch (error) {
             console.error('Error fetching company details:', error);
         }
@@ -91,14 +102,23 @@ const AddCompany = () => {
             for (const key in formData) {
                 formDataToSend.append(key, formData[key]);
             }
+
+            staff.forEach((staffMember, index) => {
+                for (const key in staffMember) {
+                  formDataToSend.append(`staff[${index}][${key}]`, staffMember[key]);
+                }
+            });
+
             if (companyId) {
-                const response = await axios.put(`https://palmoild-sand.vercel.app/api/companies/${companyId}`, formDataToSend);
+                const response = await axios.put(`${ BACKEND_URL }api/companies/${companyId}`, formDataToSend);
                 const companyData = response.data; 
                 navigate(`/companies/${companyData.company_slug}`);
+                toast.success('Company details Updated Successfully');
             } else {
-                const response =await axios.post(`https://palmoild-sand.vercel.app/api/companies`, formDataToSend);
+                const response =await axios.post(`${ BACKEND_URL }api/companies`, formDataToSend);
                 const companyData = response.data; 
                 navigate(`/companies/${companyData.company_slug}`);
+                toast.success('Company details Added Successfully');
             }
             formdatavalue();
         } catch (error) {
@@ -126,12 +146,30 @@ const AddCompany = () => {
             linkedin_url: '',
             insta_url: '',
             brochure_url: '',
-            featured: 'false',
         });
     }
 
+    const handleAddStaff = () => {
+        setStaff([...staff, { name: '', email: '', mobile: '', designation: '' }]);
+    };
+    
+    const handleRemoveStaff = (index) => {
+        const updatedStaff = [...staff];
+        updatedStaff.splice(index, 1);
+        setStaff(updatedStaff);
+    };
+    
+    const handleChange = (e, index) => {
+        const { name, value } = e.target;
+        const updatedStaff = [...staff];
+        updatedStaff[index][name] = value;
+        setStaff(updatedStaff);
+    };
+
     return (
-        <div>      
+        <div>
+        <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false}
+        closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />      
         <div className="relative bg-white  p-8 md:p-12 my-10">                
             <form className="bg-white company-row" onSubmit={handleFormSubmit} encType="multipart/form-data">
                 <div>
@@ -141,7 +179,7 @@ const AddCompany = () => {
                     <>                    
                     </>:
                     <>
-                        <img src={`https://palmoild-sand.vercel.app/uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
+                        <img src={`${ BACKEND_URL }uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
                     </>
                 }
                 <input 
@@ -311,17 +349,6 @@ const AddCompany = () => {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="featured" className="block text-gray-700 text-sm font-bold mb-2">
-                        Featured:
-                    </label>
-                    <select
-                        id="featured" name="featured" value={formData.featured} onChange={handleDropdownChange}
-                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </div>
-                <div className="mb-4">
                     <label htmlFor="status" className="block text-gray-700 text-sm font-bold mb-2">
                         Status:
                     </label>
@@ -330,6 +357,44 @@ const AddCompany = () => {
                         <option value="true">Active</option>
                         <option value="false">Inactive</option>
                     </select>
+                </div>
+                <div>
+                    {staff.map((staffMember, index) => (
+                        <div key={index} style={{ border: '1px solid #000', borderRadius: '5px' }}>
+                            <input
+                                type="text"
+                                name="name"
+                                value={staffMember.name}
+                                onChange={(e) => handleChange(e, index)}
+                                placeholder="Name" />
+                            <input
+                                type="email"
+                                name="email"
+                                value={staffMember.email}
+                                onChange={(e) => handleChange(e, index)}
+                                placeholder="Email" />
+                            <input
+                                type="tel"
+                                name="mobile"
+                                value={staffMember.mobile}
+                                onChange={(e) => handleChange(e, index)}
+                                placeholder="Mobile" />
+                            <input
+                                type="text"
+                                name="designation"
+                                value={staffMember.designation}
+                                onChange={(e) => handleChange(e, index)}
+                                placeholder="Designation" />
+                            {index > 0 && (
+                            <button type="button" onClick={() => handleRemoveStaff(index)}>
+                                Remove
+                            </button>
+                            )}
+                        </div>
+                    ))}
+                    <button type="button" onClick={handleAddStaff}>
+                        Add Staff
+                    </button>
                 </div>
                 <button
                     type="submit"

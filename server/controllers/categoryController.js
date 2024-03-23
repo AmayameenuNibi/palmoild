@@ -58,6 +58,14 @@ export const deleteCategory = async (req, res) => {
   }
 };
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export const getCategoryCompanies = async (req, res) => {
   try {
     const categoryName = req.params.categoryName;
@@ -84,10 +92,11 @@ export const getCategoryCompanies = async (req, res) => {
       }
     ];
     const companies = await Company.aggregate(pipeline);
+    const shuffledCompanies = shuffle(companies);
     if (companies.length === 0) {
       return res.status(404).json({ error: 'No companies found in this category' });
     }
-    res.status(200).json(companies);
+    res.status(200).json(shuffledCompanies);
   } catch (error) {
     console.error('Error fetching companies in category:', error);
     res.status(500).json({ error: 'Internal Server Error' });

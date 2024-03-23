@@ -9,7 +9,7 @@ const Search = () => {
   const [loading, setLoading] = useState(true);
   const [companies, setCompanies] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -25,12 +25,12 @@ const Search = () => {
 
   const fetchCompanies = async () => {
     try {
-      const response = await axios.get(`https://palmoild-sand.vercel.app/api/companies`);
+      const response = await axios.get(`${ BACKEND_URL }api/companies`);
       setCompanies(response.data);
       setLoading(false);
-      const cat_response = await axios.get(`https://palmoild-sand.vercel.app/api/categories`);
+      const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
       setCategories(cat_response.data);
-      const countriesResponse = await axios.get(`https://palmoild-sand.vercel.app/api/countries`);
+      const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
       setCountries(countriesResponse.data);
     } catch (error) {
       console.error('Error fetching companies:', error);
@@ -97,7 +97,7 @@ const Search = () => {
 
   const handleSearch = async (searchTerm, selectedCategories, selectedCountries) => {
     try {
-      let url = `https://palmoild-sand.vercel.app/api/companies/search`;
+      let url = `${ BACKEND_URL }api/companies/search`;
       const params = new URLSearchParams();      
       params.append('term', searchTerm);
       params.append('category_id', selectedCategories.join(','));
@@ -125,7 +125,7 @@ const Search = () => {
 
   const isFavorite = async (companyId) => {
     try {
-      const response = await axios.get(`https://palmoild-sand.vercel.app/api/favorites/check/${companyId}/${userInfo._id}`);
+      const response = await axios.get(`${ BACKEND_URL }api/favorites/check/${companyId}/${userInfo._id}`);
       const result = response.data.isFavorite; 
       if (result === "favorite") {
         return true;
@@ -142,9 +142,9 @@ const Search = () => {
     try {
       const isCompanyFavorite = await isFavorite(companyId, userInfo._id);  
       if (isCompanyFavorite) {
-        await axios.delete(`https://palmoild-sand.vercel.app/api/favorites/delete/${companyId}/${userInfo._id}`);
+        await axios.delete(`${ BACKEND_URL }api/favorites/delete/${companyId}/${userInfo._id}`);
       } else {
-        await axios.post(`https://palmoild-sand.vercel.app/api/favorites/add/${companyId}/${userInfo._id}`);
+        await axios.post(`${ BACKEND_URL }api/favorites/add/${companyId}/${userInfo._id}`);
       }      
       closeModal();
     } catch (error) {

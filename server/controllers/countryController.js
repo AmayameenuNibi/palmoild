@@ -67,18 +67,13 @@ export const updateCountry = asyncHandler(async (req, res) => {
 export const getCountryCompanies = async (req, res) => {
   try {
     const countryName = req.params.countryName;
-
-    // Find the country using the indexed 'name' field
     const country = await Country.findOne({ name: countryName });
-
     if (!country) {
       return res.status(404).json({ error: 'Country not found' });
     }
-
-    // Use aggregation pipeline for populating 'category_id' field
     const companies = await Company.aggregate([
       { 
-        $match: { country_id: country._id } // Filter companies by country_id
+        $match: { country_id: country._id } 
       },
       {
         $lookup: {
@@ -101,8 +96,6 @@ export const getCountryCompanies = async (req, res) => {
     if (companies.length === 0) {
       return res.status(404).json({ error: 'No companies found in the specified country' });
     }
-
-    // Return the formatted companies
     res.status(200).json(companies);
   } catch (error) {
     console.error('Error fetching companies in country:', error);

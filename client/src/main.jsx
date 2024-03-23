@@ -26,10 +26,12 @@ import CategoryList from './screens/CategoryList.jsx'
 import CategorySingle from './screens/CategorySingle.jsx';
 import CountryList from './screens/CountryList.jsx';
 import CountrySingle from './screens/CountrySingle.jsx';
+import CompanySingles from './screens/CompanySingles.jsx';
 import CompanyList from './screens/CompanyList.jsx';
 import CompanySingle from './screens/CompanySingle.jsx';
 import UserCompany from './user/UserCompany.jsx';
 import Users from './user/Users.jsx';
+import Favorites from './user/Favorites.jsx';
 import Search from './screens/Search.jsx';
 import Payment from './user/PayPalPayment.jsx';
 import ForgetPassword from './screens/ForgetPassword.jsx';
@@ -54,6 +56,7 @@ const router = createBrowserRouter(
       <Route path="/countries/:countryName" element={<CountrySingle />} />
       <Route path='/companies' element={<CompanyList />} />
       <Route path="/companies/:companyName" element={<CompanySingle />} />
+      <Route path="/company/:companyName" element={<CompanySingles />} />
       <Route path='/company' element={<UserCompany />} />
       <Route path='/add-company' element={<AddCompany />} />
       <Route path='/edit-company/:companyId' element={<AddCompany />} />
@@ -62,6 +65,7 @@ const router = createBrowserRouter(
       <Route path='/subscribe' element={<Payment />} />
       <Route path='/forget-password' element={<ForgetPassword />} />
       <Route path="/user/newpassword/:token" element={<NewPassword/>} />
+      <Route path='/favorites' element={<Favorites />} />
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
       </Route>

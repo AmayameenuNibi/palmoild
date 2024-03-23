@@ -1,5 +1,6 @@
 import { apiSlice } from './apiSlice';
-const USERS_URL = `https://palmoild-sand.vercel.app/api/users`;
+import { BACKEND_URL } from '../constans';
+const USERS_URL = `${ BACKEND_URL }api/users`;
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
