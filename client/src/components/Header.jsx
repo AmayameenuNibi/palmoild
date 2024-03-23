@@ -149,6 +149,7 @@ const Header = () => {
                     <Link to="/admin-company" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANY</Link>
                     <Link to="/admin-country" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COUNTRY</Link>
                     <Link to="/admin-category" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CATEGORY</Link>
+                    <Link to="/admin-cms" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CMS</Link>
                     <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={logoutHandler}>Logout</a>
                   </>
                 )}                

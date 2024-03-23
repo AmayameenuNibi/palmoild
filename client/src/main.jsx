@@ -16,6 +16,7 @@ import SiteScreen from './admin/SiteScreen.jsx';
 import CategoryScreen from './admin/CategoryScreen.jsx';
 import CompanyScreen from './admin/CompanyScreen.jsx';
 import AddCompany from './admin/AddCompany.jsx';
+import CMSScreen from './admin/CMSScreen.jsx';
 import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen.jsx';
 import ProfileScreen from './screens/ProfileScreen.jsx';
@@ -48,6 +49,7 @@ const router = createBrowserRouter(
       <Route path='/admin-company' element={<CompanyScreen />} />
       <Route path='/admin-site' element={<SiteScreen />} />
       <Route path='/admin-category' element={<CategoryScreen />} />
+      <Route path='/admin-cms' element={<CMSScreen />} />
       <Route path='/contact' element={<ContactScreen />} />
       <Route path='/about' element={<AboutScreen />} />
       <Route path='/categories' element={<CategoryList />} />

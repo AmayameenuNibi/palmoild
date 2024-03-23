@@ -13,8 +13,9 @@ import authRoutes from './routes/authRoutes.js';
 import passport from "./utils/passport.js";
 import FavoriteRoutes from './routes/favoriteRoutes.js'
 import StaffRoutes from './routes/staffRoutes.js'
+import CmsRoutes from './routes/cmsRoutes.js'
 import path from 'path';
-import http from "http";
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
@@ -31,8 +32,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const dirname = path.resolve();
-app.use("/uploads", express.static('uploads'))
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// app.use("/uploads", express.static('uploads'))
 
 app.use('/api/users', userRoutes);
 app.use('/api/countries', countryRoutes);
@@ -42,6 +46,7 @@ app.use('/api/companies', companyRoutes);
 app.use('/api/favorites', FavoriteRoutes);
 app.use('/api/staff', StaffRoutes);
 app.use("/auth", authRoutes);
+app.use("/cmsdata", CmsRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
