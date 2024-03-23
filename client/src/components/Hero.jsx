@@ -57,7 +57,8 @@ const HomeScreen = () => {
                                 Pay Via Paypal
                             </button>
                             <div className="flex items-center text-center space-x-3 mt-5 md:mt-0 focus:outline-none transform transition hover:text-gray-800 ease-in-out">
-                                <span className="cursor-pointer">1 Year Subscription to Palmoildirectory.com <br/>- Only €69.33!</span>
+                                <span className="cursor-pointer">
+                                    {`${ BACKEND_URL }api/categories/Associate`}1 Year Subscription to Palmoildirectory.com <br/>- Only €69.33!</span>
                             </div>
                         </div>
                     </div>
