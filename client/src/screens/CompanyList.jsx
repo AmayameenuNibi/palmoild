@@ -71,7 +71,7 @@ const CompanyList = () => {
                                         <div class="col-md-8">
                                           <div class="first_top">
                                             <div class="white_">
-                                                {userInfo ? (
+                                                {userInfo.status === 1 ? (
                                                     <Link to={`/companies/${featured.company_slug}`}>{featured.company}</Link>
                                                 ) :(
                                                     <Link to={`/company/${featured.company_slug}`}>{featured.company}</Link>
@@ -106,7 +106,7 @@ const CompanyList = () => {
                                             <div className="first_top">
                                                 <div className="white_">
                                                     <h3>
-                                                        {userInfo ? (
+                                                        {userInfo.status === 1 ? (
                                                             <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                         ) :(
                                                             <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
@@ -135,7 +135,7 @@ const CompanyList = () => {
                                 )}
                             </>
                             ) : (
-                                !loading && <div>No results found. Try a different search.</div>
+                                !loading && <div>No companies found in this category.</div>
                             )}
                             </>
                         )}  

@@ -85,7 +85,7 @@ const CompanySingles = () => {
                                                     <div className="first_top">
                                                         <div className="white_">
                                                             <h3>
-                                                                {userInfo ? (
+                                                                {userInfo.status === 1 ? (
                                                                     <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(
                                                                     <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
@@ -114,7 +114,7 @@ const CompanySingles = () => {
                                         )}
                                     </>
                                 ) : (
-                                    !loading && <div>No results found. Try a different search.</div>
+                                    !loading && <div>No related companies found in the same category..</div>
                                  )}
                             </>
                         )}  

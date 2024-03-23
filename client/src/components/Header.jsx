@@ -111,8 +111,7 @@ const Header = () => {
             <div className="relative md:mt-8">
               <a href="/"><img src={logo_img} alt="Logo" /></a>
             </div>
-            <button
-              className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
+            <button className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
               onClick={toggleMenu} >
               <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
                 <path xshow={isOpen ? "false" : "true"} fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clipRule="evenodd"></path>
@@ -120,52 +119,55 @@ const Header = () => {
               </svg>
             </button>
           </div>
-          </div>
-          <div class="bg-orange-600">
-          <div class="row">
-          <nav className={`${ isOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row md:items-center md:justify-end pb-4 md:pb-0`}>
-            {userInfo ? (
-              <>
-                {userInfo.role === 0 && (
-                  <>
-                    <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">HOME</Link>
-                    <Link to="/search" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
-                    <Link to="/company" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">MY COMPANY</Link>
-                    <Link to="/favorites" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">MY FAVOURITES</Link>
-                    {/* <Link to="/countries" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">Countries</Link> */}
-                    {/* <Link to="/categories" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">Categories</Link> */}
-                    {userInfo.status === 0 ? <a href="/subscribe" className="moving-bt px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white md:mt-0 md:ml-4 hover:bg-green-600" >
-                      <span></span> <span></span> <span></span> <span></span> SUBSCRIBE
-                    </a> :''}
-                    <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={logoutHandler}>LOGOUT</a>
-                  </>
-                )}
-                {userInfo.role === 1 && (
-                  <>
-                    <Link to="/companies" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANIES</Link>
-                    <Link to="/admin-users" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">USERS</Link>
-                    <Link to="/search" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
-                    <Link to="/admin-site" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SITES</Link>
-                    <Link to="/admin-company" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANY</Link>
-                    <Link to="/admin-country" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COUNTRY</Link>
-                    <Link to="/admin-category" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CATEGORY</Link>
-                    <Link to="/admin-cms" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CMS</Link>
-                    <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={logoutHandler}>Logout</a>
-                  </>
-                )}                
-              </>
-            ) : (
-              <>
-                <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">HOME</Link>
-                <Link to="/about-us" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">ABOUT US</Link>
-                <Link to="/companies" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANIES</Link>
-                <Link to="/register" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">REGISTER</Link>
-                <Link to="/contact-us" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CONTACT </Link>
-                <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={openPopup}>LOGIN</a>
-              </>
-            )} 
-          </nav>
         </div>
+        <div class="bg-orange-600">
+          <div class="row">
+            <nav className={`${ isOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row md:items-center md:justify-end pb-4 md:pb-0`}>
+              {userInfo ? (
+                <>
+                  {userInfo.role === 0 && userInfo.status === 1 ? (
+                    <>
+                      <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">HOME</Link>
+                      <Link to="/search" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
+                      <Link to="/company" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">MY COMPANY</Link>
+                      <Link to="/favorites" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">MY FAVOURITES</Link>
+                      <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={logoutHandler}>LOGOUT</a>
+                    </>
+                  ) : null}
+                  {userInfo.role === 0 && userInfo.status === 0 ? (
+                    <>
+                      <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">HOME</Link>
+                      <Link to="/companies" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANIES</Link>
+                      <Link to="/contact-us" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CONTACT </Link>
+                      <a href="/subscribe" className="moving-bt px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white md:mt-0 md:ml-4 hover:bg-green-600" >
+                        <span></span> <span></span> <span></span> <span></span> SUBSCRIBE
+                      </a>
+                      <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={logoutHandler}>LOGOUT</a>
+                    </>
+                  ) : null}
+                  {userInfo.role === 1 ? (
+                    <>
+                      <Link to="/companies" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANIES</Link>
+                      <Link to="/admin-users" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">USERS</Link>
+                      <Link to="/search" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
+                      <Link to="/admin-site" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SITES</Link>
+                      <Link to="/admin-company" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANY</Link>
+                      <Link to="/admin-country" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COUNTRY</Link>
+                      <Link to="/admin-category" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CATEGORY</Link>
+                      <Link to="/admin-cms" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CMS</Link>
+                      <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={logoutHandler}>Logout</a>
+                    </>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">HOME</Link>
+                  <Link to="/register" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">REGISTER</Link>
+                  <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={openPopup}>LOGIN</a>
+                </>
+              )} 
+            </nav>
+          </div>
         </div>
         <section className="popmeup" id="loginme">
           <div className="relative bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
@@ -226,7 +228,7 @@ const Header = () => {
                 </div>
             </div>
           </div>
-        </section>  
+        </section>
       </div>       
     </header>
   );
