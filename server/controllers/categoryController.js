@@ -67,7 +67,7 @@ function shuffle(array) {
 
 export const getCategoryCompanies = async (req, res) => {
   try {
-    const categoryName = req.params.categoryName;
+    const categoryName = req.params.categoryName.toLowerCase(); // Convert to lowercase
     const pipeline = [
       {
         $lookup: {
@@ -79,7 +79,7 @@ export const getCategoryCompanies = async (req, res) => {
       },
       {
         $match: {
-          "category.name": categoryName 
+          "category.name": { $regex: new RegExp(categoryName, "i") } // Case insensitive match
         }
       },
       {

@@ -160,7 +160,7 @@ const Header = () => {
                 <Link to="/about-us" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">ABOUT US</Link>
                 <Link to="/companies" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANIES</Link>
                 <Link to="/register" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">REGISTER</Link>
-                <Link to="/contact" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CONTACT </Link>
+                <Link to="/contact-us" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CONTACT </Link>
                 <a className="popup px-10 py-3 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={openPopup}>LOGIN</a>
               </>
             )} 

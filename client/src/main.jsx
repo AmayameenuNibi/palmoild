@@ -21,7 +21,7 @@ import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen.jsx';
 import ProfileScreen from './screens/ProfileScreen.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
-import ContactScreen from './screens/ContactScreen.jsx';
+import ContactScreen from './user/ContactScreen.jsx';
 import CategoryList from './screens/CategoryList.jsx'
 import CategorySingle from './screens/CategorySingle.jsx';
 import CountryList from './screens/CountryList.jsx';
@@ -54,7 +54,7 @@ const router = createBrowserRouter(
       <Route path='/admin-site' element={<SiteScreen />} />
       <Route path='/admin-category' element={<CategoryScreen />} />
       <Route path='/admin-cms' element={<CMSScreen />} />
-      <Route path='/contact' element={<ContactScreen />} />
+      <Route path='/contact-us' element={<ContactScreen />} />
       <Route path='/about-us' element={<AboutScreen />} />
       <Route path='/support' element={<SupportScreen />} />
       <Route path='/categories' element={<CategoryList />} />

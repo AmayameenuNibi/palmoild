@@ -57,7 +57,7 @@ const CompanySingles = () => {
                         <div className="mb-4">              
                             {categories.map((category) => (
                                 <div class="mb-2" key={category._id}>
-                                    <Link to={`/categories/${category.name}`} >
+                                    <Link to={`/categories/${category.name.toLowerCase()}`} >
                                         <label class="text-gray-500 ml-2">{category.name}</label>
                                     </Link>                  
                                 </div>

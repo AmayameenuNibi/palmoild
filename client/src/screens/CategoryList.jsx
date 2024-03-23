@@ -48,7 +48,7 @@ const CategoryList = () => {
                                             <span className="floater singe">{index+1 + (currentPage* itemsPerPage)}</span>
                                             <div className="white_">
                                                 <h3><b key={category._id}>
-                                                <Link to={`/categories/${category.name}`}>{category.name}</Link>
+                                                    <Link to={`/categories/${category.name.toLowerCase()}`}>{category.name}</Link>
                                                 </b></h3>
                                             </div>
                                         </div>
