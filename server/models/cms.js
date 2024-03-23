@@ -7,7 +7,7 @@ const cmsSchema = new mongoose.Schema({
   seo_title: String,
   seo_description: String,
   seo_keywords: String,
-  status: Number
+  status: String
 });
 
 const CMS = mongoose.model('CMS', cmsSchema);

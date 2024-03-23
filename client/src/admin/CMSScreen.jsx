@@ -7,6 +7,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const CMSScreen = () => {
+  const [cmsData, setCmsData] = useState([]);
   const [cmsFormData, setCmsFormData] = useState({
     id: '',
     cms_title: '',
@@ -17,8 +18,6 @@ const CMSScreen = () => {
     seo_keywords:'',
     status:'',
   });
-
-  const [cmsData, setCmsData] = useState([]);
 
   const fetchCms = async () => {
     try {
@@ -37,9 +36,9 @@ const CMSScreen = () => {
     e.preventDefault();
     try {
         await axios.post(`${ BACKEND_URL }api/cmsdata`, cmsFormData);
-        openCmspopup();
+        closeCmspopup();
         fetchCms(); 
-        setCmsFormData({ cms_title: '', cms_key:'', seo_title:'', seo_description: '', seo_keywords:'',status:'' }); 
+        formdatavalue();
         toast.success('CMS added successfully!');
     } catch (error) {
         toast.error('Error adding cms');
@@ -74,7 +73,7 @@ const CMSScreen = () => {
       });
       fetchCms();
       closeCmspopup();
-      setCmsFormData({ cms_title: '', cms_key:'',cms_content:'', seo_title:'', seo_description: '', seo_keywords:'',status:'' }); 
+      formdatavalue();
       toast.success('CMS updated successfully!');
     } catch (error) {
       toast.error('Error updating cms');
@@ -94,6 +93,17 @@ const CMSScreen = () => {
     }
   }; 
 
+  const formdatavalue = () => {
+    setCmsFormData({      
+      cms_title: '', 
+      cms_key:'', 
+      seo_title:'', 
+      seo_description: '', 
+      seo_keywords:'',
+      status:'' 
+    });
+}
+
   const openCmspopup = () => {
     const popup = document.getElementById("categorypopup");
     popup.classList.toggle("show");
@@ -101,6 +111,11 @@ const CMSScreen = () => {
 
   const closeCmspopup = () => {
     document.querySelector('.categorypopup').classList.remove('show');
+    formdatavalue();
+  };
+
+  const handleDropdownChange = (e) => {
+    setCmsFormData({ ...cmsFormData, status: e.target.value });
   };
 
   return (
@@ -114,17 +129,17 @@ const CMSScreen = () => {
           <table className="mt-4 w-3/4 border-collapse border border-gray-400">
             <thead>
               <tr>
+                <th className="border border-gray-400 p-2">CMS Title</th>
                 <th className="border border-gray-400 p-2">CMS Key</th>
                 <th className="border border-gray-400 p-2">SEO Title</th>
-                <th className="border border-gray-400 p-2">Status</th>
               </tr>
             </thead>
             <tbody>
               {cmsData.map((cms) => (
                 <tr key={cms._id}>
+                  <td className="border border-gray-400 p-2">{cms.cms_title}</td>
                   <td className="border border-gray-400 p-2">{cms.cms_key}</td>
                   <td className="border border-gray-400 p-2">{cms.seo_title}</td>
-                  <td className="border border-gray-400 p-2">{cms.status}</td>
                   <td className="border border-gray-400 p-2">
                     <button onClick={() => handleUpdateCms(cms)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 focus:outline-none focus:shadow-outline">
@@ -146,10 +161,10 @@ const CMSScreen = () => {
           <button onClick={closeCmspopup} 
             className="close px-5 py-3 mt-2 text-sm text-center bg-white text-gray-800 font-bold text-2xl"> X </button>
           <div>
-            <h3 className="font-bold text-2xl">Members Login</h3>
+            <h3 className="font-bold text-2xl">Add CMS</h3>
           </div>	  
           <div className="mt-10">
-            <form className="bg-white" onSubmit={cmsFormData.id ? handleUpdateCmsData : handleFormSubmit}>
+            <form className="bg-white" onSubmit={cmsFormData._id ? handleUpdateCmsData : handleFormSubmit}>
               
               <div className="mb-4">
                 <label htmlFor="cms_title" className="block text-gray-700 text-sm font-bold mb-2">
@@ -173,7 +188,7 @@ const CMSScreen = () => {
                   name="cms_content"
                   theme="snow"
                   value={cmsFormData.cms_content}
-                  onChange={(e) => setCmsFormData({ ...cmsFormData, cms_content: e.target.value })}
+                  onChange={(content) => setCmsFormData({ ...cmsFormData, cms_content: content })}
                 />
               </div>
               <div className="mb-4">
@@ -236,7 +251,7 @@ const CMSScreen = () => {
                   id="status"
                   name="status"
                   value={cmsFormData.status}
-                  onChange={(e) => setCmsFormData({ ...cmsFormData, status: e.target.value })}
+                  onChange={handleDropdownChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   required>
                   <option value="1">Enabled</option>
@@ -246,7 +261,7 @@ const CMSScreen = () => {
               <button
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Add Category
+                {cmsFormData.id ? 'Update CMS' : 'Add CMS'}
               </button>
             </form>
           </div>

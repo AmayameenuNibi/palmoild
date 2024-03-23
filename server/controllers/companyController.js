@@ -35,25 +35,29 @@ export const getCompanies = asyncHandler(async (req, res) => {
         country_id: 1,
         website: 1,
         mobile: 1,
-        facebook_url:1,
-        twitter_url:1,
-        linkedin_url:1,
-        insta_url:1,
-        brochure_url:1,
+        facebook_url: 1,
+        twitter_url: 1,
+        linkedin_url: 1,
+        insta_url: 1,
+        brochure_url: 1,
         profile: 1,
         title: 1,
         category_id: 1,
-        email:1,
-        user_id:1,
+        email: 1,
+        user_id: 1,
         categoryName: { $arrayElemAt: ['$category.name', 0] },
         countryName: { $arrayElemAt: ['$country.name', 0] },
       }
+    },
+    {
+      $sort: { company: 1 } // Sort by company name in ascending order
     }
   ];
 
   const companies = await Company.aggregate(pipeline);
   res.json(companies);
 });
+
 
 //........Create a new Company...........
 export const createCompany = asyncHandler(async (req, res) => {
@@ -107,13 +111,15 @@ export const createCompany = asyncHandler(async (req, res) => {
           brochure_url,
           company_slug: convertToUrlFormat(company),
       });
-      await Staff.insertMany(staff.map(staffMember => ({
-        company_id: newCompany._id,
-          ...staffMember
-      })));
+      if(staff){
+        await Staff.insertMany(staff.map(staffMember => ({
+          company_id: newCompany._id,
+            ...staffMember
+        })));
+      }      
       res.status(201).json(newCompany);
   } catch (error) {
-      next(error);
+      res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -175,12 +181,14 @@ export const updateCompany = asyncHandler(async (req, res) => {
             res.status(404).json({ error: 'Company not found' });
             return;
         }
-        await Staff.deleteMany({ company_id: companyId });
-        await Staff.insertMany(staff.map(staffMember => ({
-            company_id: companyId,
-            ...staffMember
-        })));
-
+        if(staff){
+          await Staff.deleteMany({ company_id: companyId });
+          await Staff.insertMany(staff.map(staffMember => ({
+              company_id: companyId,
+              ...staffMember
+          })));
+        }
+        
         res.json(updatedCompany);
     } catch (error) {
         console.error('Error updating company:', error);

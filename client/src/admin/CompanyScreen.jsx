@@ -91,7 +91,7 @@ const CompanyScreen = () => {
                                                 <td className="border border-gray-400 p-2">{company.company}</td>
                                                 <td className="border border-gray-400 p-2">{company.categoryName}</td>
                                                 <td className="border border-gray-400 p-2">{company.countryName}</td>
-                                                <td className="border border-gray-400 p-2">{company.user_id}</td>
+                                                <td className="border border-gray-400 p-2">{company.website}</td>
                                                 <td className="border border-gray-400 p-2">
                                                 <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
                                                     to={`/edit-company/${company._id}`}>Edit</Link> 

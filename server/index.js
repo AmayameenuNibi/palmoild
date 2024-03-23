@@ -32,11 +32,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+const dirname = path.resolve();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+// app.use('/uploads', express.static('uploads'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// app.use("/uploads", express.static('uploads'))
 
 app.use('/api/users', userRoutes);
 app.use('/api/countries', countryRoutes);
@@ -46,7 +47,7 @@ app.use('/api/companies', companyRoutes);
 app.use('/api/favorites', FavoriteRoutes);
 app.use('/api/staff', StaffRoutes);
 app.use("/auth", authRoutes);
-app.use("/cmsdata", CmsRoutes);
+app.use("/api/cmsdata", CmsRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

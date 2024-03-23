@@ -17,7 +17,7 @@ export const createCategory = async (req, res) => {
 // Get all categories
 export const getCategories = async (req, res) => {
   try {
-    const categories = await Category.find().lean();
+    const categories = await Category.find().sort({ name: 1 }).lean();
     if (categories.length === 0) {
       return res.status(404).json({ error: 'No categories found' });
     }
@@ -27,7 +27,6 @@ export const getCategories = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 // Update a category
 export const updateCategory = async (req, res) => {
@@ -89,6 +88,11 @@ export const getCategoryCompanies = async (req, res) => {
           company: 1,
           company_slug: 1,
         }
+      },
+      {
+        $sort: {
+          company: 1 // Sort by company name in ascending order
+        }
       }
     ];
     const companies = await Company.aggregate(pipeline);
@@ -102,3 +106,4 @@ export const getCategoryCompanies = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
