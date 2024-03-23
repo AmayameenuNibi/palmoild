@@ -38,7 +38,7 @@ const PayPalButton = () => {
                 address: formData.address,
                 mobile: formData.mobile,
                 transactionId: "",
-                status:0
+                status:1
             }).unwrap();
             dispatch(setCredentials(res));
             toast.success("Profile updated successfully");
