@@ -337,17 +337,17 @@ const RegisterScreen = () => {
           <div className="flex flex-col" >                  
             <button
               type="submit"
-              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-red-700">
+              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-red-700">
               Sign in with Google
             </button>
             <button
               type="submit"
-              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-blue-700">
+              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700">
                 Sign in with LinkedIn
             </button>
             <button
               type="submit"
-              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 ml-3 hover:bg-darkblue-700">
+              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 mb-4 hover:bg-blue-900">
               Sign in with Facebook
             </button>
           </div>

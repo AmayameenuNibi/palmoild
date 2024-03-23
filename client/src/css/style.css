@@ -243,9 +243,6 @@ margin-top: 20px;
 text-align: center;
 transition: 0.5s;
 }
-.container-02 .glassmorphic-card .contentBox.T1:before{
-  content: 'TRADERS';
-}
 .container-02 .glassmorphic-card .contentBox:before {
 content: "";
 position: absolute;
@@ -310,6 +307,7 @@ div#girl::after {
   clip-path: circle(25% at 66% 60%);
   z-index: 1;
 }
+/*
 .container-02 .glassmorphic-card .contentBox.T1:before{
   content: 'TRADERS';
 }
@@ -337,7 +335,7 @@ div#girl::after {
 .container-02 .glassmorphic-card .contentBox.T9:before{
   content: 'SUPPLIERS';
 }
-
+*/
 section.affiliation {
   background-position: bottom;
   background-size: contain;
@@ -497,6 +495,7 @@ section.companyupdatepopup.show {
   border-radius: 5px;
   border: none;
   color: white;
+  display: inline-block;
 }
 .create-cat-btn{
   background-color: green;
@@ -1023,15 +1022,13 @@ position: relative;
 color: #555;
 font-size: 16px;
 text-align: left;
-padding: 10px 10px;
 font-family: roboto;
 margin: 0;
 }
 .white_ a {
 color: #7d7d7d;
-font-size: 20px;
+font-size: 16px;
 text-align: center;
-padding: 20px 10px 20px 10px;
 text-decoration: none;
 font-family: roboto;
 }
@@ -1051,7 +1048,7 @@ border-radius: 10px;
 color: #555;
 font-size: 16px;
 text-align: right;
-padding: 15px 10px;
+padding: 5px ;
 font-family: roboto;
 }
 .brown a:hover {

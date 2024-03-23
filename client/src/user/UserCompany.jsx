@@ -205,7 +205,7 @@ const UserCompany = () => {
                   <label htmlFor="company" className="pb-2 block text-sm"> Company Name: <span class="text-red-500 text-xs">*</span></label>
                   <input 
                       type="text" id="company" name="company" value={formData.company} onChange={handleInputChange}
-                      class="w-full rounded border h-10"
+                      class="w-full rounded border h-10 pl-2"
                       required />
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
@@ -214,7 +214,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <select 
                       id="category_id" name="category_id" value={formData.category_id} onChange={handleDropdownChange}
-                      class="w-full rounded border h-10">
+                      class="w-full rounded border h-10 pl-2">
                       {categories.map((category) => (
                       <option key={category._id} value={category._id}>
                           {category.name}
@@ -228,7 +228,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <select 
                       id="country_id" name="country_id" value={formData.country_id} onChange={handleDropdownChange}
-                      class="w-full rounded border h-10">
+                      class="w-full rounded border h-10 pl-2">
                       <option value="">Select a country</option>
                       {countries.map((country) => (
                       <option key={country._id} value={country._id}>
@@ -243,7 +243,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <select 
                       id="site_id" name="site_id" value={formData.site_id} onChange={handleDropdownChange}
-                      class="w-full rounded border h-10">
+                      class="w-full rounded border h-10 pl-2">
                       <option value="">Select a site</option>
                       {sites.map((site) => (
                       <option key={site._id} value={site._id}>
@@ -258,14 +258,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <input
                       type="file" id="logo" name="logo" accept="image/*" onChange={handleLogoChange}
-                      class="w-full rounded border h-10"/>
-              </div>
-              <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="profile" className="pb-2 block text-sm">
-                      Profile:
-                  <span class="text-red-500 text-xs">*</span></label>
-                  <textarea id="profile" name="profile" value={formData.profile} onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="title" className="pb-2 block text-sm">
@@ -273,7 +266,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <input
                       type="text" id="title" name="title" value={formData.title} onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="website" className="pb-2 block text-sm">
@@ -281,7 +274,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <input
                       type="text" id="website" name="website" value={formData.website} onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="mobile" className="pb-2 block text-sm">
@@ -289,7 +282,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <input
                       type="text" id="mobile" name="mobile" value={formData.mobile} onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="email" className="pb-2 block text-sm">
@@ -297,7 +290,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <input
                       type="text" id="email" name="email" value={formData.email} onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="address" className="pb-2 block text-sm">
@@ -305,7 +298,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <input
                       type="text" id="address" name="address" value={formData.address} onChange={handleInputChange}
-                      class="w-full rounded border h-10"
+                      class="w-full rounded border h-10 pl-2"
                       required />
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
@@ -314,7 +307,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <textarea
                       id="description" name="description" value={formData.description} onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="facebook_url" className="pb-2 block text-sm">
@@ -323,7 +316,7 @@ const UserCompany = () => {
                   <input
                       type="text" id="facebook_url" name="facebook_url" value={formData.facebook_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="twitter_url" className="pb-2 block text-sm">
@@ -332,7 +325,7 @@ const UserCompany = () => {
                   <input
                       type="text" id="twitter_url" name="twitter_url" value={formData.twitter_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="linkedin_url" className="pb-2 block text-sm">
@@ -341,7 +334,7 @@ const UserCompany = () => {
                   <input
                       type="text" id="linkedin_url" name="linkedin_url" value={formData.linkedin_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="insta_url" className="pb-2 block text-sm">
@@ -349,7 +342,7 @@ const UserCompany = () => {
                   <span class="text-red-500 text-xs">*</span></label>
                   <input
                       type="text" id="insta_url" name="insta_url" value={formData.insta_url} onChange={handleInputChange}
-                      class="w-full rounded border h-10"/>
+                      class="w-full rounded border h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="brochure_url" className="pb-2 block text-sm">
@@ -358,25 +351,34 @@ const UserCompany = () => {
                   <input
                       type="text" id="brochure_url" name="brochure_url" value={formData.brochure_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border h-10"
+                      class="w-full rounded border h-10 pl-2 "
                   />
               </div> 
+              <div className="w-6/12 inline-block pr-4 pb-4">
+                  <label htmlFor="profile" className="pb-2 block text-sm">
+                      Profile:
+                  <span class="text-red-500 text-xs">*</span></label>
+                  <textarea id="profile" name="profile" value={formData.profile} onChange={handleInputChange}
+                      class="w-full rounded border h-20 pl-2"/>
+              </div>
               <div>
                   {staff.map((staffMember, index) => (
-                  <div key={index} style={{ border: '1px solid #000', borderRadius: '5px' }}>
+                  <div key={index}>
                       <input
                           type="text"
                           name="name"
                           value={staffMember.name}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Name"
+                          class="w-full rounded border h-10 pl-2"
                           required />
                       <input
                           type="email"
                           name="email"
                           value={staffMember.email}
                           onChange={(e) => handleChange(e, index)}
-                          placeholder="Email" 
+                          placeholder="Email"
+                          class="w-full rounded border h-10 pl-2"
                           required />
                       <input
                           type="tel"
@@ -384,28 +386,30 @@ const UserCompany = () => {
                           value={staffMember.mobile}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Mobile"
+                          class="w-full rounded border h-10 pl-2"
                           required />
                       <input
                           type="text"
                           name="designation"
+                          class="w-full rounded border h-10 pl-2"
                           value={staffMember.designation}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Designation"
                           required />
                       {index > 0 && (
-                      <button type="button" onClick={() => handleRemoveStaff(index)}>
+                      <button type="button" onClick={() => handleRemoveStaff(index)} class="text-red-500 pb-2">
                           Remove
                       </button>
                       )}
                   </div>
                   ))}
-                  <button type="button" onClick={handleAddStaff}>
+                  <button type="button" onClick={handleAddStaff} class="text-green-500 pb-2">
                   Add Staff
                   </button>
               </div>
               <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-5">
                   {companyId ? 'Edit Company' : 'Add Company'}
               </button>
             </form>
