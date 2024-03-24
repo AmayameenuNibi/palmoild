@@ -577,17 +577,33 @@ export const getFeaturedCompanies = asyncHandler(async (req, res) => {
     const users = await User.find({ status: 1 });
     const userIds = users.map(user => user._id);
     const companies = await Company.find({ user_id: { $in: userIds } })
-      .populate('category_id', 'name')
-      .populate('country_id', 'name'); 
-    
-      const shuffledCompanies = shuffle(companies);
+      .populate({
+        path: 'category_id',
+        select: 'name', // Select only the name field
+        model: 'Category'
+      })
+      .populate({
+        path: 'country_id',
+        select: 'name', // Select only the name field
+        model: 'Country'
+      });
+
+    const shuffledCompanies = shuffle(companies);
     const randomCompanies = shuffledCompanies.slice(0, 3);
-    res.status(200).json(randomCompanies);
+
+    const featuredCompanies = randomCompanies.map(company => ({
+      ...company.toJSON(),
+      categoryName: company.category_id.name,
+      countryName: company.country_id.name
+    }));
+
+    res.status(200).json(featuredCompanies);
   } catch (error) {
     console.error('Error fetching featured companies:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 export const getRelatedCompanies = async (req, res) => {
   const categoryId = req.params.catID;
