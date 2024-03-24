@@ -113,14 +113,16 @@ const PayPalButton = () => {
                             transaction_id:details.id, 
                         };
                         
-                        emailjs.send('service_vnf567f', 'template_lhgje57', templateParams).then(
-                            (response) => {
-                                console.log('SUCCESS!', response.status, response.text);
-                            },
-                            (error) => {
-                                console.log('FAILED...', error);
-                            },
-                        );
+                        handleSubmits(details.id);
+                        
+                        // emailjs.send('service_vnf567f', 'template_lhgje57', templateParams).then(
+                        //     (response) => {
+                        //         console.log('SUCCESS!', response.status, response.text);
+                        //     },
+                        //     (error) => {
+                        //         console.log('FAILED...', error);
+                        //     },
+                        // );
                         navigate('/');
                     });
                 },
@@ -130,7 +132,7 @@ const PayPalButton = () => {
             }).render('#paypal-button-container'); 
         });
         document.body.appendChild(script);
-    }, []);
+    }, [userInfo]);
 
     return (
         <div className="relative bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">           	  
