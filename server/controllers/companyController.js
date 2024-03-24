@@ -576,8 +576,11 @@ export const getFeaturedCompanies = asyncHandler(async (req, res) => {
   try {
     const users = await User.find({ status: 1 });
     const userIds = users.map(user => user._id);
-    const companies = await Company.find({ user_id: { $in: userIds } });
-    const shuffledCompanies = shuffle(companies);
+    const companies = await Company.find({ user_id: { $in: userIds } })
+      .populate('category_id', 'name')
+      .populate('country_id', 'name'); 
+    
+      const shuffledCompanies = shuffle(companies);
     const randomCompanies = shuffledCompanies.slice(0, 3);
     res.status(200).json(randomCompanies);
   } catch (error) {
