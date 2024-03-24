@@ -115,14 +115,14 @@ const PayPalButton = () => {
                         
                         handleSubmits(details.id);
                         
-                        // emailjs.send('service_vnf567f', 'template_lhgje57', templateParams).then(
-                        //     (response) => {
-                        //         console.log('SUCCESS!', response.status, response.text);
-                        //     },
-                        //     (error) => {
-                        //         console.log('FAILED...', error);
-                        //     },
-                        // );
+                        emailjs.send('service_vnf567f', 'template_lhgje57', templateParams).then(
+                            (response) => {
+                                console.log('SUCCESS!', response.status, response.text);
+                            },
+                            (error) => {
+                                console.log('FAILED...', error);
+                            },
+                        );
                         navigate('/');
                     });
                 },
