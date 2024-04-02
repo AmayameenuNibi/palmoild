@@ -21,15 +21,15 @@ const HomeScreen = () => {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`${ BACKEND_URL }api/categories/Associate`);
+                const response = await fetch(`http://localhost:5000/api/categories/Associate`);
                 const data = await response.json();
                 const limitedData = data.slice(0, 8);
                 setAssCompanies(limitedData);
-                const responses = await fetch(`${ BACKEND_URL }api/categories/Ordinary`);
+                const responses = await fetch(`http://localhost:5000/api/categories/Ordinary`);
                 const datas = await responses.json();
                 const limitedDatas = datas.slice(0, 8);
                 setOrCompanies(limitedDatas);
-                const responsess = await fetch(`${ BACKEND_URL }api/categories/Affiliate`);
+                const responsess = await fetch(`http://localhost:5000/api/categories/Affiliate`);
                 const datass = await responsess.json();
                 const limitedDatass = datass.slice(0, 8);
                 setAffCompanies(limitedDatass);

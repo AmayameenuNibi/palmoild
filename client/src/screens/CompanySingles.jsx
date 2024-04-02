@@ -17,13 +17,13 @@ const CompanySingles = () => {
 
     const fetchCompanyDetails = async (companyName) => {
         try {
-            const response = await fetch(`${ BACKEND_URL }api/companies/${companyName}`);
+            const response = await fetch(`http://localhost:5000/api/companies/${companyName}`);
             const data = await response.json();
             setCompany(data);
-            const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
+            const cat_response = await axios.get(`http://localhost:5000/api/categories`);
             setCategories(cat_response.data);
             if (data && data.category_id) {
-                const relatedCompaniesResponse = await axios.get(`${ BACKEND_URL }api/companies/category/${data.category_id}/${data._id}`);
+                const relatedCompaniesResponse = await axios.get(`http://localhost:5000/api/companies/category/${data.category_id}/${data._id}`);
                 setRelatedCompanies(relatedCompaniesResponse.data);
             }
             setLoading(false);
@@ -51,13 +51,13 @@ const CompanySingles = () => {
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">
                     <div className="w-3/12"> 
-                        <label className="block text-gray-700 text-ds mb-3 font-raleway mt-1">
-                            <b>Categories:</b>
+                        <label className="block text-gray-600 text-lg mb-2 font-raleway font-semibold">
+                            Categories:
                         </label>
                         <div className="mb-4">              
                             {categories.map((category) => (
                                 <div class="" key={category._id}>
-                                    <Link to={`/categories/${category.name.toLowerCase()}`} >
+                                    <Link to={`/categories/${category.name}`} >
                                         <label class="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
@@ -67,13 +67,10 @@ const CompanySingles = () => {
                     <div className="w-9/12">
                         {company && (
                             <label className="">
-                                <b class="relative featured-companies font-raleway mb-3 text-xxl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">{company.company}</b>
-                                <p class="text-gray-800 font-lato text-sm my-2 ml-2">
-                                <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in 
-                                </p><p class="text-gray-800 font-lato text-sm my-2 ">Palm Oil Industry.</p>
-                                <label className="relative featured-companies font-raleway mt-2 mb-4 text-xxl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">
-                                    Related Companies
-                                </label>
+                                <b class="relative featured-companies font-raleway mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">{company.company}</b>
+                                <p class="text-gray-700 font-lato text-sm">
+                                <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in Palm Oil Industry.
+                                </p>
                             </label>
                         )}
                         {loading ? (
@@ -87,7 +84,7 @@ const CompanySingles = () => {
                                                 <div className="w-8/12 inline-block my-2">
                                                     <div className="first_top">
                                                         <div className="white_">
-                                                            <h3 class="text-gray-800 text-gray-800 font-lato text-sm">
+                                                            <h3 class="text-gray-800 text-gray-700 font-lato text-sm">
                                                                 {userInfo ? (
                                                                     <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(

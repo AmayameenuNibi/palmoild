@@ -12,17 +12,17 @@ const CategorySingle = () => {
     const [companies, setCompanies] = useState([]);
     const [categories, setCategories] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
-    const [itemsPerPage] = useState(50); 
+    const [itemsPerPage] = useState(20); 
     const [loading, setLoading] = useState(true);
     const { userInfo } = useSelector((state) => state.auth);
 
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`${ BACKEND_URL }api/categories/${categoryName}`);
+                const response = await fetch(`http://localhost:5000/api/categories/${categoryName}`);
                 const data = await response.json();
                 setCompanies(data);
-                const Catresponse = await axios.get(`${ BACKEND_URL }api/categories`);
+                const Catresponse = await axios.get(`http://localhost:5000/api/categories`);
                 setCategories(Catresponse.data);
                 setLoading(false);
             } catch (error) {
@@ -51,21 +51,21 @@ const CategorySingle = () => {
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">
                     <div className="w-3/12"> 
-                        <label className="block text-gray-700 text-ds mb-3 font-raleway mt-1">
-                            <b>Categories:</b>
+                        <label className="block text-gray-700 text-lg mb-2 font-raleway  font-semibold">
+                            Categories:
                         </label>
                         <div className="mb-4">              
                             {categories.map((category) => (
                                 <div class="" key={category._id}>
-                                    <Link to={`/categories/${category.name.toLowerCase()}`} >
-                                        <label class="font-lato text-gray-600 text-sm ">{category.name}</label>
+                                    <Link to={`/categories/${category.name}`} >
+                                        <label class="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div className="w-9/12">
-                        <label className="capitalize relative featured-companies font-raleway mb-4 text-xxl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">
+                        <label className="relative featured-companies font-raleway mb-1.5 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">
                             {categoryName}
                         </label>
                         {loading ? (
@@ -76,10 +76,10 @@ const CategorySingle = () => {
                                     <>
                                         {currentCompanies.map((company, index) => (
                                             <div className="listing row-tab" key={company._id}>
-                                                <div className="w-8/12 inline-block mb-1 ml-2">
+                                                <div className="w-8/12 inline-block my-3">
                                                     <div className="first_top">
                                                         <div className="white_">
-                                                            <h3 class="text-gray-800 text-gray-700 font-lato text-sm ">
+                                                            <h3 class="text-gray-800 text-gray-700 font-lato text-sm">
                                                                 {userInfo ? (
                                                                     <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(

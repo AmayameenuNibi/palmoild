@@ -8,7 +8,7 @@ const CompanySingle = () => {
     
     const fetchCompanyDetails = async (companyName) => {
         try {
-            const response = await fetch(`${ BACKEND_URL }api/companies/${companyName}`);
+            const response = await fetch(`http://localhost:5000/api/companies/${companyName}`);
             const data = await response.json();
             setCompany(data);
         } catch (error) {
@@ -32,10 +32,10 @@ const CompanySingle = () => {
                             <div className="col-xl-6 col-md-12">
                                 <div className="card user-card-full">
                                     <div className="row m-l-0 m-r-0">
-                                        <div className="col-sm-12 col-md-4 bg-c-lite-green user-profile py-5">
+                                        <div className="col-sm-12 col-md-4 bg-c-lite-green user-profile">
                                             <div className="card-block text-center text-white">
                                                 <div className="m-b-25">
-                                                    <img src={`${ BACKEND_URL }uploads/${company.logo}`} className="img-radius h-full" alt="User-Profile-Image"/>
+                                                    <img src={`http://localhost:5000/uploads/${company.logo}`} className="img-radius h-full" alt="User-Profile-Image"/>
                                                 </div>
                                                 <h5 className="f-w-600">{company.company}</h5>
                                                 <p>{company.categoryName}</p>
@@ -51,38 +51,38 @@ const CompanySingle = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-sm-12 col-md-8 py-5">
+                                        <div className="col-sm-12 col-md-8">
                                             <div className="card-block">
-                                                <h6 className="block text-gray-700 text-lg mb-2 font-raleway font-semibold">Profile { company.status ? <span className="green flo">Active</span> : <span className="red flo">Inactive</span> }</h6>
+                                                <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Profile { company.status ? <span className="green flo">Active</span> : <span className="red flo">Inactive</span> }</h6>
                                                 <div className="">
                                                     <div className="col-sm-12">
-                                                        <p className="text-gray-700 font-lato text-sm">{company.profile}</p>
+                                                        <p className="m-b-10 f-w-600 text-justify">{company.profile}</p>
                                                     </div>
                                                 </div>
-                                                <h6 className="text-gray-700 font-lato text-sm">Information</h6>
+                                                <h6 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Information</h6>
                                                 <div className="row">
                                                     {company.mobile && (
                                                         <div className="col-sm-6">
-                                                            <p className="text-gray-700 font-lato text-sm">Phone</p>
+                                                            <p className="m-b-10 f-w-600">Phone</p>
                                                             <a className="text-muted f-w-400">{company.mobile}</a>
                                                         </div>
                                                     )}
                                                     {company.sector && (
                                                         <div className="col-sm-6">
-                                                            <p className="text-gray-700 font-lato text-sm">Sector</p>
+                                                            <p className="m-b-10 f-w-600">Sector</p>
                                                             <a className="text-muted f-w-400">{company.sector}</a>
                                                         </div>
                                                     )}
                                                     {company.website && (
                                                         <div className="col-sm-6">
-                                                            <p className="text-gray-700 font-lato text-sm">Website</p>
-                                                            <a href="#" className="text-muted text-gray-700 font-lato text-sm">{company.website}</a>
+                                                            <p className="m-b-10 f-w-600">Website</p>
+                                                            <a href="#" className="text-muted f-w-400">{company.website}</a>
                                                         </div>
                                                     )}
                                                     {company.address && (
                                                         <div className="col-sm-6">
-                                                            <p className="text-gray-700 font-lato text-sm">Address</p>
-                                                            <a className="text-muted text-gray-700 font-lato text-sm">{company.address}</a>
+                                                            <p className="m-b-10 f-w-600">Address</p>
+                                                            <a className="text-muted f-w-400">{company.address}</a>
                                                         </div>
                                                     )}
                                                 </div>

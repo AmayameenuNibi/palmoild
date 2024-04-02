@@ -16,7 +16,7 @@ const CompanyScreen = () => {
 
     const fetchCompanies = async () => {
         try {
-            const response = await axios.get(`${ BACKEND_URL }api/companies`);
+            const response = await axios.get(`http://localhost:5000/api/companies`);
             setCompanies(response.data);
             setLoading(false);
         } catch (error) {
@@ -33,7 +33,7 @@ const CompanyScreen = () => {
         try {
             const confirmDelete = window.confirm('Are you sure you want to delete this company?');
             if (confirmDelete) {
-                await axios.delete(`${ BACKEND_URL }api/companies/${id}`);
+                await axios.delete(`http://localhost:5000/api/companies/${id}`);
                 fetchCompanies(); 
             }
         } catch (error) {
@@ -84,14 +84,14 @@ const CompanyScreen = () => {
                                                         <img style={{ width:'80px', height:'50px' }} src={default_img} />
                                                     </>:
                                                     <>
-                                                        <img class="font-lato text-gray-600 text-sm p-2" src={`${ BACKEND_URL }uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
+                                                        <img class="font-lato text-gray-600 text-sm p-2" src={`http://localhost:5000/uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
                                                     </>
                                                     }
                                                 </td>
                                                 <td className="font-lato text-gray-600 text-sm p-2">{company.company}</td>
                                                 <td className="font-lato text-gray-600 text-sm p-2">{company.categoryName}</td>
                                                 <td className="font-lato text-gray-600 text-sm p-2">{company.countryName}</td>
-                                                <td className="font-lato text-gray-600 text-sm p-2">{company.website}</td>
+                                                <td className="font-lato text-gray-600 text-sm p-2">{company.user_id}</td>
                                                 <td className="font-lato text-gray-600 text-sm p-2 text-center">
                                                 <Link className="font-lato text-sm bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 rounded focus:outline-none focus:shadow-outline md:inline-block"
                                                     to={`/edit-company/${company._id}`}>Edit</Link> 

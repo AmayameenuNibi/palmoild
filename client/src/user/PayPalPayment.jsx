@@ -38,7 +38,7 @@ const PayPalButton = () => {
                 address: formData.address,
                 mobile: formData.mobile,
                 transactionId: "",
-                status:1
+                status:0
             }).unwrap();
             dispatch(setCredentials(res));
             toast.success("Profile updated successfully");
@@ -71,7 +71,7 @@ const PayPalButton = () => {
     useEffect(() => {
         const fetchCountriesAndCategories = async () => {
             try {
-                const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
+                const countriesResponse = await axios.get(`http://localhost:5000/api/countries`);
                 setCountries(countriesResponse.data);
             } catch (error) {
                 console.error('Error fetching countries and categories:', error);
@@ -113,8 +113,6 @@ const PayPalButton = () => {
                             transaction_id:details.id, 
                         };
                         
-                        handleSubmits(details.id);
-                        
                         emailjs.send('service_vnf567f', 'template_lhgje57', templateParams).then(
                             (response) => {
                                 console.log('SUCCESS!', response.status, response.text);
@@ -132,7 +130,7 @@ const PayPalButton = () => {
             }).render('#paypal-button-container'); 
         });
         document.body.appendChild(script);
-    }, [userInfo]);
+    }, []);
 
     return (
         <div className="relative bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">           	  

@@ -10,7 +10,7 @@ const Search = () => {
   const [loading, setLoading] = useState(true);
   const [companies, setCompanies] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage] = useState(50);
+  const [itemsPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -159,24 +159,24 @@ const Search = () => {
 
   return (
     <div>
-      <div className="desktop-1 pt-7 mt-1">
+      <div className="desktop-1 pt-7">
         <div className="row">
           <div class="w-3/12 pr-3.5">
             <h4 class="font-raleway mb-3.5 text-lg font-semibold text-gray-600">Refine Your Results</h4>
           </div>
-          <div className="w-9/12 px-4 search pr-0">          
+          <div className="w-9/12 px-4 search">          
             <input 
-              class="text-sm px-3 py-2 mb-2 text-gray-400 border border-gray-400 w-10/12 rounded-sm font-lato border-r-0"
+              class="text-sm px-3 py-1.5 text-gray-400 border border-gray-200 w-10/12 rounded-sm font-lato"
               type="text"
               value={searchTerm}
               onChange={handleInputChange}
               placeholder="Products, Companies" />
             <span class="w-2/12 text-right"><i class="icon-email2"></i><button 
-              class="bg-lime-500 text-white text-xsm px-4  py-2 border border-lime-500 hover:bg-green-500 rounded-r" 
+              class="bg-lime-500 text-white text-sm px-3.5 py-1.5 border border-lime-500 hover:bg-green-500 rounded-r" 
               onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
               Search
             </button>
-            <button class="text-xsm px-3.5 py-2 text-gray-800 border border-gray-200 border-l-0 rounded" onClick={downloadSearchResultsAsExcel}>Excel</button></span>
+            <button class="text-sm px-3 py-1.5 text-gray-800 border border-gray-200" onClick={downloadSearchResultsAsExcel}>Excel</button></span>
           </div>
         </div>
         
@@ -187,7 +187,7 @@ const Search = () => {
               </label>
             <div className="mb-4 max-h-96 overflow-y-auto">
               <div class="mb-2" key="AllCategories">
-                <input  class="py-1 w-4 inline-block text-sm mr-2"
+                <input 
                   type="checkbox" 
                   id="AllCategories" 
                   name="AllCategories" 
@@ -197,11 +197,11 @@ const Search = () => {
               </div>
               {categories.map((category) => (
                 <div class="mb-2" key={category._id}>
-                  <input class="py-1  w-4 inline-block text-sm mr-2" type="checkbox" id={category._id} name={category._id}
+                  <input type="checkbox" id={category._id} name={category._id}
                     checked={selectedCategories.includes(category._id)}
                     onChange={() => handleCategoryChange(category._id)}
                   />
-                  <label class="text-gray-500 ml-2 ml-2 font-lato text-sm tracking-widest" htmlFor={category._id}>{category.name}</label>
+                  <label class="text-gray-500 ml-2 ml-2 font-lato text-sm tracking-wider" htmlFor={category._id}>{category.name}</label>
                 </div>
               ))}
             </div>
@@ -210,14 +210,14 @@ const Search = () => {
             </label>
             <div className="mb-4 max-h-96 overflow-y-auto">              
               <div class="mb-2" key="AllCountries">
-                <input class="py-1  w-4 inline-block text-sm mr-2" type="checkbox" id="AllCountries" name="AllCountries" checked={selectedCountries.includes("All")}
+                <input type="checkbox" id="AllCountries" name="AllCountries" checked={selectedCountries.includes("All")}
                   onChange={() => handleCountryChange("All")}
                 />
                 <label className="text-gray-500 ml-2 font-lato text-sm tracking-wider" htmlFor="AllCountries">All Countries</label>
               </div>
               {countries.map((country) => (
                 <div class="mb-2" key={country._id}>
-                  <input class="py-1  w-4 inline-block text-sm mr-2" type="checkbox" id={country._id} name={country._id}
+                  <input type="checkbox" id={country._id} name={country._id}
                     checked={selectedCountries.includes(country._id)}
                     onChange={() => handleCountryChange(country._id)}
                   />
@@ -226,19 +226,19 @@ const Search = () => {
               ))}
             </div>
           </div>
-          <div className="w-9/12 px-4 pr-0">
+          <div className="w-9/12 px-4">
             <div className="favourites-container relative">
-              <h4 className="text-ds z-10 mt-2 relative featured-companies font-raleway mb-2  font-semibold text-gray-600 bg-white pr-1.5 inline-block">Featured Companies</h4>
+              <h4 className="relative featured-companies font-raleway mb-1.5 text-lg font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">Featured Companies</h4>
               <div class="row-tab listing featured from-white bg-gradient-to-r from-white to-green-300 border border-slate-500">
               {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                 <>
                     {featuredCompanies.map((featured, index) => (
-                      <div key={featured._id} class="border-b-1 border-l-4 p-3 m-1.5 mb-3 ml-0 border-gray-400">
+                      <div key={featured._id} class="border-b-2 border-l-4 p-3 m-1.5 mb-3 ml-0 border-gray-300">
                         <div class="w-8/12 inline-block">
                           <div class="relative">
                             <div class="white_">
-                              <h3 class="font-lato text-black font-bold">
-                                <button class="text-md font-lato text-gray-900 font-semibold hover:underline " onClick={() => handleCompanyClick(featured)}>
+                              <h3 class="text-base font-lato text-black font-bold">
+                                <button class="text-base font-lato text-gray-700 font-semibold hover:underline " onClick={() => handleCompanyClick(featured)}>
                                     {featured.company}
                                 </button></h3>
                             </div>
@@ -246,7 +246,7 @@ const Search = () => {
                         </div>
                         <div class="w-4/12 inline-block text-right">
                             <div class="brown">
-                                <h3 class="text-md font-lato font-semibold text-gray-900">Featured</h3>
+                                <h3 class="text-base font-lato font-semibold text-gray-700">Featured</h3>
                             </div>
                         </div>
                       </div> 
@@ -298,7 +298,7 @@ const Search = () => {
                     )}
                   </>
                 ) : (
-                  !loading && <div className="font-lato text-sm text-gray-700 pt-10">No results found. Try a different search.</div>
+                  !loading && <div>No results found. Try a different search.</div>
                 )}
               </>
             )}  

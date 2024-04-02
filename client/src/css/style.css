@@ -21,25 +21,20 @@ html, body {
 body {
   font-family: 'Poppins', sans-serif;
 }
+
 .bg-yellow-500 {
   background-color: #FF5200;
 }
+
 .text-yellow-500 {
   color: #FF5200;
 }
+
 .floating {
   animation-name: floating;
   animation-duration: 3s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
-}
-.text-lg {
-  font-size: 18px;
-  line-height: 1.5;
-}
-.text-sm {
-  font-size: 15px;
-  line-height: 1.25rem;
 }
 
 @keyframes floating {
@@ -610,7 +605,7 @@ left: 0;
 border-radius: 0;
 }
 .row {
-width: 1200px;
+width: 1170px;
 margin: 0 auto;
 }
 .body-content {
@@ -864,43 +859,6 @@ h3.fe {
   vertical-align: baseline;
   border-radius: .25em;
 }
-@media only screen and (max-width: 1200px) and (min-width: 720px){
-  .row-tab{
-    padding: 10px 0px!important;
-    display: block!important;
-  }
-  .listing .col-md-4 {
-    margin-left: 0px;
-  }
-  .frame-a {
-    padding-left: 20px;
-  }
-  .row{
-    width: 970px;
-  }
-  .desktop-1.pt-7 {
-      padding: 0 20px;
-  }
-  .w-9\/12.px-4.search .w-10\/12 {
-    width: 75%;
-  }
-  .listing .w-3\/12.pr-3\.5 {
-    float: left;
-  }
-  .listing .w-9\/12.px-4 {
-      float: right;
-  }
-  .main-content {
-    padding-top: 30px;
-  }
-  .row.listing.row-tab .w-3\/12 {
-    float: left;
-  }
-  .row.listing.row-tab .w-9\/12 {
-      float: right;
-  }
-}
-
 @media only screen and (max-width: 720px) {
   .table-responsive {
       width: 100%;
@@ -1018,7 +976,5 @@ h3.fe {
   .page-centr ul.pagination {
     text-align: center;
   }
-  .row-tab.listing.featured.from-white.bg-gradient-to-r.from-white.to-green-200.border.border-slate-500 {
-    padding-bottom: 0 !important;
-  }
+
 }

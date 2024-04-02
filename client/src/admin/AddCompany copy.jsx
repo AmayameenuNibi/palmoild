@@ -39,13 +39,13 @@ const AddCompany = () => {
 
     const fetchOptions = async () => {
         try {
-            const categoriesResponse = await axios.get(`${ BACKEND_URL }api/categories`);
+            const categoriesResponse = await axios.get(`http://localhost:5000/api/categories`);
             setCategories(categoriesResponse.data);
 
-            const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
+            const countriesResponse = await axios.get(`http://localhost:5000/api/countries`);
             setCountries(countriesResponse.data);
 
-            const sitesResponse = await axios.get(`${ BACKEND_URL }api/sites`);
+            const sitesResponse = await axios.get(`http://localhost:5000/api/sites`);
             setSites(sitesResponse.data);
         } catch (error) {
             console.error('Error fetching options:', error);
@@ -70,10 +70,10 @@ const AddCompany = () => {
 
     const fetchCompanyDetails = async (companyId) => {
         try {
-            const response = await axios.get(`${ BACKEND_URL }api/companies/single/${companyId}`);
+            const response = await axios.get(`http://localhost:5000/api/companies/single/${companyId}`);
             const companyData = response.data; 
             setFormData(companyData);
-            const staffresponse = await axios.get(`${ BACKEND_URL }api/staff/${companyData._id}`);
+            const staffresponse = await axios.get(`http://localhost:5000/api/staff/${companyData._id}`);
             const staffData = staffresponse.data;
             if (Array.isArray(staffData)) {
                 setStaff(staffData);
@@ -109,12 +109,12 @@ const AddCompany = () => {
           });
     
           if (statusData.status === '1') {
-            const response = await axios.put(`${ BACKEND_URL }api/companies/${statusData.companyId}`, formDataToSend);
+            const response = await axios.put(`http://localhost:5000/api/companies/${statusData.companyId}`, formDataToSend);
             const companyData = response.data;
             navigate(`/companies/${companyData.company_slug}`);
             toast.success('Company details Updated Successfully');
           } else {
-            const response = await axios.post(`${ BACKEND_URL }api/companies`, formDataToSend);
+            const response = await axios.post(`http://localhost:5000/api/companies`, formDataToSend);
             const companyData = response.data;
             navigate(`/companies/${companyData.company_slug}`);
             toast.success('Company details Added Successfully');
@@ -182,7 +182,7 @@ const AddCompany = () => {
                     <>                    
                     </>:
                     <>
-                        <img src={`${ BACKEND_URL }uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
+                        <img src={`http://localhost:5000/uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
                     </>
                 }
                 <input 
