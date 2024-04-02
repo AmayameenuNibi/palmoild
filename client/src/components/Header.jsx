@@ -130,28 +130,28 @@ const Header = () => {
               <>
                 {userInfo.role === 0 && (
                   <>
-                    <Link to="/" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway">HOME</Link>
-                    <Link to="/search" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
-                    <Link to="/company" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">MY COMPANY</Link>
-                    <Link to="/favorites" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">MY FAVOURITES</Link>
-                    {/* <Link to="/countries" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">Countries</Link> */}
-                    {/* <Link to="/categories" className="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">Categories</Link> */}
+                    <Link to="/" className="px-6 py-5 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway">HOME</Link>
+                    <Link to="/search" className="px-6 py-5 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
+                    <Link to="/company" className="px-6 py-5 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">MY COMPANY</Link>
+                    <Link to="/favorites" className="px-6 py-5 mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">MY FAVOURITES</Link>
+                    {/* <Link to="/countries" className="px-6 py-5 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">Countries</Link> */}
+                    {/* <Link to="/categories" className="px-6 py-5 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">Categories</Link> */}
                     {userInfo.status === 0 ? <a href="/subscribe" className="moving-bt px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white md:mt-0 md:ml-4 hover:bg-green-600" >
                       <span></span> <span></span> <span></span> <span></span> SUBSCRIBE
                     </a> :''}
-                    <a className="popup px-10 py-6 text-sm text-center  bg-green-900 text-white md:ml-10 cursor-pointer font-raleway font-semibold" onClick={logoutHandler}>LOGOUT</a>
+                    <a className="popup px-6 py-5 font-semibold mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline" onClick={logoutHandler}>LOGOUT</a>
                   </>
                 )}
                 {userInfo.role === 1 && (
                   <>
-                    <Link to="/companies" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANIES</Link>
-                    <Link to="/admin-users" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">USERS</Link>
-                    <Link to="/search" className="px-4 py-2 mt-2 font-medium text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
-                    <Link to="/admin-site" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SITES</Link>
-                    <Link to="/admin-company" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANY</Link>
-                    <Link to="/admin-country" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COUNTRY</Link>
-                    <Link to="/admin-category" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CATEGORY</Link>
-                    <a className="popup px-10 py-6 text-sm text-center  bg-green-900 text-white md:ml-10 cursor-pointer font-raleway font-semibold" onClick={logoutHandler}>LOGOUT</a>
+                    <Link to="/companies" className="px-6 py-5 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANIES</Link>
+                    <Link to="/admin-users" className="px-6 py-5 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">USERS</Link>
+                    <Link to="/search" className="px-6 py-5 mt-2 font-medium text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
+                    <Link to="/admin-site" className="px-6 py-5 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SITES</Link>
+                    <Link to="/admin-company" className="px-6 py-5 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANY</Link>
+                    <Link to="/admin-country" className="px-6 py-5 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COUNTRY</Link>
+                    <Link to="/admin-category" className="px-6 py-5 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CATEGORY</Link>
+                    <a className="popup px-6 py-5 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline" onClick={logoutHandler}>Logout</a>
                   </>
                 )}                
               </>
@@ -162,7 +162,7 @@ const Header = () => {
                 <Link to="/companies" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">COMPANIES</Link>
                 <Link to="/register" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">REGISTER</Link>
                 <Link to="/contact-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">CONTACT </Link>
-                <a className="popup px-10 py-6 text-sm text-center  bg-green-900 text-white md:ml-10 cursor-pointer font-raleway font-semibold" onClick={openPopup}>LOGIN</a>
+                <a className="popup px-6 py-5 text-sm text-center  bg-green-900 text-white md:ml-10 cursor-pointer font-raleway font-semibold" onClick={openPopup}>LOGIN</a>
               </>
             )} 
           </nav>
@@ -209,18 +209,18 @@ const Header = () => {
                 <label className="mt-3 right-label" onClick={handleClick}>Forget password?</label>
                 <button
                     type="submit"
-                    className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-red-700"
+                    className="bg-red-600 text-white px-6 py-5 rounded-md mt-4 hover:bg-red-700"
                     onClick={handleGoogleAuth}>
                     Sign in with Google
                   </button>
                   <button
                     type="submit"
-                    className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700">
+                    className="bg-red-600 text-white px-6 py-5 rounded-md mt-4 hover:bg-blue-700">
                       Sign in with LinkedIn
                   </button>
                   <button
                     type="submit"
-                    className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-darkblue-700"
+                    className="bg-red-600 text-white px-6 py-5 rounded-md mt-4 hover:bg-darkblue-700"
                     onClick={handleFacebookAuth}>
                     Sign in with Facebook
                   </button>
