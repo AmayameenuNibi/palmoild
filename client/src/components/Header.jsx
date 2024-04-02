@@ -108,8 +108,8 @@ const Header = () => {
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <div className='w-full text-gray-700 bg-cream'>
         <div className="row">
-          <div className="py-2">
-            <div className="relative">
+          <div className="responsive-head">
+            <div className="relative logoim">
               <a class="desk-logo" href="/"><img src={logo_img} alt="Logo" /></a>
               <a class="mobile-logo" href="/"><img src={mobile_logo} alt="Logo" /></a>
             </div>
@@ -161,7 +161,7 @@ const Header = () => {
                 <Link to="/about-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">ABOUT US</Link>
                 <Link to="/companies" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">COMPANIES</Link>
                 <Link to="/register" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">REGISTER</Link>
-                <Link to="/contact" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">CONTACT </Link>
+                <Link to="/contact-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">CONTACT </Link>
                 <a className="popup px-10 py-5 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer font-raleway font-semibold" onClick={openPopup}>LOGIN</a>
               </>
             )} 

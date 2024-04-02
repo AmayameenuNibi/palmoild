@@ -79,7 +79,7 @@ const CompanyList = () => {
                                                 )}                                                 
                                                 <p class="text-gray-600 font-lato text-sm">{featured.mobile}</p>
                                                 <p class="text-gray-600 font-lato text-sm">{featured.email}</p>
-                                                <p class="text-gray-600 font-lato text-sm">{featured.website}</p>
+                                                <p class="text-green-600 font-lato text-sm">{featured.website}</p>
                                             </div>
                                           </div>
                                         </div>
@@ -136,7 +136,7 @@ const CompanyList = () => {
                                 )}
                             </>
                             ) : (
-                                !loading && <div>No results found. Try a different search.</div>
+                                !loading && <div className="font-lato text-sm text-gray-700 pt-10">No results found.</div>
                             )}
                             </>
                         )}  

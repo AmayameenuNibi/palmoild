@@ -236,7 +236,7 @@ const RegisterScreen = () => {
           <h2 class="text-xl text-gray-600 mb-10">Register</h2>
           <form ref={form}  onSubmit={handleSubmit}>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide mb-1" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
+              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text"
                 name="name"
@@ -247,7 +247,7 @@ const RegisterScreen = () => {
                 {validationErrors.name && <p className="text-red-500 text-xs italic">{validationErrors.name}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide" htmlFor="email" >Email Address <span class="text-red-500 text-xs">*</span></label>
+              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="email" >Email Address <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text" 
                 name="email" 
@@ -258,7 +258,7 @@ const RegisterScreen = () => {
                 {validationErrors.email && <p className="text-red-500 text-xs italic">{validationErrors.email}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide" htmlFor="Company Name" > Company Name <span class="text-red-500 text-xs">*</span></label>
+              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Company Name" > Company Name <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text" 
                 name="company" 
@@ -269,7 +269,7 @@ const RegisterScreen = () => {
                 {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide" htmlFor="Address" > Address <span class="text-red-500 text-xs">*</span></label>
+              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Address" > Address <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text" 
                 name="address" 
@@ -280,7 +280,7 @@ const RegisterScreen = () => {
                 {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide" htmlFor="Country" > Country <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2 block text-sm font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Country" > Country <span class="text-red-500 text-xs">*</span></label>
               <select
                   id="country_id"
                   class="w-full rounded border h-10 font-lato text-gray-600 text-sm"
@@ -300,7 +300,7 @@ const RegisterScreen = () => {
               {validationErrors.country_id && <p className="text-red-500 text-xs italic">{validationErrors.country_id}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide" htmlFor="Mobile" > Mobile <span class="text-red-500 text-xs">*</span></label>
+              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Mobile" > Mobile <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text" 
                 name="mobile" 
@@ -311,7 +311,7 @@ const RegisterScreen = () => {
                 {validationErrors.mobile && <p className="text-red-500 text-xs italic">{validationErrors.mobile}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide" htmlFor="password" > Password <span class="text-red-500 text-xs">*</span></label>
+              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="password" > Password <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="password" 
                 id="password" 
@@ -322,7 +322,7 @@ const RegisterScreen = () => {
                 {validationErrors.password && <p className="text-red-500 text-xs italic">{validationErrors.password}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide" htmlFor="Confirm Password" > Confirm Password <span class="text-red-500 text-xs">*</span></label>
+              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Confirm Password" > Confirm Password <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="password" 
                 name="confirmPassword" 

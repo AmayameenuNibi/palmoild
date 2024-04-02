@@ -115,7 +115,7 @@ const CompanySingles = () => {
                                         )}
                                     </>
                                 ) : (
-                                    !loading && <div>No results found. Try a different search.</div>
+                                    !loading && <div className="font-lato text-sm text-gray-700 pt-10">No results found.</div>
                                  )}
                             </>
                         )}  

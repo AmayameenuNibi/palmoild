@@ -166,17 +166,17 @@ const Search = () => {
           </div>
           <div className="w-9/12 px-4 search pr-0">          
             <input 
-              class="text-sm px-3 py-2 mb-2 text-gray-400 border border-gray-400 w-10/12 rounded-sm font-lato border-r-0"
+              class="text-sm px-2.5 py-2 mb-2 text-gray-400 border border-gray-400 w-10/12 rounded-sm font-lato border-r-0"
               type="text"
               value={searchTerm}
               onChange={handleInputChange}
               placeholder="Products, Companies" />
             <span class="w-2/12 text-right"><i class="icon-email2"></i><button 
-              class="bg-lime-500 text-white text-xsm px-4  py-2 border border-lime-500 hover:bg-green-500 rounded-r" 
+              class="bg-lime-500 text-white text-xsm px-3  py-2 border border-lime-500 hover:bg-green-500 rounded-r" 
               onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
               Search
             </button>
-            <button class="text-xsm px-3.5 py-2 text-gray-800 border border-gray-200 border-l-0 rounded" onClick={downloadSearchResultsAsExcel}>Excel</button></span>
+            <button class="text-xsm px-3 py-2 text-gray-800 border border-gray-200 border-l-0 rounded" onClick={downloadSearchResultsAsExcel}>Excel</button></span>
           </div>
         </div>
         

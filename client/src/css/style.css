@@ -13,10 +13,12 @@ html, body {
 }
 
 /*primary color*/
-.bg-cream {
+/* .bg-cream {
   background-color: #f2f2f2;
+} */
+.logoim img {
+  max-width: 98%;
 }
-
 /*font*/
 body {
   font-family: 'Poppins', sans-serif;
