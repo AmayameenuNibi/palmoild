@@ -12,7 +12,7 @@ const CompanyList = () => {
     const [featuredCompanies, setFeaturedcompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
     const [categories, setCategories] = useState([]);
-    const [itemsPerPage] = useState(20); 
+    const [itemsPerPage] = useState(50); 
     const { userInfo } = useSelector((state) => state.auth);
 
     useEffect(() => {
@@ -44,47 +44,48 @@ const CompanyList = () => {
 
     return (
         <div>
-            <div className="desktop-1">
+            <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">
                     <div className="w-3/12"> 
-                        <label className="block text-gray-600 text-lg mb-2">
-                            Categories:
+                        <label className="block text-gray-700 text-ds mb-3 font-raleway mt-1">
+                            <b>Categories:</b>
                         </label>
                         <div className="mb-4">              
                             {categories.map((category) => (
-                                <div class="mb-2" key={category._id}>
+                                <div class="" key={category._id}>
                                     <Link to={`/categories/${category.name.toLowerCase()}`} >
-                                        <label class="text-gray-500 ml-2">{category.name}</label>
+                                        <label class="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div className="w-9/12">
-                        <div className="favourites-container">
-                            <h1 className="featured-companies">Featured Companies</h1>
+                        <div className="relative mb-6 mt-3">
+                            <h4 className="relative featured-companies font-raleway mb-1.5 text-xxl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">List of Companies</h4>
+                            <div class="row-tab listing featured">
                             {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                                 <>
                                     {featuredCompanies.map((featured, index) => (
-                                        <div key={featured._id} class="row listing featured from-white bg-gradient-to-r from-white to-green-200 border border-slate-500">
-                                        <div class="col-md-8">
-                                          <div class="first_top">
-                                            <div class="white_">
-                                                {userInfo.status === 1 ? (
-                                                    <Link to={`/companies/${featured.company_slug}`}>{featured.company}</Link>
+                                        <div key={featured._id} class="border-b-2 border-l-4 p-4 m-1.5 mb-1 ml-0 border-green-500 flex items-center from-white bg-gradient-to-r from-white to-green-200">
+                                        <div class="w-8/12 inline-block">
+                                          <div class="relative">
+                                            <div class="featr">
+                                                {userInfo ? (
+                                                    <Link class="text-gray-600 font-lato text-sm" to={`/companies/${featured.company_slug}`}>{featured.company}</Link>
                                                 ) :(
-                                                    <Link to={`/company/${featured.company_slug}`}>{featured.company}</Link>
+                                                    <Link class="text-gray-600 font-lato text-sm" to={`/company/${featured.company_slug}`}>{featured.company}</Link>
                                                 )}                                                 
-                                                <p>{featured.mobile}</p>
-                                                <p>{featured.email}</p>
+                                                <p class="text-gray-600 font-lato text-sm">{featured.mobile}</p>
+                                                <p class="text-gray-600 font-lato text-sm">{featured.email}</p>
+                                                <p class="text-green-600 font-lato text-sm"><a href={featured.website} >{featured.website}</a></p>
                                             </div>
                                           </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="second_left"></div>
+                                        <div class="w-4/12 inline-block text-right">
                                             <div class="brown">
-                                                <h3><b>Featured</b></h3>
+                                                <h3 class="font-lato text-white bg-blue-600 text-xs inline-block px-2 py-1 rounded-sm fe">Featured</h3>
                                             </div>
                                         </div>
                                       </div>
@@ -94,6 +95,7 @@ const CompanyList = () => {
                                 <p></p>
                             )}
                         </div>
+                        </div>
                         {loading ? (
                             <div className="spinner"></div> 
                         ) : (
@@ -101,12 +103,12 @@ const CompanyList = () => {
                             {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
                             <>
                                 {currentCompanies.map((company, index) => (
-                                    <div className="listing row-tab" key={company._id}>
+                                    <div className="listing row-tab my-3" key={company._id}>
                                         <div className="w-8/12 inline-block">
                                             <div className="first_top">
                                                 <div className="white_">
-                                                    <h3>
-                                                        {userInfo.status === 1 ? (
+                                                    <h3 class="text-gray-800 font-lato text-sm pt-5">
+                                                        {userInfo ? (
                                                             <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                         ) :(
                                                             <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
@@ -118,7 +120,7 @@ const CompanyList = () => {
                                         <div className="w-4/12 inline-block">
                                             <div className="second_left"></div>
                                             <div className="brown">
-                                                <h3><b>{company.categoryName}</b></h3>
+                                                <h3 class="text-gray-800 text-gray-700 font-lato text-sm"></h3>
                                             </div>
                                         </div>
                                     </div>
@@ -135,7 +137,7 @@ const CompanyList = () => {
                                 )}
                             </>
                             ) : (
-                                !loading && <div>No companies found in this category.</div>
+                                !loading && <div>No results found. Try a different search.</div>
                             )}
                             </>
                         )}  

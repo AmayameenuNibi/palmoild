@@ -18,6 +18,7 @@ const Search = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [isFavoriteCompany, setIsFavoriteCompany] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
+  const [featuredCompanies, setFeaturedcompanies] = useState([]);
 
   const indexOfLastItem = (currentPage + 1) * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -44,6 +45,8 @@ const Search = () => {
       const response = await axios.get(`${ BACKEND_URL }api/companies`);
       setCompanies(response.data);
       setLoading(false);
+      const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
+      setFeaturedcompanies(featureresponse.data);
       const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
       setCategories(cat_response.data);
       const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
@@ -157,69 +160,101 @@ const Search = () => {
     <div>
       <div className="desktop-1">
         <div className="desktop-1-child"></div>
-        <div className="frame-a mb-10">
-          <div className="frame-a-child"></div>
-          <h1 className="products-companies">Products, Companies</h1>
-          <div className="frame-c">
-            <input
+        <div className="mb-10">
+          <div className="frame-c">          
+            <input 
+              class="text-lg"
               type="text"
               value={searchTerm}
               onChange={handleInputChange}
-              placeholder="search ...."
-            />
+              placeholder="Products, Companies" />
             <div className="frame-c-child"></div>
             <div className="frame-d"></div>
-            <button onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
-              <i className="fa-brands fa-searchengin"></i>
+            <button 
+              class="bg-green-400 p-5 text-white text-lg" 
+              onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
+              Search
             </button>
             <button onClick={downloadSearchResultsAsExcel}>Excel</button>
           </div>
         </div>
         
-        <div className="row listing row-tab" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
-          <div className="col-md-3"> {/* This div takes up 1/4 of the width */}
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+        <div className="row listing row-tab">
+          <div className="w-3/12"> 
+            <div className="mb-4 max-h-96 overflow-y-auto">
+              <label className="block text-gray-600 text-lg mb-2">
                 Categories:
               </label>
-              <div key="AllCategories">
-                <input type="checkbox" id="AllCategories" name="AllCategories" checked={selectedCategories.includes("All")}
-                  onChange={() => handleCategoryChange("All")}
-                />
-                <label htmlFor="AllCategories">All Categories</label>
+              <div class="mb-2" key="AllCategories">
+                <input 
+                  type="checkbox" 
+                  id="AllCategories" 
+                  name="AllCategories" 
+                  checked={selectedCategories.includes("All")}
+                  onChange={() => handleCategoryChange("All")} />
+                <label class="text-gray-800 ml-2" htmlFor="AllCategories">All Categories</label>
               </div>
               {categories.map((category) => (
-                <div key={category._id}>
+                <div class="mb-2" key={category._id}>
                   <input type="checkbox" id={category._id} name={category._id}
                     checked={selectedCategories.includes(category._id)}
                     onChange={() => handleCategoryChange(category._id)}
                   />
-                  <label htmlFor={category._id}>{category.name}</label>
+                  <label class="text-gray-500 ml-2" htmlFor={category._id}>{category.name}</label>
                 </div>
               ))}
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-gray-600 text-lg mb-2">
                 Countries:
-              </label>
-              <div key="AllCountries">
+            </label>
+            <div className="mb-4 max-h-96 overflow-y-auto">              
+              <div class="mb-2" key="AllCountries">
                 <input type="checkbox" id="AllCountries" name="AllCountries" checked={selectedCountries.includes("All")}
                   onChange={() => handleCountryChange("All")}
                 />
-                <label htmlFor="AllCountries">All Countries</label>
+                <label className="text-gray-800 ml-2" htmlFor="AllCountries">All Countries</label>
               </div>
               {countries.map((country) => (
-                <div key={country._id}>
+                <div class="mb-2" key={country._id}>
                   <input type="checkbox" id={country._id} name={country._id}
                     checked={selectedCountries.includes(country._id)}
                     onChange={() => handleCountryChange(country._id)}
                   />
-                  <label htmlFor={country._id}>{country.name}</label>
+                  <label className="text-gray-500 ml-2" htmlFor={country._id}>{country.name}</label>
                 </div>
               ))}
             </div>
           </div>
-          <div className="col-md-9"> {/* This div takes up 3/4 of the width */}
+          <div className="w-9/12">
+            <div className="favourites-container">
+              <h1 className="featured-companies">Featured Companies</h1>
+              {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
+                <>
+                    {featuredCompanies.map((featured, index) => (
+                      <div key={featured._id} class="row listing featured from-white bg-gradient-to-r from-white to-green-200 border border-slate-500">
+                        <div class="col-md-8">
+                          <div class="first_top">
+                            <div class="white_">
+                              <h3><b>
+                                <button onClick={() => handleCompanyClick(featured)}>
+                                    {featured.company}
+                                </button></b></h3>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="second_left"></div>
+                            <div class="brown">
+                                <h3><b>Featured</b></h3>
+                            </div>
+                        </div>
+                      </div> 
+                    ))}
+                </>
+            ) : (
+                <p></p>
+            )}  
+            </div>   
             {loading ? (
               <div className="spinner"></div> 
             ) : (
@@ -227,10 +262,9 @@ const Search = () => {
                 {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
                   <>
                     {currentCompanies.map((company, index) => (
-                      <div className="row listing row-tab" key={company._id}>
-                        <div className="col-md-8">
+                      <div className="listing row-tab" key={company._id}>
+                        <div className="w-8/12 inline-block">
                           <div className="first_top">
-                            <span className="floater">{index + 1 + currentPage * itemsPerPage}</span>
                             <div className="white_">
                               <h3>
                                 <b>
@@ -242,7 +276,7 @@ const Search = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="col-md-4">
+                        <div className="w-4/12 inline-block">
                           <div className="second_left"></div>
                           <div className="brown">
                             <h3><b>{company.categoryName}</b></h3>
@@ -273,7 +307,7 @@ const Search = () => {
       {selectedCompany && (
         <section className="selectedCompany-modal">
           <div className="modal fade in">
-            <div className="modal-dialog">
+            <div className="modal-dialog bg-white p-5 z-20">
               <div className="modal-content">
                 <div className="modal-header">
                   <button type="button" onClick={closeModal} className="close">×</button>
@@ -323,9 +357,6 @@ const Search = () => {
                             </tr>
                           )}
                           <tr>
-                            {selectedCompany.email !== '' && (
-                              <p>Email: {selectedCompany.email}</p>
-                            )}
                             {selectedCompany.twitter_url !== '' && (
                               <p>twitter_url: {selectedCompany.twitter_url}</p>
                             )}

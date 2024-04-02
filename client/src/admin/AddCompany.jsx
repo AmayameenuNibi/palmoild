@@ -173,7 +173,7 @@ const AddCompany = () => {
         <div className="relative bg-white  p-8 md:p-12 my-10">                
             <form className="bg-white company-row" onSubmit={handleFormSubmit} encType="multipart/form-data">
                 <div>
-                    <h3 className="font-bold text-2xl">Create Company</h3>
+                    <h3 className="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded">Create Company</h3>
                 </div>
                 {!formData.logo ? 
                     <>                    

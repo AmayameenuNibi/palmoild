@@ -12,7 +12,7 @@ const CategorySingle = () => {
     const [companies, setCompanies] = useState([]);
     const [categories, setCategories] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
-    const [itemsPerPage] = useState(20); 
+    const [itemsPerPage] = useState(50); 
     const [loading, setLoading] = useState(true);
     const { userInfo } = useSelector((state) => state.auth);
 
@@ -47,25 +47,25 @@ const CategorySingle = () => {
 
     return (
         <div>
-            <div className="desktop-1">
+            <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">
                     <div className="w-3/12"> 
-                        <label className="block text-gray-600 text-lg mb-2">
-                            Categories:
+                        <label className="block text-gray-700 text-ds mb-3 font-raleway mt-1">
+                            <b>Categories:</b>
                         </label>
                         <div className="mb-4">              
                             {categories.map((category) => (
-                                <div class="mb-2" key={category._id}>
+                                <div class="" key={category._id}>
                                     <Link to={`/categories/${category.name.toLowerCase()}`} >
-                                        <label class="text-gray-500 ml-2">{category.name}</label>
+                                        <label class="font-lato text-gray-600 text-sm ">{category.name}</label>
                                     </Link>                  
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div className="w-9/12">
-                        <label className="block text-gray-600 text-lg mb-2">
+                        <label className="capitalize relative featured-companies font-raleway mb-4 text-xxl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">
                             {categoryName}
                         </label>
                         {loading ? (
@@ -76,11 +76,11 @@ const CategorySingle = () => {
                                     <>
                                         {currentCompanies.map((company, index) => (
                                             <div className="listing row-tab" key={company._id}>
-                                                <div className="w-8/12 inline-block">
+                                                <div className="w-8/12 inline-block mb-1 ml-2">
                                                     <div className="first_top">
                                                         <div className="white_">
-                                                            <h3>
-                                                                {userInfo.status === 1 ? (
+                                                            <h3 class="text-gray-800 text-gray-700 font-lato text-sm ">
+                                                                {userInfo ? (
                                                                     <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(
                                                                     <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
@@ -109,7 +109,7 @@ const CategorySingle = () => {
                                         )}
                                     </>
                                 ) : (
-                                    !loading && <div>No companies found in this category.</div>
+                                    !loading && <div>No results found. Try a different search.</div>
                                  )}
                             </>
                         )}  

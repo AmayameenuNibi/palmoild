@@ -57,8 +57,7 @@ const HomeScreen = () => {
                                 Pay Via Paypal
                             </button>
                             <div className="flex items-center text-center space-x-3 mt-5 md:mt-0 focus:outline-none transform transition hover:text-gray-800 ease-in-out">
-                                <span className="cursor-pointer">
-                                    1 Year Subscription to Palmoildirectory.com <br/>- Only €69.33!</span>
+                                <span className="cursor-pointer">1 Year Subscription to Palmoildirectory.com <br/>- Only €69.33!</span>
                             </div>
                         </div>
                     </div>
@@ -67,7 +66,7 @@ const HomeScreen = () => {
                     </div>
                 </div>
             </div>
-            <div className="absolute w-full -mt-12 lg:-mt-24">
+            <div className="images- absolute w-full -mt-12 lg:-mt-24">
                 <svg viewBox="0 0 1428 174" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ background: '#f2f2f2' }}>
                     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                         <g transform="translate(-2.000000, 44.000000)" fill="#FFFFFF" fillRule="nonzero">
@@ -143,9 +142,9 @@ const HomeScreen = () => {
                                 <h3>Associate</h3>
                                 {asscompanies.map(company => (
                                     (userInfo ? (
-                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
-                                    ) : (
                                         <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                    ) : (
+                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
                                     ))
                                 ))}
                                 <a class="viewal" href="/categories/associate"><span>View All</span></a>
@@ -161,9 +160,9 @@ const HomeScreen = () => {
                                 <h3>Ordinary</h3>
                                 {orcompanies.map(company => (
                                     (userInfo ? (
-                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
-                                    ) : (
                                         <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                    ) : (
+                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
                                     ))
                                 ))}
                                 <a class="viewal" href="/categories/ordinary"><span>View All</span></a>
@@ -179,9 +178,9 @@ const HomeScreen = () => {
                                 <h3>Affiliate</h3>
                                 {affcompanies.map(company => (
                                     (userInfo ? (
-                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
-                                    ) : (
                                         <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                    ) : (
+                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
                                     ))
                                 ))}
                                 <a class="viewal" href="/categories/affiliate"><span>View All</span></a>

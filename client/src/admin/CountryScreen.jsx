@@ -85,25 +85,25 @@ const CountryScreen = () => {
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-      <div className="relative block w-3/4 justify-center px-10 mb-5 mt-5 items-center">        
-        <button className="create-country-btn" onClick={openCountryPopup}>
+      <div className="relative block w-3/4 px-10 mb-5 mt-5 text-right">        
+        <button className="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded inline-block" onClick={openCountryPopup}>
           Create Country
         </button> 
       </div>
       <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center">
         <div className="table-responsive">
-          <table className="mt-4 w-3/4 border-collapse border border-gray-400">
+          <table className="mt-4 w-3/4 text-left">
             <thead>
               <tr>
-                <th className="border border-gray-400 p-2">Country Name</th>
-                <th className="border border-gray-400 p-2">Actions</th>
+                <th className="font-lato text-gray-600 text-sm p-2 font-semibold">Country Name</th>
+                <th className="font-lato text-gray-600 text-sm p-2 font-semibold">Actions</th>
               </tr>
             </thead>
             <tbody>
               {countries.map((country) => (
                 <tr key={country._id}>
-                  <td className="border border-gray-400 p-2">{country.name}</td>
-                  <td className="border border-gray-400 p-2">
+                  <td className="font-lato text-gray-600 text-sm p-2">{country.name}</td>
+                  <td className="font-lato text-gray-600 text-sm p-2">
                     <button
                       onClick={() => handleEditCountry(country)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 focus:outline-none focus:shadow-outline">

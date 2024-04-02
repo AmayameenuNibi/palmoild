@@ -9,7 +9,7 @@ const Footer = () => {
 			<div className="text-center text-white">
 				<p className="my-3 text-gray-400 text-sm">© 2024 Palmoildirectory.com All Rights Reserved.</p>
 			</div>
-			<div className="flex items-center text-gray-400 text-sm justify-center">
+			<div className="flex items-center text-gray-400 text-sm justify-center footer-">
 				<Link to={'/about-us'} className="pr-3" >About us</Link>
 				<Link to={'/support'} className="border-l border-gray-400 px-3">Support</Link>
 				<Link to={'/privacy-policy'} className="border-l border-gray-400 px-3">Privacy Policy</Link>

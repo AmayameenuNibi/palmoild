@@ -83,32 +83,32 @@ const SiteScreen = () => {
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-      <div className="relative block w-3/4 justify-center px-10 mb-5 mt-5 items-center">        
-        <button className="create-site-btn" onClick={openSitePopup}>
+      <div className="relative block w-3/4 justify-center px-10 mb-5 mt-5 items-center text-right">        
+        <button className="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded" onClick={openSitePopup}>
           Create Site
         </button>
       </div>
       <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center">
         <div className="table-responsive">
-          <table className="mt-4 w-3/4 border-collapse border border-gray-400">
+          <table className="mt-4 w-3/4">
             <thead>
               <tr>
-                <th scope="col" className="border border-gray-400 p-2">Site Name</th>
-                <th scope="col" className="border border-gray-400 p-2">Delete</th>
+                <th scope="col" className="font-lato text-gray-600 text-sm p-2 text-left">Site Name</th>
+                <th scope="col" className="font-lato text-gray-600 text-sm p-2">Delete</th>
               </tr>
             </thead>
             <tbody>
               {sites.map((site) => (
                 <tr key={site._id}>
-                  <td className="border border-gray-400 p-2">{site.name}</td>
-                  <td className="border border-gray-400 p-2">
+                  <td className="p-2 text-gray-800 font-lato text-sm">{site.name}</td>
+                  <td className="p-2 text-right">
                     <button onClick={() => handleUpdateSite(site)}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 focus:outline-none focus:shadow-outline">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-raleway px-3 py-1.5 text-sm py-1 px-2 rounded mr-2 focus:outline-none focus:shadow-outline">
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteSite(site._id)}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+                      className="bg-red-500 hover:bg-red-700 text-white font-raleway px-3 py-1.5 text-sm rounded focus:outline-none focus:shadow-outline">
                       Delete
                     </button>
                   </td>

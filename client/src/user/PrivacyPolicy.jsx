@@ -21,18 +21,6 @@ const PrivacyPolicy = () => {
 
   return (
     <div>
-      <div className="pt-24 backdropse h-96" style={{ backgroundImage: `url(${background})`}}>
-        <div className="px-3 mx-auto items-center content-center grid">
-          <div className="relative z-10 justify-center text-center">
-              <h1 className="my-4 text-gray-100 text-5xl font-bold leading-tight">
-                  Privacy Policy
-              </h1>
-              <p className="block uppercase tracking-loose w-full text-white font-bold">
-                  <span> <a href="#">Home</a>&nbsp; &#8594; &nbsp;Privacy Policy</span>
-              </p>
-          </div>
-        </div>
-      </div>
 	    <section className="bg-white border-b py-8" id="about">
 		    <div className="container max-w-5xl mx-auto">
           <div className="w-full mb-4">

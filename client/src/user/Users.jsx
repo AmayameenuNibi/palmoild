@@ -46,28 +46,28 @@ const Users = () => {
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />     
-      <div className="relative block w-3/4 justify-center px-10 mb-5 mt-5 items-center">        
-        <ul className="flex">
+      <div className="relative block w-3/4 px-10 mb-5 mt-5 text-right">        
+        <ul className="flex text-right">
           <li className={activeTab === 'active' ? 'active-tab' : ''}>
-            <button className={`user-tab-btn ${activeTab === 'active' ? 'active' : ''}`} onClick={() => handleTabChange('active')}>Active Users</button>
+            <button class="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded" className={`user-tab-btn ${activeTab === 'active' ? 'active' : ''}`} onClick={() => handleTabChange('active')}>Active Users</button>
           </li>
           <li className={activeTab === 'inactive' ? 'active-tab' : ''}>
-            <button className={`user-tab-btn ${activeTab === 'inactive' ? 'active' : ''}`} onClick={() => handleTabChange('inactive')}>Inactive Users</button>
+            <button class="text-gray-700 font-raleway px-3 py-1.5 text-sm bg-gray-200 mt-5 rounded" className={`user-tab-btn ${activeTab === 'inactive' ? 'active' : ''}`} onClick={() => handleTabChange('inactive')}>Inactive Users</button>
           </li>
         </ul>
       </div>
       {activeTab === 'active' && (
         <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center">
           <div className="table-responsive">
-          <table className="mt-4 w-3/4 border-collapse border border-gray-400">
+          <table className="mt-4 w-3/4 border-collapse text-left">
             <thead>
               <tr>
-                <th className="border border-gray-400 p-2">UserName</th>
-                <th className="border border-gray-400 p-2">Company</th>
-                <th className="border border-gray-400 p-2">Contact</th>
-                <th className="border border-gray-400 p-2">Created At</th>
-                <th className="border border-gray-400 p-2">Expired At</th>
-                <th className="border border-gray-400 p-2">Actions</th>
+                <th className="font-lato text-gray-600 text-sm p-2 text-semibold">UserName</th>
+                <th className="font-lato text-gray-600 text-sm p-2 text-semibold">Company</th>
+                <th className="font-lato text-gray-600 text-sm p-2 text-semibold">Contact</th>
+                <th className="font-lato text-gray-600 text-sm p-2 text-semibold">Created At</th>
+                <th className="font-lato text-gray-600 text-sm p-2 text-semibold">Expired At</th>
+                <th className="font-lato text-gray-600 text-sm p-2 text-semibold">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -79,15 +79,15 @@ const Users = () => {
 
                     return (
                         <tr key={user._id}>
-                        <td className="border border-gray-400 p-2">{user.name}</td>
-                        <td className="border border-gray-400 p-2">{user.company}</td>
-                        <td className="border border-gray-400 p-2">{user.mobile}</td>
-                        <td className="border border-gray-400 p-2">{createdAtDateString}</td>
-                        <td className="border border-gray-400 p-2">{updatedAtDateString}</td>
-                        <td className="border border-gray-400 p-2">
+                        <td className="font-lato text-gray-600 text-sm p-2">{user.name}</td>
+                        <td className="font-lato text-gray-600 text-sm p-2">{user.company}</td>
+                        <td className="font-lato text-gray-600 text-sm p-2">{user.mobile}</td>
+                        <td className="font-lato text-gray-600 text-sm p-2">{createdAtDateString}</td>
+                        <td className="font-lato text-gray-600 text-sm p-2">{updatedAtDateString}</td>
+                        <td className="font-lato text-gray-600 text-sm p-2">
                             <button
                             onClick={() => handleDelete(user._id)}
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                            className="bg-red-500 hover:bg-red-700 text-white font-raleway px-3 py-1.5 text-sm rounded focus:outline-none focus:shadow-outline"
                             >
                             Delete
                             </button>

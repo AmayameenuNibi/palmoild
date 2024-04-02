@@ -236,54 +236,54 @@ const RegisterScreen = () => {
           <h2 class="text-xl text-gray-600 mb-10">Register</h2>
           <form ref={form}  onSubmit={handleSubmit}>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2.5 inline-block font-lato text-gray-600 font-semibold text-xsm uppercase tracking-wide" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text"
                 name="name"
                 id="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10" />
+                class="w-full rounded border h-10 font-lato text-gray-600 text-xsm" />
                 {validationErrors.name && <p className="text-red-500 text-xs italic">{validationErrors.name}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm" htmlFor="email" >Email Address <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2.5 inline-block font-lato text-gray-600 font-semibold text-xsm uppercase tracking-wide" htmlFor="email" >Email Address <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text" 
                 name="email" 
                 id="email" 
                 value={formData.email}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10"/>
+                class="w-full rounded border h-10 font-lato text-gray-600 text-xsm"/>
                 {validationErrors.email && <p className="text-red-500 text-xs italic">{validationErrors.email}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm" htmlFor="Company Name" > Company Name <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2.5 inline-block font-lato text-gray-600 font-semibold text-xsm uppercase tracking-wide" htmlFor="Company Name" > Company Name <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text" 
                 name="company" 
                 id="company" 
                 value={formData.company}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10"/>
+                class="w-full rounded border h-10 font-lato text-gray-600 text-xsm"/>
                 {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm" htmlFor="Address" > Address <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2.5 inline-block font-lato text-gray-600 font-semibold text-xsm uppercase tracking-wide" htmlFor="Address" > Address <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text" 
                 name="address" 
                 id="address" 
                 value={formData.address}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10"/>
+                class="w-full rounded border h-10 font-lato text-gray-600 text-2sm"/>
                 {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm" htmlFor="Country" > Country <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2.5 inline-block block text-xsm font-lato text-gray-600 font-semibold text-xsm uppercase tracking-wide" htmlFor="Country" > Country <span class="text-red-500 text-xs">*</span></label>
               <select
                   id="country_id"
-                  class="w-full rounded border h-10"
+                  class="w-full rounded border h-10 font-lato text-gray-600 text-xsm"
                   type="text"
                   name="country_id"
                   value={formData.country_id}
@@ -300,36 +300,36 @@ const RegisterScreen = () => {
               {validationErrors.country_id && <p className="text-red-500 text-xs italic">{validationErrors.country_id}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm" htmlFor="Mobile" > Mobile <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2.5 inline-block font-lato text-gray-600 font-semibold text-xsm uppercase tracking-wide" htmlFor="Mobile" > Mobile <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text" 
                 name="mobile" 
                 id="mobile"                           
                 value={formData.mobile}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10"/>
+                class="w-full rounded border h-10 font-lato text-gray-600 text-xsm"/>
                 {validationErrors.mobile && <p className="text-red-500 text-xs italic">{validationErrors.mobile}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm" htmlFor="password" > Password <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2.5 inline-block font-lato text-gray-600 font-semibold text-xsm uppercase tracking-wide" htmlFor="password" > Password <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="password" 
                 id="password" 
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10"/>
+                class="w-full rounded border h-10 font-lato text-gray-600 text-xsm"/>
                 {validationErrors.password && <p className="text-red-500 text-xs italic">{validationErrors.password}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm" htmlFor="Confirm Password" > Confirm Password <span class="text-red-500 text-xs">*</span></label>
+              <label className="pb-2.5 inline-block font-lato text-gray-600 font-semibold text-xsm uppercase tracking-wide" htmlFor="Confirm Password" > Confirm Password <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="password" 
                 name="confirmPassword" 
                 id="confirmPassword" 
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10"/>
+                class="w-full rounded border h-10 font-lato text-gray-600 text-xsm"/>
                 {validationErrors.confirmPassword && <p className="text-red-500 text-xs italic">{validationErrors.confirmPassword}</p>}
             </div>
             <div class="col-sm-5 mt-10"><input class="button nomargin" type="submit" name="yt0" value="Signup"></input></div>

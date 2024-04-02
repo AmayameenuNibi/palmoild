@@ -52,10 +52,10 @@ const CompanyScreen = () => {
     return (
         <div>
             <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-            <div className="relative block w-3/4 justify-center px-10 mb-5 mt-5 items-center">        
-                <Link className="create-company-btn" to={`/add-company`}>Create Company</Link>  
+            <div className="relative block w-3/4 justify-center px-10 mb-5 mt-2 items-center text-right ">        
+                <Link className="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded inline-block" to={`/add-company`}>Create Company</Link>  
             </div>
-            <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center" >
+            <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center page-centr" >
                 {loading ? (
                     <div className="flex justify-center items-center h-screen">
                         <div className="spinner"></div> 
@@ -64,40 +64,40 @@ const CompanyScreen = () => {
                     <>
                         {currentCompanies.length > 0 ? (
                             <div className="table-responsive">
-                                <table className="mt-4 w-3/4 border-collapse border border-gray-400">
+                                <table className="mt-4 w-3/4">
                                     <thead>
                                         <tr>
-                                            <th className="border border-gray-400 p-2">Logo</th>
-                                            <th className="border border-gray-400 p-2">Company Name</th>
-                                            <th className="border border-gray-400 p-2">Category</th>
-                                            <th className="border border-gray-400 p-2">Country</th>
-                                            <th className="border border-gray-400 p-2">Website</th>
-                                            <th className="border border-gray-400 p-2">Delete</th>
+                                            <th className="font-lato text-gray-600 text-sm p-2">Logo</th>
+                                            <th className="font-lato text-gray-600 text-sm p-2">Company Name</th>
+                                            <th className="font-lato text-gray-600 text-sm p-2">Category</th>
+                                            <th className="font-lato text-gray-600 text-sm p-2">Country</th>
+                                            <th className="font-lato text-gray-600 text-sm p-2">Website</th>
+                                            <th className="font-lato text-gray-600 text-sm p-2">Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {currentCompanies.map((company) => (
                                             <tr key={company._id}>
-                                                <td className="border border-gray-400 p-2">
+                                                <td className="p-2">
                                                     {!company.logo ? 
                                                     <>
                                                         <img style={{ width:'80px', height:'50px' }} src={default_img} />
                                                     </>:
                                                     <>
-                                                        <img src={`${ BACKEND_URL }uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
+                                                        <img class="font-lato text-gray-600 text-sm p-2" src={`${ BACKEND_URL }uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
                                                     </>
                                                     }
                                                 </td>
-                                                <td className="border border-gray-400 p-2">{company.company}</td>
-                                                <td className="border border-gray-400 p-2">{company.categoryName}</td>
-                                                <td className="border border-gray-400 p-2">{company.countryName}</td>
-                                                <td className="border border-gray-400 p-2">{company.website}</td>
-                                                <td className="border border-gray-400 p-2">
-                                                <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                                                <td className="font-lato text-gray-600 text-sm p-2">{company.company}</td>
+                                                <td className="font-lato text-gray-600 text-sm p-2">{company.categoryName}</td>
+                                                <td className="font-lato text-gray-600 text-sm p-2">{company.countryName}</td>
+                                                <td className="font-lato text-gray-600 text-sm p-2">{company.website}</td>
+                                                <td className="font-lato text-gray-600 text-sm p-2 text-center">
+                                                <Link className="font-lato text-sm bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 rounded focus:outline-none focus:shadow-outline md:inline-block"
                                                     to={`/edit-company/${company._id}`}>Edit</Link> 
                                                 <button
                                                     onClick={() => handleDeleteCompany(company._id)}
-                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</button>                               
+                                                    className="font-lato text-sm bg-red-500 hover:bg-red-700 text-white py-1.5 ml-1 px-2 rounded focus:outline-none focus:shadow-outline md:inline-block">Delete</button>                               
                                                 </td>
                                             </tr>
                                         ))}

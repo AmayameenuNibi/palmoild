@@ -47,18 +47,18 @@ const CompanySingles = () => {
 
     return (
         <div>
-            <div className="desktop-1">
+            <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">
                     <div className="w-3/12"> 
-                        <label className="block text-gray-600 text-lg mb-2">
-                            Categories:
+                        <label className="block text-gray-700 text-ds mb-3 font-raleway mt-1">
+                            <b>Categories:</b>
                         </label>
                         <div className="mb-4">              
                             {categories.map((category) => (
-                                <div class="mb-2" key={category._id}>
+                                <div class="" key={category._id}>
                                     <Link to={`/categories/${category.name.toLowerCase()}`} >
-                                        <label class="text-gray-500 ml-2">{category.name}</label>
+                                        <label class="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
                             ))}
@@ -66,11 +66,14 @@ const CompanySingles = () => {
                     </div>
                     <div className="w-9/12">
                         {company && (
-                            <label className="block text-gray-600 text-lg mb-2">
-                                <b>{company.company}</b>
-                                <p>
-                                <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in Palm Oil Industry.
-                                </p>
+                            <label className="">
+                                <b class="relative featured-companies font-raleway mb-3 text-xxl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">{company.company}</b>
+                                <p class="text-gray-800 font-lato text-sm my-2 ml-2">
+                                <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in 
+                                </p><p class="text-gray-800 font-lato text-sm my-2 ">Palm Oil Industry.</p>
+                                <label className="relative featured-companies font-raleway mt-2 mb-4 text-xxl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">
+                                    Related Companies
+                                </label>
                             </label>
                         )}
                         {loading ? (
@@ -81,11 +84,11 @@ const CompanySingles = () => {
                                     <>
                                         {currentCompanies.map((company, index) => (
                                             <div className="listing row-tab" key={company._id}>
-                                                <div className="w-8/12 inline-block">
+                                                <div className="w-8/12 inline-block my-2">
                                                     <div className="first_top">
                                                         <div className="white_">
-                                                            <h3>
-                                                                {userInfo.status === 1 ? (
+                                                            <h3 class="text-gray-800 text-gray-800 font-lato text-sm">
+                                                                {userInfo ? (
                                                                     <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(
                                                                     <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
@@ -114,7 +117,7 @@ const CompanySingles = () => {
                                         )}
                                     </>
                                 ) : (
-                                    !loading && <div>No related companies found in the same category..</div>
+                                    !loading && <div>No results found. Try a different search.</div>
                                  )}
                             </>
                         )}  
