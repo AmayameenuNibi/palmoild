@@ -172,19 +172,16 @@ const Search = () => {
               onChange={handleInputChange}
               placeholder="Products, Companies" />
             <span class="w-2/12 text-right"><i class="icon-email2"></i><button 
-              class="bg-lime-500 text-white text-xsm px-3  py-2 border border-lime-500 hover:bg-green-500 rounded-r" 
+              class="bg-lime-500 text-white text-xsm px-2.5  py-2 border border-lime-500 hover:bg-green-500 rounded-r" 
               onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
               Search
             </button>
-            <button class="text-xsm px-3 py-2 text-gray-800 border border-gray-200 border-l-0 rounded" onClick={downloadSearchResultsAsExcel}>Excel</button></span>
+            <button class="text-xsm px-2.5 py-2 text-gray-800 border border-gray-200 border-l-0 rounded" onClick={downloadSearchResultsAsExcel}>Excel</button></span>
           </div>
         </div>
         
         <div className="row listing row-tab">
           <div className="w-3/12 pr-3.5"> 
-              <label className="block text-gray-700 text-lg mb-2 font-raleway">
-                <b>Categories:</b>
-              </label>
             <div className="mb-4 max-h-96 overflow-y-auto">
               <div class="mb-2" key="AllCategories">
                 <input  class="py-1 w-4 inline-block text-sm mr-2"
@@ -228,7 +225,7 @@ const Search = () => {
           </div>
           <div className="w-9/12 px-4 pr-0">
             <div className="favourites-container relative">
-              <h4 className="text-ds z-10 mt-2 relative featured-companies font-raleway mb-2  font-semibold text-gray-600 bg-white pr-1.5 inline-block">Featured Companies</h4>
+              <h4 className="text-lg z-10 mt-2 relative featured-companies font-raleway mb-2  font-semibold text-gray-600 bg-white pr-1.5 inline-block">Featured Companies</h4>
               <div class="row-tab listing featured from-white bg-gradient-to-r from-white to-green-300 border border-slate-500">
               {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                 <>

@@ -139,7 +139,7 @@ const Header = () => {
                     {userInfo.status === 0 ? <a href="/subscribe" className="moving-bt px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white md:mt-0 md:ml-4 hover:bg-green-600" >
                       <span></span> <span></span> <span></span> <span></span> SUBSCRIBE
                     </a> :''}
-                    <a className="popup px-10 py-4 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={logoutHandler}>LOGOUT</a>
+                    <a className="popup px-10 py-6 text-sm text-center  bg-green-900 text-white md:ml-10 cursor-pointer font-raleway font-semibold" onClick={logoutHandler}>LOGOUT</a>
                   </>
                 )}
                 {userInfo.role === 1 && (
@@ -151,7 +151,7 @@ const Header = () => {
                     <Link to="/admin-company" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COMPANY</Link>
                     <Link to="/admin-country" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">COUNTRY</Link>
                     <Link to="/admin-category" className="px-4 py-2 font-medium mt-2 text-sm bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">CATEGORY</Link>
-                    <a className="popup px-10 py-5 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer" onClick={logoutHandler}>Logout</a>
+                    <a className="popup px-10 py-6 text-sm text-center  bg-green-900 text-white md:ml-10 cursor-pointer font-raleway font-semibold" onClick={logoutHandler}>LOGOUT</a>
                   </>
                 )}                
               </>
@@ -162,7 +162,7 @@ const Header = () => {
                 <Link to="/companies" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">COMPANIES</Link>
                 <Link to="/register" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">REGISTER</Link>
                 <Link to="/contact-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">CONTACT </Link>
-                <a className="popup px-10 py-5 text-sm text-center bg-white text-gray-800 md:ml-10 z-10 cursor-pointer font-raleway font-semibold" onClick={openPopup}>LOGIN</a>
+                <a className="popup px-10 py-6 text-sm text-center  bg-green-900 text-white md:ml-10 cursor-pointer font-raleway font-semibold" onClick={openPopup}>LOGIN</a>
               </>
             )} 
           </nav>

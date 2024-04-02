@@ -19,6 +19,9 @@ html, body {
 .logoim img {
   max-width: 98%;
 }
+.bg-green-900 {
+  background: #8ab704;
+}
 /*font*/
 body {
   font-family: 'Poppins', sans-serif;
@@ -848,6 +851,10 @@ h4.relative.featured-companies.font-raleway.mb-1\.5.text-lg.font-semibold.text-g
 a.popup.px-10.py-3.text-sm.text-center.bg-white.text-gray-800.md\:ml-10.z-10.cursor-pointer {
   z-index: 1;
 }
+.text-sm {
+  font-size: 14px;
+  line-height: 1.25rem;
+}
 h3.fe {
   background-color: #337ab7;
   display: inline;
@@ -987,5 +994,21 @@ a.mobile-logo{
   a.mobile-logo{
     display: block;
   }
-
+  .bg-orange-600 {
+    background: #ffffff;
+  }
+  .bg-orange-600 a {
+    color: #000;
+    width: 100%;
+    border-bottom: 1px solid #e2e2e2;
+    padding: 10px 25px;
+  }
+  .bg-orange-600  a.popup {
+    background: #fff;
+    text-align: left;
+    padding-left: 25px;
+  }
+  .listing.row-tab.my-3 {
+    padding: 0!important;
+  }
 }
