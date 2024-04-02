@@ -27,7 +27,7 @@ const Search = () => {
   useEffect(() => {
     const checkIsFavorite = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/favorites/check/${selectedCompany._id}/${userInfo._id}`);
+        const response = await axios.get(`${ BACKEND_URL }api/favorites/check/${selectedCompany._id}/${userInfo._id}`);
         const result = response.data.isFavorite;
         setIsFavoriteCompany(result === "favorite");
       } catch (error) {
@@ -42,14 +42,14 @@ const Search = () => {
   
   const fetchCompanies = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/companies`);
+      const response = await axios.get(`${ BACKEND_URL }api/companies`);
       setCompanies(response.data);
       setLoading(false);
-      const featureresponse = await axios.get(`http://localhost:5000/api/companies/featuredlist`);
+      const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
       setFeaturedcompanies(featureresponse.data);
-      const cat_response = await axios.get(`http://localhost:5000/api/categories`);
+      const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
       setCategories(cat_response.data);
-      const countriesResponse = await axios.get(`http://localhost:5000/api/countries`);
+      const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
       setCountries(countriesResponse.data);
     } catch (error) {
       console.error('Error fetching companies:', error);
@@ -116,7 +116,7 @@ const Search = () => {
 
   const handleSearch = async (searchTerm, selectedCategories, selectedCountries) => {
     try {
-      let url = `http://localhost:5000/api/companies/search`;
+      let url = `${ BACKEND_URL }api/companies/search`;
       const params = new URLSearchParams();      
       params.append('term', searchTerm);
       params.append('category_id', selectedCategories.join(','));
@@ -145,9 +145,9 @@ const Search = () => {
   const handleAddRemoveFavorite = async () => {
     try {
       if (isFavoriteCompany) {
-        await axios.delete(`http://localhost:5000/api/favorites/delete/${selectedCompany._id}/${userInfo._id}`);
+        await axios.delete(`${ BACKEND_URL }api/favorites/delete/${selectedCompany._id}/${userInfo._id}`);
       } else {
-        await axios.post(`http://localhost:5000/api/favorites/add/${selectedCompany._id}/${userInfo._id}`);
+        await axios.post(`${ BACKEND_URL }api/favorites/add/${selectedCompany._id}/${userInfo._id}`);
       }
       setIsFavoriteCompany(!isFavoriteCompany);
     } catch (error) {

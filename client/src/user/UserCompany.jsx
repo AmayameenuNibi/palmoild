@@ -43,13 +43,13 @@ const UserCompany = () => {
 
   const fetchOptions = async () => {
     try {
-      const categoriesResponse = await axios.get(`http://localhost:5000/api/categories`);
+      const categoriesResponse = await axios.get(`${ BACKEND_URL }api/categories`);
       setCategories(categoriesResponse.data);
 
-      const countriesResponse = await axios.get(`http://localhost:5000/api/countries`);
+      const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
       setCountries(countriesResponse.data);
 
-      const sitesResponse = await axios.get(`http://localhost:5000/api/sites`);
+      const sitesResponse = await axios.get(`${ BACKEND_URL }api/sites`);
       setSites(sitesResponse.data);
     } catch (error) {
       console.error('Error fetching options:', error);
@@ -75,14 +75,14 @@ const UserCompany = () => {
 
   const fetchCompanyDetails = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/companies/user/${userId}`);
+      const response = await axios.get(`${ BACKEND_URL }api/companies/user/${userId}`);
       const companyData = response.data;
       setstatusData({
         status: '1',
         companyId: companyData._id,
       });
       setFormData(companyData);
-      const staffresponse = await axios.get(`http://localhost:5000/api/staff/${companyData._id}`);
+      const staffresponse = await axios.get(`${ BACKEND_URL }api/staff/${companyData._id}`);
       const staffData = staffresponse.data;
       if (Array.isArray(staffData)) {
         setStaff(staffData);
@@ -121,12 +121,12 @@ const UserCompany = () => {
       });
 
       if (statusData.status === '1') {
-        const response = await axios.put(`http://localhost:5000/api/companies/${statusData.companyId}`, formDataToSend);
+        const response = await axios.put(`${ BACKEND_URL }api/companies/${statusData.companyId}`, formDataToSend);
         const companyData = response.data;
         navigate(`/companies/${companyData.company_slug}`);
         toast.success('Company details Updated Successfully');
       } else {
-        const response = await axios.post(`http://localhost:5000/api/companies`, formDataToSend);
+        const response = await axios.post(`${ BACKEND_URL }api/companies`, formDataToSend);
         const companyData = response.data;
         navigate(`/companies/${companyData.company_slug}`);
         toast.success('Company details Added Successfully');
@@ -191,7 +191,7 @@ const UserCompany = () => {
             <form onSubmit={handleFormSubmit} encType="multipart/form-data">
               {logoPreview ? <img src={logoPreview} width="75px" height="55px" alt={formData.company} /> : null}
               {statusData.status == '1' ? (
-                <img src={`http://localhost:5000/uploads/${formData.logo}`} width="75px" height="55px" alt="Company Logo" />
+                <img src={`${ BACKEND_URL }uploads/${formData.logo}`} width="75px" height="55px" alt="Company Logo" />
               ) : null}
               <input
                 type="hidden"
@@ -199,22 +199,22 @@ const UserCompany = () => {
                 name="user_id"
                 value={formData.user_id}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10"/>
+                class="w-full rounded border-gray-400 border h-10"/>
               
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="company" className="pb-2 block text-sm"> Company Name: <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="company" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700"> COMPANY NAME <span class="text-red-500 text-xl pl-1">*</span></label>
                   <input 
                       type="text" id="company" name="company" value={formData.company} onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"
+                      class="w-full rounded border border-gray-400 h-10 pl-2"
                       required />
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="category_id" className="pb-2 block text-sm">
-                      Category:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="category_id" className="pb-3 block text-sm  uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Category
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <select 
                       id="category_id" name="category_id" value={formData.category_id} onChange={handleDropdownChange}
-                      class="w-full rounded border h-10 pl-2">
+                      class="w-full rounded border border-gray-400 h-10 pl-2">
                       {categories.map((category) => (
                       <option key={category._id} value={category._id}>
                           {category.name}
@@ -223,12 +223,12 @@ const UserCompany = () => {
                   </select>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="country_id" className="pb-2 block text-sm">
-                      Country:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="country_id" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      COUNTRY
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <select 
                       id="country_id" name="country_id" value={formData.country_id} onChange={handleDropdownChange}
-                      class="w-full rounded border h-10 pl-2">
+                      class="w-full rounded border border-gray-400 h-10 pl-2">
                       <option value="">Select a country</option>
                       {countries.map((country) => (
                       <option key={country._id} value={country._id}>
@@ -238,12 +238,12 @@ const UserCompany = () => {
                   </select>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="site_id" className="pb-2 block text-sm">
-                      Site:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="site_id" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Site
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <select 
                       id="site_id" name="site_id" value={formData.site_id} onChange={handleDropdownChange}
-                      class="w-full rounded border h-10 pl-2">
+                      class="w-full rounded border border-gray-400 h-10 pl-2">
                       <option value="">Select a site</option>
                       {sites.map((site) => (
                       <option key={site._id} value={site._id}>
@@ -253,124 +253,124 @@ const UserCompany = () => {
                   </select>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="logo" className="pb-2 block text-sm">
-                      Logo:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="logo" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Logo
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="file" id="logo" name="logo" accept="image/*" onChange={handleLogoChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="title" className="pb-2 block text-sm">
-                      Title:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="title" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Title
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="title" name="title" value={formData.title} onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="website" className="pb-2 block text-sm">
-                      Website URL:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="website" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Website URL
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="website" name="website" value={formData.website} onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="mobile" className="pb-2 block text-sm">
-                      Mobile:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="mobile" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Mobile
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="mobile" name="mobile" value={formData.mobile} onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="email" className="pb-2 block text-sm">
-                      Email:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="email" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Email
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="email" name="email" value={formData.email} onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="address" className="pb-2 block text-sm">
-                      Address:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="address" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Address
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="address" name="address" value={formData.address} onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"
+                      class="w-full rounded border border-gray-400 h-10 pl-2"
                       required />
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="description" className="pb-2 block text-sm">
-                      Description:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="description" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Description
+                  <span class="text-red-500 text-xl pl-1">*</span></label>
                   <textarea
                       id="description" name="description" value={formData.description} onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="facebook_url" className="pb-2 block text-sm">
-                      Facebook URL:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="facebook_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Facebook URL
+                  </label>
                   <input
                       type="text" id="facebook_url" name="facebook_url" value={formData.facebook_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="twitter_url" className="pb-2 block text-sm">
-                      Twitter URL:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="twitter_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Twitter URL
+                  </label>
                   <input
                       type="text" id="twitter_url" name="twitter_url" value={formData.twitter_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="linkedin_url" className="pb-2 block text-sm">
-                      LinkedIn URL:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="linkedin_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      LinkedIn URL
+                  </label>
                   <input
                       type="text" id="linkedin_url" name="linkedin_url" value={formData.linkedin_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="insta_url" className="pb-2 block text-sm">
-                      Instagram URL:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="insta_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Instagram URL
+                  </label>
                   <input
                       type="text" id="insta_url" name="insta_url" value={formData.insta_url} onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="brochure_url" className="pb-2 block text-sm">
-                      Brochure URL:
-                  <span class="text-red-500 text-xs">*</span></label>
+                  <label htmlFor="brochure_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Brochure URL
+                  </label>
                   <input
                       type="text" id="brochure_url" name="brochure_url" value={formData.brochure_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border h-10 pl-2 "
+                      class="w-full rounded border border-gray-400 h-10 pl-2 "
                   />
               </div> 
-              <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="profile" className="pb-2 block text-sm">
-                      Profile:
-                  <span class="text-red-500 text-xs">*</span></label>
+              <div className="w-full inline-block pr-4 pb-4">
+                  <label htmlFor="profile" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
+                      Profile
+                  </label>
                   <textarea id="profile" name="profile" value={formData.profile} onChange={handleInputChange}
-                      class="w-full rounded border h-20 pl-2"/>
+                      class="w-full rounded border border-gray-400 h-20 pl-2"/>
               </div>
               <div>
                   {staff.map((staffMember, index) => (
-                  <div key={index}>
+                  <div class="block mb-5" key={index}>
                       <input
                           type="text"
                           name="name"
                           value={staffMember.name}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Name"
-                          class="w-full rounded border h-10 pl-2"
+                          class="w-6/12 border h-10 pl-2 inline-block text-center"
                           required />
                       <input
                           type="email"
@@ -378,7 +378,7 @@ const UserCompany = () => {
                           value={staffMember.email}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Email"
-                          class="w-full rounded border h-10 pl-2"
+                          class="w-6/12 border h-10 pl-2 inline-block text-center"
                           required />
                       <input
                           type="tel"
@@ -386,12 +386,12 @@ const UserCompany = () => {
                           value={staffMember.mobile}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Mobile"
-                          class="w-full rounded border h-10 pl-2"
+                          class="w-6/12 border h-10 pl-2 inline-block text-center"
                           required />
                       <input
                           type="text"
                           name="designation"
-                          class="w-full rounded border h-10 pl-2"
+                          class="w-6/12 border h-10 pl-2 inline-block text-center"
                           value={staffMember.designation}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Designation"
@@ -410,7 +410,7 @@ const UserCompany = () => {
               <button
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-5">
-                  {companyId ? 'Edit Company' : 'Add Company'}
+                  Update Company
               </button>
             </form>
           </div>

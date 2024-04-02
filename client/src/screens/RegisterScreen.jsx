@@ -213,7 +213,7 @@ const RegisterScreen = () => {
   useEffect(() => {
       const fetchCountriesAndCategories = async () => {
         try {
-            const countriesResponse = await axios.get(`http://localhost:5000/api/countries`);
+            const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
             setCountries(countriesResponse.data);
         } catch (error) {
             console.error('Error fetching countries and categories:', error);
@@ -236,7 +236,7 @@ const RegisterScreen = () => {
           <h2 class="text-xl text-gray-600 mb-10">Register</h2>
           <form ref={form}  onSubmit={handleSubmit}>
             <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
+              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide mb-1" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
               <input 
                 type="text"
                 name="name"

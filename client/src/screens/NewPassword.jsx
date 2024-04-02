@@ -13,7 +13,7 @@ const NewPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`http://localhost:5000/api/users/newpassword/${token}`, FormData);
+            await axios.post(`${ BACKEND_URL }api/users/newpassword/${token}`, FormData);
             
             navigate('/');          
         } catch (error) {

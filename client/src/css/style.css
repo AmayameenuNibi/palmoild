@@ -859,6 +859,9 @@ h3.fe {
   vertical-align: baseline;
   border-radius: .25em;
 }
+a.mobile-logo{
+  display: none;
+}
 @media only screen and (max-width: 720px) {
   .table-responsive {
       width: 100%;
@@ -975,6 +978,12 @@ h3.fe {
   }
   .page-centr ul.pagination {
     text-align: center;
+  }
+  .desk-logo{
+    display:none;
+  }
+  a.mobile-logo{
+    display: block;
   }
 
 }

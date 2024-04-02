@@ -12,10 +12,10 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const activeResponse = await axios.get(`http://localhost:5000/api/users/active`);
+        const activeResponse = await axios.get(`${ BACKEND_URL }api/users/active`);
         setActiveUsers(activeResponse.data);
 
-        const inactiveResponse = await axios.get(`http://localhost:5000/api/users/inactive`);
+        const inactiveResponse = await axios.get(`${ BACKEND_URL }api/users/inactive`);
         setInactiveUsers(inactiveResponse.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -27,12 +27,12 @@ const Users = () => {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/users/${userId}`);
+      await axios.delete(`${ BACKEND_URL }api/users/${userId}`);
       toast.success('User removed');
-      const activeResponse = await axios.get(`http://localhost:5000/api/users/active`);
+      const activeResponse = await axios.get(`${ BACKEND_URL }api/users/active`);
       setActiveUsers(activeResponse.data);
 
-      const inactiveResponse = await axios.get(`http://localhost:5000/api/users/inactive`);
+      const inactiveResponse = await axios.get(`${ BACKEND_URL }api/users/inactive`);
       setInactiveUsers(inactiveResponse.data);
     } catch (error) {
       console.error('Error deleting user:', error);

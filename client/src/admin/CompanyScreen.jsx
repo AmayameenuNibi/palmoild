@@ -16,7 +16,7 @@ const CompanyScreen = () => {
 
     const fetchCompanies = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/companies`);
+            const response = await axios.get(`${ BACKEND_URL }api/companies`);
             setCompanies(response.data);
             setLoading(false);
         } catch (error) {
@@ -33,7 +33,7 @@ const CompanyScreen = () => {
         try {
             const confirmDelete = window.confirm('Are you sure you want to delete this company?');
             if (confirmDelete) {
-                await axios.delete(`http://localhost:5000/api/companies/${id}`);
+                await axios.delete(`${ BACKEND_URL }api/companies/${id}`);
                 fetchCompanies(); 
             }
         } catch (error) {
@@ -84,7 +84,7 @@ const CompanyScreen = () => {
                                                         <img style={{ width:'80px', height:'50px' }} src={default_img} />
                                                     </>:
                                                     <>
-                                                        <img class="font-lato text-gray-600 text-sm p-2" src={`http://localhost:5000/uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
+                                                        <img class="font-lato text-gray-600 text-sm p-2" src={`${ BACKEND_URL }uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
                                                     </>
                                                     }
                                                 </td>

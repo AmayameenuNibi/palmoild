@@ -16,9 +16,9 @@ const CategoryScreen = () => {
 
   const fetchCategories = async () => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/categories`);
+        const response = await axios.get(`${ BACKEND_URL }api/categories`);
         setCategories(response.data);
-        const site_response = await axios.get(`http://localhost:5000/api/sites`);
+        const site_response = await axios.get(`${ BACKEND_URL }api/sites`);
         setSites(site_response.data);
     } catch (error) {
         console.error('Error fetching categories:', error);
@@ -32,7 +32,7 @@ const CategoryScreen = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-        await axios.post(`http://localhost:5000/api/categories`, categoryFormData);
+        await axios.post(`${ BACKEND_URL }api/categories`, categoryFormData);
         openCatpopup();
         fetchCategories(); 
         setCategoryFormData({ name: '', site_id: '' }); 
@@ -54,7 +54,7 @@ const CategoryScreen = () => {
   const handleUpdateCategoryData = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/categories/${categoryFormData.id}`, {
+      await axios.put(`${ BACKEND_URL }api/categories/${categoryFormData.id}`, {
         site_id: categoryFormData.site_id,
         name: categoryFormData.name,
       });
@@ -75,7 +75,7 @@ const CategoryScreen = () => {
     try {
         const confirmDelete = window.confirm('Are you sure you want to delete this category?');    
         if (confirmDelete) {
-          await axios.delete(`http://localhost:5000/api/categories/${id}`);
+          await axios.delete(`${ BACKEND_URL }api/categories/${id}`);
           fetchCategories(); 
         }        
         toast.success('Category Deleted successfully!');

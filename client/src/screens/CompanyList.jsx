@@ -12,7 +12,7 @@ const CompanyList = () => {
     const [featuredCompanies, setFeaturedcompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
     const [categories, setCategories] = useState([]);
-    const [itemsPerPage] = useState(20); 
+    const [itemsPerPage] = useState(50); 
     const { userInfo } = useSelector((state) => state.auth);
 
     useEffect(() => {
@@ -21,11 +21,11 @@ const CompanyList = () => {
 
     const fetchCompanies = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/companies`);
+            const response = await axios.get(`${ BACKEND_URL }api/companies`);
             setCompanies(response.data);
-            const cat_response = await axios.get(`http://localhost:5000/api/categories`);
+            const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
             setCategories(cat_response.data);
-            const featureresponse = await axios.get(`http://localhost:5000/api/companies/featuredlist`);
+            const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
             setFeaturedcompanies(featureresponse.data);
             setLoading(false); 
         } catch (error) {
@@ -54,7 +54,7 @@ const CompanyList = () => {
                         <div className="mb-4">              
                             {categories.map((category) => (
                                 <div class="" key={category._id}>
-                                    <Link to={`/categories/${category.name}`} >
+                                    <Link to={`/categories/${category.name.toLowerCase()}`} >
                                         <label class="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
@@ -63,7 +63,7 @@ const CompanyList = () => {
                     </div>
                     <div className="w-9/12">
                         <div className="relative mb-6">
-                            <h4 className="relative featured-companies font-raleway mb-1.5 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">Featured Companies</h4>
+                            <h4 className="relative featured-companies font-raleway mb-1.5 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">List of Companies</h4>
                             <div class="row-tab listing featured from-white bg-gradient-to-r from-white to-green-200 border border-slate-500">
                             {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                                 <>
@@ -79,6 +79,7 @@ const CompanyList = () => {
                                                 )}                                                 
                                                 <p class="text-gray-600 font-lato text-sm">{featured.mobile}</p>
                                                 <p class="text-gray-600 font-lato text-sm">{featured.email}</p>
+                                                <p class="text-gray-600 font-lato text-sm">{featured.website}</p>
                                             </div>
                                           </div>
                                         </div>
@@ -119,7 +120,6 @@ const CompanyList = () => {
                                         <div className="w-4/12 inline-block">
                                             <div className="second_left"></div>
                                             <div className="brown">
-                                                <h3 class="text-gray-800 text-gray-700 font-lato text-sm">{company.categoryName}</h3>
                                             </div>
                                         </div>
                                     </div>

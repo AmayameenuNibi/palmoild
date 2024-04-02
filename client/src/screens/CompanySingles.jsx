@@ -11,19 +11,19 @@ const CompanySingles = () => {
     const [categories, setCategories] = useState([]);
     const [relatedCompanies, setRelatedCompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
-    const [itemsPerPage] = useState(20); 
+    const [itemsPerPage] = useState(50); 
     const [loading, setLoading] = useState(true);
     const { userInfo } = useSelector((state) => state.auth);
 
     const fetchCompanyDetails = async (companyName) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/companies/${companyName}`);
+            const response = await fetch(`${ BACKEND_URL }api/companies/${companyName}`);
             const data = await response.json();
             setCompany(data);
-            const cat_response = await axios.get(`http://localhost:5000/api/categories`);
+            const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
             setCategories(cat_response.data);
             if (data && data.category_id) {
-                const relatedCompaniesResponse = await axios.get(`http://localhost:5000/api/companies/category/${data.category_id}/${data._id}`);
+                const relatedCompaniesResponse = await axios.get(`${ BACKEND_URL }api/companies/category/${data.category_id}/${data._id}`);
                 setRelatedCompanies(relatedCompaniesResponse.data);
             }
             setLoading(false);
@@ -68,9 +68,10 @@ const CompanySingles = () => {
                         {company && (
                             <label className="">
                                 <b class="relative featured-companies font-raleway mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">{company.company}</b>
-                                <p class="text-gray-700 font-lato text-sm">
-                                <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in Palm Oil Industry.
-                                </p>
+                                <p class="text-gray-700 font-lato text-sm ml-2">
+                                    <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in 
+                                </p><p class="text-gray-700 font-lato text-sm">Palm Oil Industry.</p>
+                                <b class="relative featured-companies font-raleway mt-3 mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">Related Companies</b>
                             </label>
                         )}
                         {loading ? (

@@ -19,10 +19,10 @@ const CategorySingle = () => {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/categories/${categoryName}`);
+                const response = await fetch(`${ BACKEND_URL }api/categories/${categoryName}`);
                 const data = await response.json();
                 setCompanies(data);
-                const Catresponse = await axios.get(`http://localhost:5000/api/categories`);
+                const Catresponse = await axios.get(`${ BACKEND_URL }api/categories`);
                 setCategories(Catresponse.data);
                 setLoading(false);
             } catch (error) {
@@ -57,7 +57,7 @@ const CategorySingle = () => {
                         <div className="mb-4">              
                             {categories.map((category) => (
                                 <div class="" key={category._id}>
-                                    <Link to={`/categories/${category.name}`} >
+                                    <Link to={`/categories/${category.name.toLowerCase()}`} >
                                         <label class="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
@@ -65,7 +65,7 @@ const CategorySingle = () => {
                         </div>
                     </div>
                     <div className="w-9/12">
-                        <label className="relative featured-companies font-raleway mb-1.5 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">
+                        <label className="capitalize relative featured-companies font-raleway mb-1.5 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">
                             {categoryName}
                         </label>
                         {loading ? (

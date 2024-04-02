@@ -9,6 +9,7 @@ import { logout } from '../slices/authSlice';
 import { BACKEND_URL } from "../constans";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import mobile_logo from '../images/logo-dark.png';
 
 const Header = () => {
   const [email, setEmail] = useState('');
@@ -84,7 +85,7 @@ const Header = () => {
 
   const handleGoogleAuth = () => {
     try {
-      window.location.href = `http://localhost:5000/auth/google/callback`;
+      window.location.href = `${ BACKEND_URL }auth/google/callback`;
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -92,7 +93,7 @@ const Header = () => {
 
   const handleFacebookAuth = () => {
     try {
-      window.location.href = `http://localhost:5000/auth/facebook`;
+      window.location.href = `${ BACKEND_URL }auth/facebook`;
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -109,7 +110,8 @@ const Header = () => {
         <div className="row">
           <div className="py-2">
             <div className="relative">
-              <a href="/"><img src={logo_img} alt="Logo" /></a>
+              <a class="desk-logo" href="/"><img src={logo_img} alt="Logo" /></a>
+              <a class="mobile-logo" href="/"><img src={mobile_logo} alt="Logo" /></a>
             </div>
             <button
               className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
@@ -156,7 +158,7 @@ const Header = () => {
             ) : (
               <>
                 <Link to="/" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">HOME</Link>
-                <Link to="/about" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">ABOUT US</Link>
+                <Link to="/about-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">ABOUT US</Link>
                 <Link to="/companies" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">COMPANIES</Link>
                 <Link to="/register" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">REGISTER</Link>
                 <Link to="/contact" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">CONTACT </Link>

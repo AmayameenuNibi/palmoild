@@ -8,7 +8,7 @@ const CompanySingle = () => {
     
     const fetchCompanyDetails = async (companyName) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/companies/${companyName}`);
+            const response = await fetch(`${ BACKEND_URL }api/companies/${companyName}`);
             const data = await response.json();
             setCompany(data);
         } catch (error) {
@@ -35,7 +35,7 @@ const CompanySingle = () => {
                                         <div className="col-sm-12 col-md-4 bg-c-lite-green user-profile">
                                             <div className="card-block text-center text-white">
                                                 <div className="m-b-25">
-                                                    <img src={`http://localhost:5000/uploads/${company.logo}`} className="img-radius h-full" alt="User-Profile-Image"/>
+                                                    <img src={`${ BACKEND_URL }uploads/${company.logo}`} className="img-radius h-full" alt="User-Profile-Image"/>
                                                 </div>
                                                 <h5 className="f-w-600">{company.company}</h5>
                                                 <p>{company.categoryName}</p>
