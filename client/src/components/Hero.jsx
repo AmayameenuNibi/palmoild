@@ -149,7 +149,7 @@ const HomeScreen = () => {
                                         </p>
                                     ) : (
                                         <p>
-                                            <Link to={`companies/${company.company_slug}`}>
+                                            <Link to={`company/${company.company_slug}`}>
                                                 {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
                                             </Link>
                                         </p>
@@ -175,7 +175,7 @@ const HomeScreen = () => {
                                         </p>
                                     ) : (
                                         <p>
-                                            <Link to={`companies/${company.company_slug}`}>
+                                            <Link to={`company/${company.company_slug}`}>
                                                 {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
                                             </Link>
                                         </p>
@@ -201,7 +201,7 @@ const HomeScreen = () => {
                                         </p>
                                     ) : (
                                         <p>
-                                            <Link to={`companies/${company.company_slug}`}>
+                                            <Link to={`company/${company.company_slug}`}>
                                                 {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
                                             </Link>
                                         </p>
