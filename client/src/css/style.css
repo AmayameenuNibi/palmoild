@@ -1032,4 +1032,7 @@ a.mobile-logo{
       margin: 5px 0px;
       margin-bottom: 0;
   }
+  img.font-lato.text-gray-600.text-sm.p-2 {
+    padding: 0;
+  }
 }

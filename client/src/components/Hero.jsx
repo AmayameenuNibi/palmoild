@@ -25,15 +25,15 @@ const HomeScreen = () => {
             try {
                 const response = await fetch(`${ BACKEND_URL }api/categories/Associate`);
                 const data = await response.json();
-                const limitedData = data.slice(0, 8);
+                const limitedData = data.slice(0, 10);
                 setAssCompanies(limitedData);
                 const responses = await fetch(`${ BACKEND_URL }api/categories/Ordinary`);
                 const datas = await responses.json();
-                const limitedDatas = datas.slice(0, 8);
+                const limitedDatas = datas.slice(0, 10);
                 setOrCompanies(limitedDatas);
                 const responsess = await fetch(`${ BACKEND_URL }api/categories/Affiliate`);
                 const datass = await responsess.json();
-                const limitedDatass = datass.slice(0, 8);
+                const limitedDatass = datass.slice(0, 10);
                 setAffCompanies(limitedDatass);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -142,9 +142,17 @@ const HomeScreen = () => {
                                 <h3>Associate</h3>
                                 {asscompanies.map(company => (
                                     (userInfo ? (
-                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
+                                        <p>
+                                            <Link to={`company/${company.company_slug}`}>
+                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
+                                            </Link>
+                                        </p>
                                     ) : (
-                                        <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                        <p>
+                                            <Link to={`companies/${company.company_slug}`}>
+                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
+                                            </Link>
+                                        </p>
                                     ))
                                 ))}
                                 <a class="viewal" href="/categories/associate"><span>View All</span></a>
@@ -160,12 +168,20 @@ const HomeScreen = () => {
                                 <h3>Ordinary</h3>
                                 {orcompanies.map(company => (
                                     (userInfo ? (
-                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
+                                        <p>
+                                            <Link to={`company/${company.company_slug}`}>
+                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
+                                            </Link>
+                                        </p>
                                     ) : (
-                                        <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                        <p>
+                                            <Link to={`companies/${company.company_slug}`}>
+                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
+                                            </Link>
+                                        </p>
                                     ))
                                 ))}
-                                <a class="viewal" href="/categories/ordinary"><span>View All</span></a>
+                                <a className="viewal" href="/categories/ordinary"><span>View All</span></a>
                             </div>
                         </div>
                     </div>
@@ -178,9 +194,17 @@ const HomeScreen = () => {
                                 <h3>Affiliate</h3>
                                 {affcompanies.map(company => (
                                     (userInfo ? (
-                                        <p><Link to={`company/${company.company_slug}`}>{company.company}</Link></p>
+                                        <p>
+                                            <Link to={`company/${company.company_slug}`}>
+                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
+                                            </Link>
+                                        </p>
                                     ) : (
-                                        <p><Link to={`companies/${company.company_slug}`}>{company.company}</Link></p>
+                                        <p>
+                                            <Link to={`companies/${company.company_slug}`}>
+                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
+                                            </Link>
+                                        </p>
                                     ))
                                 ))}
                                 <a class="viewal" href="/categories/affiliate"><span>View All</span></a>

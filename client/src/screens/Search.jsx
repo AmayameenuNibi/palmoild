@@ -91,23 +91,6 @@ const Search = () => {
       await handleSearch(value, selectedCategories, selectedCountries);
     }
   };
-  
-  const handleCategoryChange = async (categoryId) => {
-    const updatedCategories = selectedCategories.includes(categoryId)
-      ? selectedCategories.filter(id => id !== categoryId)
-      : [...selectedCategories, categoryId];
-    setSelectedCategories(updatedCategories);
-    await handleSearch(searchTerm, updatedCategories, selectedCountries);
-  }; 
-  
-  
-  const handleCountryChange = async (countryId) => {
-    const updatedCountries = selectedCountries.includes(countryId)
-      ? selectedCountries.filter(id => id !== countryId)
-      : [...selectedCountries, countryId];
-    setSelectedCountries(updatedCountries);
-    await handleSearch(searchTerm, selectedCategories, updatedCountries);
-  };
 
   useEffect(() => {
     if(searchTerm === '') {
@@ -155,7 +138,40 @@ const Search = () => {
       console.error('Error toggling favorite:', error);
     }
   };
-  
+
+  const handleCategoryChange = async (categoryId) => {
+    if (categoryId === "All") {
+      if (selectedCategories.length === categories.length) {
+        setSelectedCategories([]);
+      } else {
+        setSelectedCategories(categories.map(category => category._id));
+      }
+      await handleSearch(searchTerm, selectedCategories, selectedCountries);
+    } else {
+      const updatedCategories = selectedCategories.includes(categoryId)
+        ? selectedCategories.filter(id => id !== categoryId)
+        : [...selectedCategories, categoryId];
+      setSelectedCategories(updatedCategories);
+      await handleSearch(searchTerm, updatedCategories, selectedCountries);
+    }    
+  }; 
+    
+  const handleCountryChange = async (countryId) => {
+    if (countryId === "All") {
+      if (selectedCountries.length === countries.length) {
+        setSelectedCountries([]);
+      } else {
+        setSelectedCountries(countries.map(country => country._id));
+      }
+      await handleSearch(searchTerm, selectedCategories, selectedCountries);
+    } else {
+      const updatedCountries = selectedCountries.includes(countryId)
+        ? selectedCountries.filter(id => id !== countryId)
+        : [...selectedCountries, countryId];
+      setSelectedCountries(updatedCountries);
+      await handleSearch(searchTerm, selectedCategories, updatedCountries);
+    }      
+  };
 
   return (
     <div>
@@ -183,22 +199,38 @@ const Search = () => {
         <div className="row listing row-tab">
           <div className="w-3/12 pr-3.5"> 
             <div className="mb-4 max-h-96 overflow-y-auto">
-              <div class="mb-2" key="AllCategories">
-                <input  class="py-1 w-4 inline-block text-sm mr-2"
-                  type="checkbox" 
-                  id="AllCategories" 
-                  name="AllCategories" 
-                  checked={selectedCategories.includes("All")}
-                  onChange={() => handleCategoryChange("All")} />
-                <label class="ml-2 text-gray-600 ml-2 font-lato text-sm tracking-wider font-semibold" htmlFor="AllCategories">All Categories</label>
+            <div className="mb-2" key="AllCategories">
+                <input
+                  className="py-1 w-4 inline-block text-sm mr-2"
+                  type="checkbox"
+                  id="AllCategories"
+                  name="AllCategories"
+                  checked={selectedCategories.length === categories.length}
+                  onChange={() => handleCategoryChange("All")}
+                />
+                <label
+                  className="ml-2 text-gray-600 ml-2 font-lato text-sm tracking-wider font-semibold"
+                  htmlFor="AllCategories"
+                >
+                  All Categories
+                </label>
               </div>
               {categories.map((category) => (
-                <div class="mb-2" key={category._id}>
-                  <input class="py-1  w-4 inline-block text-sm mr-2" type="checkbox" id={category._id} name={category._id}
+                <div className="mb-2" key={category._id}>
+                  <input
+                    className="py-1  w-4 inline-block text-sm mr-2"
+                    type="checkbox"
+                    id={category._id}
+                    name={category._id}
                     checked={selectedCategories.includes(category._id)}
                     onChange={() => handleCategoryChange(category._id)}
                   />
-                  <label class="text-gray-500 ml-2 ml-2 font-lato text-sm tracking-widest" htmlFor={category._id}>{category.name}</label>
+                  <label
+                    className="text-gray-500 ml-2 ml-2 font-lato text-sm tracking-widest"
+                    htmlFor={category._id}
+                  >
+                    {category.name}
+                  </label>
                 </div>
               ))}
             </div>
@@ -207,7 +239,11 @@ const Search = () => {
             </label>
             <div className="mb-4 max-h-96 overflow-y-auto">              
               <div class="mb-2" key="AllCountries">
-                <input class="py-1  w-4 inline-block text-sm mr-2" type="checkbox" id="AllCountries" name="AllCountries" checked={selectedCountries.includes("All")}
+                <input class="py-1  w-4 inline-block text-sm mr-2" 
+                  type="checkbox" 
+                  id="AllCountries" 
+                  name="AllCountries" 
+                  checked={selectedCountries.length === countries.length}
                   onChange={() => handleCountryChange("All")}
                 />
                 <label className="text-gray-500 ml-2 font-lato text-sm tracking-wider" htmlFor="AllCountries">All Countries</label>
