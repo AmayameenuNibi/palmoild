@@ -48,7 +48,7 @@ const CompanyList = () => {
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">
                     <div className="w-3/12"> 
-                        <label className="block text-gray-700 text-lg mb-2 font-raleway ">
+                        <label className="block text-gray-600 text-lg mb-5 font-raleway ">
                             <b>Categories:</b>
                         </label>
                         <div className="mb-4">              
@@ -63,12 +63,12 @@ const CompanyList = () => {
                     </div>
                     <div className="w-9/12">
                         <div className="relative mb-6">
-                            <h4 className="relative featured-companies font-raleway mb-1.5 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">List of Companies</h4>
-                            <div class="row-tab listing featured from-white bg-gradient-to-r from-white to-green-200 border border-slate-500">
+                            <h4 className="relative featured-companies font-raleway mb-5 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">List of Companies</h4>
+                            <div class="row-tab listing featured">
                             {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                                 <>
                                     {featuredCompanies.map((featured, index) => (
-                                        <div key={featured._id} class="border-b-2 border-l-4 p-3 m-1.5 mb-3 ml-0 border-green-500 flex items-center">
+                                        <div key={featured._id} class="p-4 flex items-center from-white bg-gradient-to-r from-white to-green-200">
                                         <div class="w-8/12 inline-block">
                                           <div class="relative">
                                             <div class="featr">

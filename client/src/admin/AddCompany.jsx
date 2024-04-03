@@ -173,7 +173,7 @@ const AddCompany = () => {
         <div className="relative bg-white  p-8 md:p-12 my-10">                
             <form className="bg-white company-row" onSubmit={handleFormSubmit} encType="multipart/form-data">
                 <div>
-                    <h3 className="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded">Create Company</h3>
+                    <h3 className="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-3 rounded inline-block mb-4">Create Company</h3>
                 </div>
                 {!formData.logo ? 
                     <>                    
@@ -360,27 +360,31 @@ const AddCompany = () => {
                 </div>
                 <div>
                     {staff.map((staffMember, index) => (
-                        <div key={index} style={{ border: '1px solid #000', borderRadius: '5px' }}>
+                        <div key={index} className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline">
                             <input
                                 type="text"
+                                className="focus:outline-none focus:shadow-outline"
                                 name="name"
                                 value={staffMember.name}
                                 onChange={(e) => handleChange(e, index)}
                                 placeholder="Name" />
                             <input
                                 type="email"
+                                className="focus:outline-none focus:shadow-outline"
                                 name="email"
                                 value={staffMember.email}
                                 onChange={(e) => handleChange(e, index)}
                                 placeholder="Email" />
                             <input
                                 type="tel"
+                                className="focus:outline-none focus:shadow-outline"
                                 name="mobile"
                                 value={staffMember.mobile}
                                 onChange={(e) => handleChange(e, index)}
                                 placeholder="Mobile" />
                             <input
                                 type="text"
+                                className="focus:outline-none focus:shadow-outline"
                                 name="designation"
                                 value={staffMember.designation}
                                 onChange={(e) => handleChange(e, index)}

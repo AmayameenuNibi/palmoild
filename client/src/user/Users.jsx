@@ -49,10 +49,10 @@ const Users = () => {
       <div className="relative block w-3/4 px-10 mb-5 mt-5 text-right">        
         <ul className="flex text-right">
           <li className={activeTab === 'active' ? 'active-tab' : ''}>
-            <button class="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded" className={`user-tab-btn ${activeTab === 'active' ? 'active' : ''}`} onClick={() => handleTabChange('active')}>Active Users</button>
+            <button class="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded" className={`text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-4 rounded inline-block mb-4 ${activeTab === 'active' ? 'active' : ''}`} onClick={() => handleTabChange('active')}>Active Users</button>
           </li>
           <li className={activeTab === 'inactive' ? 'active-tab' : ''}>
-            <button class="text-gray-700 font-raleway px-3 py-1.5 text-sm bg-gray-200 mt-5 rounded" className={`user-tab-btn ${activeTab === 'inactive' ? 'active' : ''}`} onClick={() => handleTabChange('inactive')}>Inactive Users</button>
+            <button class="text-gray-700 font-raleway px-3 py-1.5 text-sm bg-gray-200 mt-5 rounded" className={`text-gray-700 font-raleway px-3 py-1.5 text-sm bg-green-200 mt-4 rounded inline-block mb-4 ${activeTab === 'inactive' ? 'active' : ''}`} onClick={() => handleTabChange('inactive')}>Inactive Users</button>
           </li>
         </ul>
       </div>

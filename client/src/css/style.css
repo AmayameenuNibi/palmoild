@@ -680,22 +680,23 @@ form.bg-white.company-row button {
   margin-top: 30px;
 }
 }
-
-.row-tab.listing.featured.from-white.bg-gradient-to-r.from-white.to-green-200.border.border-slate-500 {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0) 25%, #d1facf 100%);
-  border: 0;
+.bg-cream {
+  background: #f2f2f2;
 }
-
+.from-white.bg-gradient-to-r.from-white.to-green-200 {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 25%, #d1facf 100%);
+  border: 1px solid #D6E2EB;
+  border-left: 3px solid #01A66C;
+  margin-bottom: 5px;
+}
 .row-tab.listing.featured.from-white.bg-gradient-to-r.from-white.to-green-300.border.border-slate-500 {
   background: linear-gradient(to right, rgba(255, 255, 255, 0) 25%, rgba(125, 225, 7, 0.26) 100%);
   border: 0;
 }
-
 .half {
   width: 50%;
   display: inline-block;
 }
-
 input.button.nomargin {
   display: inline-block;
   position: relative;
@@ -1001,14 +1002,34 @@ a.mobile-logo{
     color: #000;
     width: 100%;
     border-bottom: 1px solid #e2e2e2;
-    padding: 10px 25px;
+    padding: 10px;
   }
   .bg-orange-600  a.popup {
     background: #fff;
     text-align: left;
-    padding-left: 25px;
+    padding-left: 10px;
   }
   .listing.row-tab.my-3 {
     padding: 0!important;
+  }
+  .row.responsive_ {
+    display: inline-block;
+    padding: 0 20px;
+  }
+  .row.responsive_ .relative.logoim {
+      text-align: center;
+  }
+  .row.responsive_ a.mobile-logo {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+  }
+  .row.responsive_ button {
+      padding: 15px 5px;
+      width: 100%;
+      border-top: 1px solid #f2f2f2;
+      border-bottom: 1px solid #f2f2f2;
+      margin: 5px 0px;
+      margin-bottom: 0;
   }
 }

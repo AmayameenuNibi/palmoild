@@ -305,6 +305,10 @@ export const searchCompanies = asyncHandler(async (req, res) => {
   const searchTerm = req.query.term;
   const category_id = req.query.category_id;
   const country_id = req.query.country_id;
+  console.log("cat");
+  console.log(category_id);
+  console.log("country_id");
+  console.log(country_id);
   const pipeline = [
     {
       $search: {
@@ -374,10 +378,11 @@ export const searchCompanies = asyncHandler(async (req, res) => {
     },
   ];
 
-  if (searchTerm !== '') {
+  if (searchTerm !== '') {    
     if (category_id !== '' && category_id !== 'All' && country_id !== '' && country_id !== 'All') {
-        const categoryIds = category_id.split(',').map(id => id.trim()); // Split and trim the category_id string into an array
-        const countryIds = country_id.split(',').map(id => id.trim()); // Split and trim the country_id string into an array
+        console.log("1");  
+        const categoryIds = category_id.split(',').map(id => id.trim()); 
+        const countryIds = country_id.split(',').map(id => id.trim()); 
         const result = await Company.aggregate(pipeline);
         const results = result
             .filter(company => 
@@ -402,6 +407,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             }));
         res.json(results);
     } else if (country_id !== '' && country_id !== 'All') {
+        console.log("2");  
         const result = await Company.aggregate(pipeline);
         const results = result
             .filter(company => country_id.split(',').includes(String(company.country_id)))
@@ -425,6 +431,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             }));
         res.json(results);
     } else if (category_id !== '' && category_id !== 'All') {
+        console.log("3");  
         const categoryIds = category_id.split(',').map(id => id.trim()); // Split and trim the category_id string into an array
         const result = await Company.aggregate(pipeline);
         const results = result
@@ -449,10 +456,12 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             }));
         res.json(results);
     } else {
+        console.log("4");  
         const result = await Company.aggregate(pipeline);
         res.json(result);
     }    
   } else if (category_id !== '' && category_id !== 'All') {
+      console.log("5");  
       if (country_id !== '' && country_id !== 'All' && category_id !== '' && category_id !== 'All') {
           const companies = await Company.find({ country_id: { $in: country_id.split(',').map(id => id.trim()) }, category_id: { $in: category_id.split(',').map(id => id.trim()) } })
               .populate('category_id', 'name')
@@ -477,6 +486,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           }));
           res.json(result);
       } else {
+        console.log("6");  
           const companies = await Company.find({ category_id: { $in: category_id.split(',').map(id => id.trim()) } })
               .populate('category_id', 'name')
               .populate('country_id', 'name'); 
@@ -501,6 +511,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           res.json(result);
       }    
   } else if (country_id !== '' && country_id !== 'All') {
+    console.log("7");  
       const companies = await Company.find({ country_id: { $in: country_id.split(',').map(id => id.trim()) } })
           .populate('category_id', 'name')
           .populate('country_id', 'name'); 
@@ -524,6 +535,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
       }));
       res.json(result);
   } else if (country_id === 'All' && category_id === 'All') {
+    console.log("8");  
       const companies = await Company.find()
           .populate('category_id', 'name')
           .populate('country_id', 'name'); 
