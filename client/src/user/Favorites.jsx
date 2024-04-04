@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { BACKEND_URL } from "../constans";
 import '../css/spinner.css'
+import { Helmet } from 'react-helmet';
 
 const Favorites = () => {
     const { userInfo } = useSelector((state) => state.auth);
@@ -43,6 +44,9 @@ const Favorites = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Favorites</title>
+            </Helmet>
             {loading ? (
                 <div className="spinner"></div>
             ) : (

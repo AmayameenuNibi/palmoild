@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BACKEND_URL } from '../constans';
+import { Helmet } from 'react-helmet';
 
 const UserCompany = () => {
   const { userInfo } = useSelector((state) => state.auth);

@@ -1,9 +1,13 @@
 import React from 'react';
 import background from '../images/vlo.jpg'
+import { Helmet } from 'react-helmet';
 
 const ContactScreen = () => {
     return (
       <div>
+        <Helmet>
+          <title>Contact Us</title>
+        </Helmet>
 	    <section className="bg-white border-b py-8" id="about">
 		    <div className="container max-w-5xl mx-auto">
           <div className="w-full mb-4">

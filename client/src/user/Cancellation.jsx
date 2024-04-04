@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import background from '../images/vlo.jpg'
 import { BACKEND_URL } from "../constans";
+import { Helmet } from 'react-helmet';
 
 const Cancellation = () => {
   const [cancellationData, setcancellationData] = useState('');
@@ -21,6 +22,9 @@ const Cancellation = () => {
 
   return (
     <div>
+      <Helmet>
+          <title>Cancellation</title>
+      </Helmet>
 	    <section className="bg-white border-b py-8" id="about">
 		    <div className="container max-w-5xl mx-auto">
           <div className="w-full mb-4">

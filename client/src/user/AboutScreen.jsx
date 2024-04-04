@@ -1,10 +1,13 @@
 import React from 'react';
 import background from '../images/vlo.jpg'
+import { Helmet } from 'react-helmet';
 
 const AboutScreen = () => {
   return (
     <div>
-      
+      <Helmet>
+          <title>About Us</title>
+      </Helmet>
 	    <section className="bg-white border-b py-8" id="about">
 		    <div className="container max-w-5xl mx-auto">
           <h2 className="w-full my-2 text-5xl font-semibold font-raleway text-center text-gray-800 abt relative inline-block">

@@ -266,19 +266,6 @@ export const getCompanyDetails = asyncHandler(async (req, res) => {
     return res.status(404).json({ error: 'Company not found' });
   }
   res.status(200).json(companyDetails[0]);
-  res.send(`
-    <html>
-      <head>
-        <title>User Profile</title>
-        <meta name="description" content="User Profile Page">
-        <!-- Add more meta tags as needed -->
-      </head>
-      <body>
-        <h1>Welcome, ${user.username}!</h1>
-        <!-- Render user profile content here -->
-      </body>
-    </html>
-  `);
 });
 
 //...........Getting Single Company Data using ID...........
