@@ -10,6 +10,9 @@ import { BACKEND_URL } from "../constans";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import mobile_logo from '../images/logo-dark.png';
+import fb from '../images/fb.png';
+import link from '../images/link.png';
+import goog from '../images/goog.png';
 
 const Header = () => {
   const [email, setEmail] = useState('');
@@ -55,7 +58,8 @@ const Header = () => {
         const res = await login({ email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
         closePopup();
-        navigate('/');
+        console.log('search');
+        navigate('/search');
         setEmail('');
         setPassword('');
         toast.success('Login Successful');
@@ -110,8 +114,8 @@ const Header = () => {
         <div className="row responsive_">
           <div className="responsive-head">
             <div className="relative logoim">
-              <a class="desk-logo" href="/"><img src={logo_img} alt="Logo" /></a>
-              <a class="mobile-logo" href="/"><img src={mobile_logo} alt="Logo" /></a>
+              <a className="desk-logo" href="/"><img src={logo_img} alt="Logo" /></a>
+              <a className="mobile-logo" href="/"><img src={mobile_logo} alt="Logo" /></a>
             </div>
             <button
               className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
@@ -123,8 +127,8 @@ const Header = () => {
             </button>
           </div>
           </div>
-          <div class="bg-orange-600 ">
-          <div class="row responsive_">
+          <div className="bg-orange-600 ">
+          <div className="row responsive_">
           <nav className={`${ isOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row md:items-center md:justify-end pb-4 md:pb-0`}>
             {userInfo ? (
               <>
@@ -169,62 +173,70 @@ const Header = () => {
         </div>
         </div>
         <section className="popmeup" id="loginme">
-          <div className="relative bg-white max-w-lg mx-auto p-8 md:p-12 my-10  shadow-2xl">
+          <div className="relative bg-white w-5/12 mx-auto p-8 md:p-12 my-10  shadow-2xl">
             <button
                 className="close px-5 py-3 mt-2 text-sm text-center bg-white text-gray-800 font-bold text-2xl"
                 onClick={closePopup} > X 
             </button>
             <div>
-              <h3 className="font-bold text-2xl">Members Login</h3>
-            </div>	  
+              <h3 className="font-bold text-2xl text-center font-raleway">Members Login</h3>
+            </div>
             <div className="mt-10">
-              <form className="flex flex-col"  onSubmit={submitHandler}>
-                <div className="mb-6 pt-3 rounded bg-gray-200">
-                  <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="email" > Email </label>
-                  <input 
-                    name="email"
-                    type="text" 
-                    id="email" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
-                    {emailError && <p className="text-red-500 text-xs italic">{emailError}</p>}
-                </div>
-                <div className="mb-6 pt-3 rounded bg-gray-200">
-                  <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="password" > Password </label>
-                  <input 
-                    type="password" 
-                    id="password" 
-                    name="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
-                    {passwordError && <p className="text-red-500 text-xs italic">{passwordError}</p>}
-                </div>
-                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"type="submit">
-                  Sign In
-                </button>                
-              </form>
-              <div className="flex flex-col">
-                <label className="mt-3 right-label" onClick={handleClick}>Forget password?</label>
-                <button
+              <div className="text-center">
+              <button
                     type="submit"
-                    className="bg-red-600 text-white px-6 py-5 rounded-md mt-4 hover:bg-red-700"
-                    onClick={handleGoogleAuth}>
+                    className="w-3.5/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"
+                    onClick={handleGoogleAuth}> <img src={goog} alt="Google" className="pr-2"/>
                     Sign in with Google
                   </button>
                   <button
                     type="submit"
-                    className="bg-red-600 text-white px-6 py-5 rounded-md mt-4 hover:bg-blue-700">
+                    className="w-3.5/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"> 
+                    <img src={link} alt="Linked In" className="pr-2"/>
                       Sign in with LinkedIn
                   </button>
                   <button
                     type="submit"
-                    className="bg-red-600 text-white px-6 py-5 rounded-md mt-4 hover:bg-darkblue-700"
-                    onClick={handleFacebookAuth}>
+                    className="text-center w-3.5/12 rounded-md border font-raleway text-gray-600 text-sm mx-2 px-6 py-3 mt-4 mb-4 sig font-semibold"
+                    onClick={handleFacebookAuth}> <img src={fb} alt="Facebook" className="pr-2"/>
                     Sign in with Facebook
                   </button>
+              </div>
+              <div className="or_with mx-5 text-center relative my-5">
+                <p className="font-lato text-sm text-gray-500">Or with email</p>
+              </div>
+              <form className="flex flex-col flex-respn"  onSubmit={submitHandler}>
+                <div className="mb-2 pt-3 flex">
+                  <input 
+                    htmlFor="email" 
+                    name="email"
+                    type="text" 
+                    id="email" 
+                    placeholder='Email'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold mx-5"/>
+                    {emailError && <p className="text-red-500 text-xs italic">{emailError}</p>}
                 </div>
+                <div className="mb-3 pt-3 flex">
+                  <input 
+                    type="password" 
+                    htmlFor="password"
+                    id="password" 
+                    placeholder='Password'
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold mx-5"/>
+                    {passwordError && <p className="text-red-500 text-xs italic">{passwordError}</p>}
+                </div>
+              <div className="flex flex-col text-right">
+                <label className="mx-5 mb-8 font-lato text-green-600 text-sm" onClick={handleClick}>Forget password?</label>
+              </div>
+                <button className="mx-5 text-raleway text-sm bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md shadow-lg hover:shadow-xl transition duration-200" type="submit">
+                  Sign In
+                </button>                
+              </form>
             </div>
           </div>
         </section>  

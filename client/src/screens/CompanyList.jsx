@@ -63,7 +63,6 @@ const CompanyList = () => {
                     </div>
                     <div className="w-9/12">
                         <div className="relative mb-6">
-                            <h4 className="relative featured-companies font-raleway mb-5 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">List of Companies</h4>
                             <div class="row-tab listing featured">
                             {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                                 <>

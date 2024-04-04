@@ -199,8 +199,8 @@ flex-direction: column;
 .container-02:after {
 content: '';
 position: absolute;
-top: 0;
-left: 0;
+top: 7px;
+left: 21px;
 width: 100%;
 height: 100%;
 background: linear-gradient(#4CAF50, #009688);
@@ -267,6 +267,8 @@ color: rgb(102 102 102 / 20%);
 font-size: 1.8em;
 color: #000;
 z-index: 1;
+line-height: 1.2em;
+margin-bottom: 5px;
 }
 .container-02 .glassmorphic-card .contentBox p {
 font-size: 1em;
@@ -884,6 +886,44 @@ a.mobile-logo{
   z-index: 555;
   position: relative;
 }
+button.let {
+  display: inline;
+}
+button.let img {
+  width: 18px;
+  display: inline-block;
+}
+.sig{
+  display: inline;
+}
+.sig img{
+  display: inline-block;
+  width: 22px;
+}
+.or_with:after {
+  content: "";
+  position: absolute;
+  width: 42%;
+  height: 1px;
+  background: #ebebeb;
+  right: 0;
+  top: 50%;
+}
+.or_with:before {
+  content: "";
+  position: absolute;
+  width: 42%;
+  height: 1px;
+  background: #ebebeb;
+  left: 0;
+  top: 50%;
+}
+.social_bt {
+  text-align: justify;
+}
+.w-3\.4\/12 {
+  width: 32%;
+}
 @media only screen and (max-width: 720px) {
   .table-responsive {
       width: 100%;
@@ -1103,6 +1143,28 @@ a.mobile-logo{
   }
   .related_lab .listing.row-tab {
       line-height: 0px;
-      padding: 5px 0px!important;
+      padding: 1px 0px!important;
+  }
+  .search span.w-3\/12.text-right.inline-block {
+    text-align: center;
+  }
+  .sig {
+    width: 100%;
+    margin-left: 0;
+  }
+  .or_with:after {
+    width: 30%;
+  }
+  .or_with:before {
+    width: 30%;
+  }
+  form.flex.flex-col.flex-respn input {
+    margin: 0;
+  }
+  form.flex.flex-col.flex-respn button {
+      margin: 0;
+  }
+  form.flex.flex-col.flex-respn label {
+      margin-right: 0;
   }
 }

@@ -86,7 +86,7 @@ const CompanySingles = () => {
                                     <>
                                         {currentCompanies.map((company, index) => (
                                             <div className="listing row-tab" key={company._id}>
-                                                <div className="w-8/12 inline-block my-2">
+                                                <div className="w-8/12 inline-block">
                                                     <div className="first_top">
                                                         <div className="white_">
                                                             <h3 class="text-gray-800 text-gray-700 font-lato text-sm">

@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import * as XLSX from 'xlsx';
 import { BACKEND_URL } from '../constans';
 import '../css/spinner.css';
+import buttonimage from '../images/download.png';
 
 const Search = () => {
   const [loading, setLoading] = useState(true);
@@ -26,21 +27,11 @@ const Search = () => {
   const currentCompanies = companies.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
-    const checkIsFavorite = async () => {
-      try {
-        const response = await axios.get(`${ BACKEND_URL }api/favorites/check/${selectedCompany._id}/${userInfo._id}`);
-        const result = response.data.isFavorite;
-        setIsFavoriteCompany(result === "favorite");
-      } catch (error) {
-        console.error('Error checking favorite:', error);
-      }
-    };
-  
-    if (selectedCompany) {
-      checkIsFavorite();
+    if(searchTerm === '') {
+      fetchCompanies();
     }
-  }, [selectedCompany, userInfo]);
-  
+  }, []);
+
   const fetchCompanies = async () => {
     try {
       const response = await axios.get(`${ BACKEND_URL }api/companies`);
@@ -58,6 +49,23 @@ const Search = () => {
     }
   };
 
+  useEffect(() => {
+    const checkIsFavorite = async () => {
+      try {
+        const response = await axios.get(`${ BACKEND_URL }api/favorites/check/${selectedCompany._id}/${userInfo._id}`);
+        const result = response.data.isFavorite;
+        setIsFavoriteCompany(result === "favorite");
+      } catch (error) {
+        console.error('Error checking favorite:', error);
+      }
+    };
+  
+    if (selectedCompany) {
+      checkIsFavorite();
+    }
+  }, [selectedCompany, userInfo]);
+  
+  
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
@@ -90,13 +98,7 @@ const Search = () => {
     } else {
       await handleSearch(value, selectedCategories, selectedCountries);
     }
-  };
-
-  useEffect(() => {
-    if(searchTerm === '') {
-      fetchCompanies();
-    }
-  }, []);
+  };  
 
   const handleSearch = async (searchTerm, selectedCategories, selectedCountries) => {
     try {
@@ -177,22 +179,22 @@ const Search = () => {
     <div>
       <div className="desktop-1 pt-7 respons_search">
         <div className="row">
-          <div class="w-3/12 pr-3.5">
-            <h4 class="font-raleway mb-3.5 text-lg font-semibold text-gray-600">Refine Your Results</h4>
+          <div className="w-3/12 pr-3.5">
+            <h4 className="font-raleway mb-3.5 text-lg font-semibold text-gray-600">Refine Your Results</h4>
           </div>
           <div className="w-9/12 px-4 search pr-0">          
             <input 
-              class="text-sm px-2.5 py-2 mb-2 text-gray-400 border border-gray-400 w-10/12 rounded-sm font-lato border-r-0"
+              className="text-sm px-2.5 py-2 mb-2 text-gray-400 border border-gray-400 w-9/12 rounded-sm font-lato"
               type="text"
               value={searchTerm}
               onChange={handleInputChange}
               placeholder="Products, Companies" />
-            <span class="w-2/12 text-right"><i class="icon-email2"></i><button 
-              class="bg-lime-500 text-white text-xsm px-2.5  py-2 border border-lime-500 hover:bg-green-500 rounded-r" 
+            <span className="w-3/12 text-right inline-block"><i className="icon-email2"></i><button 
+              className="bg-lime-500 text-white text-sm px-5 mx-1 py-2 border border-lime-500 hover:bg-green-500 rounded" 
               onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
               Search
             </button>
-            <button class="text-xsm px-2.5 py-2 text-gray-800 border border-gray-200 border-l-0 rounded" onClick={downloadSearchResultsAsExcel}>Excel</button></span>
+            <button className="let bg-slate-50 text-sm mx-1 px-5 py-2 text-gray-800 border border-gray-200 rounded hover:text-gray-500" onClick={downloadSearchResultsAsExcel}><img src={buttonimage} alt="download" /> Export</button></span>
           </div>
         </div>
         
@@ -238,8 +240,8 @@ const Search = () => {
                 <b>Countries:</b>
             </label>
             <div className="mb-4 max-h-96 overflow-y-auto">              
-              <div class="mb-2" key="AllCountries">
-                <input class="py-1  w-4 inline-block text-sm mr-2" 
+              <div className="mb-2" key="AllCountries">
+                <input className="py-1  w-4 inline-block text-sm mr-2" 
                   type="checkbox" 
                   id="AllCountries" 
                   name="AllCountries" 
@@ -249,8 +251,8 @@ const Search = () => {
                 <label className="text-gray-500 ml-2 font-lato text-sm tracking-wider" htmlFor="AllCountries">All Countries</label>
               </div>
               {countries.map((country) => (
-                <div class="mb-2" key={country._id}>
-                  <input class="py-1  w-4 inline-block text-sm mr-2" type="checkbox" id={country._id} name={country._id}
+                <div className="mb-2" key={country._id}>
+                  <input className="py-1  w-4 inline-block text-sm mr-2" type="checkbox" id={country._id} name={country._id}
                     checked={selectedCountries.includes(country._id)}
                     onChange={() => handleCountryChange(country._id)}
                   />
@@ -262,24 +264,24 @@ const Search = () => {
           <div className="w-9/12 px-4 pr-0">
             <div className="favourites-container relative">
               <h4 className="text-lg z-10 mt-2 relative featured-companies font-raleway mb-2  font-semibold text-gray-600 bg-white pr-1.5 inline-block">Featured Companies</h4>
-              <div class="row-tab listing featured from-white bg-gradient-to-r from-white to-green-300 border border-slate-500">
+              <div className="row-tab listing featured from-white bg-gradient-to-r from-white to-green-300 border border-slate-500">
               {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                 <>
                     {featuredCompanies.map((featured, index) => (
-                      <div key={featured._id} class="border-b-1 border-l-4 p-3 m-1.5 mb-3 ml-0 border-gray-400">
-                        <div class="w-8/12 inline-block">
-                          <div class="relative">
-                            <div class="white_">
-                              <h3 class="font-lato text-black font-bold">
-                                <button class="text-md font-lato text-gray-900 font-semibold hover:underline " onClick={() => handleCompanyClick(featured)}>
+                      <div key={featured._id} className="border-b-1 border-l-4 p-3 m-1.5 mb-3 ml-0 border-gray-400">
+                        <div className="w-8/12 inline-block">
+                          <div className="relative">
+                            <div className="white_">
+                              <h3 className="font-lato text-black font-bold">
+                                <button className="text-md font-lato text-gray-900 font-semibold hover:underline " onClick={() => handleCompanyClick(featured)}>
                                     {featured.company}
                                 </button></h3>
                             </div>
                           </div>
                         </div>
-                        <div class="w-4/12 inline-block text-right">
-                            <div class="brown">
-                                <h3 class="text-md font-lato font-semibold text-gray-900">Featured</h3>
+                        <div className="w-4/12 inline-block text-right">
+                            <div className="brown">
+                                <h3 className="text-md font-lato font-semibold text-gray-900">Featured</h3>
                             </div>
                         </div>
                       </div> 
@@ -303,7 +305,7 @@ const Search = () => {
                             <div className="white_ p-2.5">
                               <h3>
                                 <b>
-                                  <button class="font-lato hover:underline text-gray-600 text-sm" onClick={() => handleCompanyClick(company)}>
+                                  <button className="font-lato hover:underline text-gray-600 text-sm" onClick={() => handleCompanyClick(company)}>
                                     {company.company}
                                   </button>
                                 </b>
@@ -314,7 +316,7 @@ const Search = () => {
                         <div className="w-4/12 inline-block text-right">
                           <div className="second_left"></div>
                           <div className="brown">
-                            <h3 class="font-lato hover:underline text-gray-600 text-sm">{company.categoryName}</h3>
+                            <h3 className="font-lato hover:underline text-gray-600 text-sm">{company.categoryName}</h3>
                           </div>
                         </div>
                       </div>

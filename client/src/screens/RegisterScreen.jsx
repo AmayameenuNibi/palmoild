@@ -8,6 +8,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import emailjs from '@emailjs/browser';
 import { BACKEND_URL } from "../constans";
+import fb from '../images/fb.png';
+import link from '../images/link.png';
+import goog from '../images/goog.png';
 
 const RegisterScreen = () => {
   const form = useRef();
@@ -234,6 +237,29 @@ const RegisterScreen = () => {
       <section class="bg-white">
         <div class="container mx-auto my-0 w-8/12 pt-10">
           <h2 class="text-xl text-gray-600 mb-10">Register</h2>
+          <div class="social_bt">
+              <button
+                    type="submit"
+                    className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mr-2 mt-4 sig font-semibold"
+                    > <img src={goog} alt="Google" class="pr-2"/>
+                    Sign in with Google
+                  </button>
+                  <button
+                    type="submit"
+                    className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"> 
+                    <img src={link} alt="Linked In" class="pr-2"/>
+                      Sign in with LinkedIn
+                  </button>
+                  <button
+                    type="submit"
+                    className="text-center w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm ml-2 px-6 py-3 mt-4 mb-4 sig font-semibold"
+                   > <img src={fb} alt="Facebook" class="pr-2"/>
+                    Sign in with Facebook
+                  </button>
+              </div>
+              <div className="or_with mx-5 text-center relative my-5">
+                <p className="font-lato text-sm text-gray-500">Or with email</p>
+              </div>
           <form ref={form}  onSubmit={handleSubmit}>
             <div class="w-6/12 inline-block pr-4 pb-4">
               <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
@@ -277,7 +303,7 @@ const RegisterScreen = () => {
                 value={formData.address}
                 onChange={handleInputChange}
                 class="w-full rounded border h-10 font-lato text-gray-600 text-2sm"/>
-                {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
+                {validationErrors.address && <p className="text-red-500 text-xs italic">{validationErrors.address}</p>}
             </div>
             <div class="w-6/12 inline-block pr-4 pb-4">
               <label className="pb-2 block text-sm font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Country" > Country <span class="text-red-500 text-xs">*</span></label>
@@ -334,23 +360,6 @@ const RegisterScreen = () => {
             </div>
             <div class="col-sm-5 mt-10"><input class="button nomargin" type="submit" name="yt0" value="Signup"></input></div>
           </form>
-          <div className="flex flex-col" >                  
-            <button
-              type="submit"
-              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-red-700">
-              Sign in with Google
-            </button>
-            <button
-              type="submit"
-              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700">
-                Sign in with LinkedIn
-            </button>
-            <button
-              type="submit"
-              className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 mb-4 hover:bg-blue-900">
-              Sign in with Facebook
-            </button>
-          </div>
         </div>
       </section> 
     </div> 
