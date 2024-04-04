@@ -49,7 +49,7 @@ const CompanySingles = () => {
     return (
         <div>
             <Helmet>
-                <title>{company.company}</title>
+                <title>{companyName}</title>
             </Helmet>
             <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
