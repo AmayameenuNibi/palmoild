@@ -216,7 +216,7 @@ z-index: 1;
 width: 320px;
 min-height: 600px;
 padding: 40px 30px;
-margin: 28px;
+margin: 5px 20px;
 box-shadow: 20px 20px 50px rgba(0,0,0, 0.5);
 border-radius: 15px;
 border-top: 1px solid rgba(255,255,255,0.5);
@@ -872,6 +872,18 @@ h3.fe {
 a.mobile-logo{
   display: none;
 }
+.images-.absolute.w-full.-mt-12.lg\:-mt-24 {
+  z-index: 1;
+  margin-top: -10rem;
+}
+.max-w-screen-xl.px-8.mx-auto.flex.flex-col.lg\:flex-row.items-start {
+  z-index: 55;
+  position: relative;
+}
+.md\:flex.mt-10.md\:space-x-10.items-start {
+  z-index: 555;
+  position: relative;
+}
 @media only screen and (max-width: 720px) {
   .table-responsive {
       width: 100%;
@@ -888,6 +900,7 @@ a.mobile-logo{
   ul.pagination li {
     display: inline-block;
     margin: 0 1px;
+    padding: 0;
   }
   ul.pagination li a {
     line-height: 38px;
@@ -1011,6 +1024,17 @@ a.mobile-logo{
   }
   .listing.row-tab.my-3 {
     padding: 0!important;
+    line-height: 15px;
+  }
+  form.bg-white {
+    text-align: center;
+  }
+  .my-10 {
+    margin: 10px 0px;
+  }
+  form.bg-white button {
+      width: 100%;
+      margin-top: 8px;
   }
   .row.responsive_ {
     display: inline-block;
@@ -1034,5 +1058,51 @@ a.mobile-logo{
   }
   img.font-lato.text-gray-600.text-sm.p-2 {
     padding: 0;
+  }
+  .bg-white .container {
+    padding: 0px 20px;
+  }
+  .bg-white .container {
+    padding: 0px 20px;
+  }
+  .foot .flex.items-center.text-gray-400.text-sm.justify-center {
+      padding: 0 10px;
+      display: block;
+  }
+  .foot .flex.items-center.text-gray-400.text-sm.justify-center a {
+    display: inline-block;
+    margin-top: 5px;
+  }
+  .mb-10 {
+    margin-bottom: 15px;
+  }
+  .mb-4 {
+      margin-bottom: auto;
+  }
+  .mt-10 {
+      margin-top: 15px;
+  }
+  .respons_search .w-8\/12 {
+    width: 66.666667%;
+  }
+  .respons_search .w-4\/12 {
+    width: 33.3333333%;
+  }
+  .respons_search .w-9\/12.px-4.pr-0 {
+    padding-left: 0;
+  }
+  .white_.p-2\.5 {
+    padding: 0 0px;
+  }
+  .related_lab .w-8\/12.inline-block.my-2 {
+    margin: 0;
+    padding: 0;
+  }
+  .related_lab {
+      margin-top: 10px;
+  }
+  .related_lab .listing.row-tab {
+      line-height: 0px;
+      padding: 5px 0px!important;
   }
 }

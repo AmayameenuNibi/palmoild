@@ -4,6 +4,7 @@ import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import { BACKEND_URL } from "../constans";
+import { Helmet } from 'react-helmet';
 
 const CompanySingles = () => {
     const { companyName } = useParams();
@@ -47,6 +48,9 @@ const CompanySingles = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>{companyName}</title>
+            </Helmet>
             <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">
@@ -64,7 +68,7 @@ const CompanySingles = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="w-9/12">
+                    <div className="w-9/12 related_lab">
                         {company && (
                             <label className="">
                                 <b class="relative featured-companies font-raleway mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">{company.company}</b>

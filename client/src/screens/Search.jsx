@@ -175,7 +175,7 @@ const Search = () => {
 
   return (
     <div>
-      <div className="desktop-1 pt-7">
+      <div className="desktop-1 pt-7 respons_search">
         <div className="row">
           <div class="w-3/12 pr-3.5">
             <h4 class="font-raleway mb-3.5 text-lg font-semibold text-gray-600">Refine Your Results</h4>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { BACKEND_URL } from "../constans";
+import { Helmet } from 'react-helmet';
 
 const CompanySingle = () => {
     const { companyName } = useParams();
@@ -25,9 +26,12 @@ const CompanySingle = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>{companyName}</title>
+            </Helmet>
             {company && (
                 <div className="page-content page-container" id="page-content">
-                    <div className="padding">
+                    <div className="padding desktop-1 pt-7">
                         <div className="row container d-flex justify-content-center">
                             <div className="col-xl-6 col-md-12">
                                 <div className="card user-card-full">
@@ -44,45 +48,45 @@ const CompanySingle = () => {
                                                 <a href={company.linkedin_url} className="social_"><i className="fa-brands fa-linkedin-in"></i></a>
                                                 <a href={company.insta_url} className="social_"><i className="fa-brands fa-instagram"></i></a>
                                                 <div className="cnt-code">
-                                                    <a className="f-w-600 f-r">Country</a>
-                                                    <a className="f-r">{company.countryName}</a>
-                                                    <a className="f-w-600 f-r">Member since</a>
-                                                    <a className="f-r">{createdAtDateString}</a>
+                                                    <a className="block text-gray-700 text-2sm mb-2 font-raleway ">Country</a>
+                                                    <a className="block text-gray-700 text-2sm mb-2 font-raleway ">{company.countryName}</a>
+                                                    <a className="block text-gray-700 text-2sm mb-2 font-raleway ">Member since</a>
+                                                    <a className="block text-gray-700 text-2sm mb-2 font-raleway ">{createdAtDateString}</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="col-sm-12 col-md-8">
                                             <div className="card-block">
-                                                <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Profile { company.status ? <span className="green flo">Active</span> : <span className="red flo">Inactive</span> }</h6>
+                                                <h6 className="text-justify text-gray-600 mb-3 font-lato text-xl">Profile { company.status ? <span className="green flo">Active</span> : <span className="red flo">Inactive</span> }</h6>
                                                 <div className="">
                                                     <div className="col-sm-12">
-                                                        <p className="m-b-10 f-w-600 text-justify">{company.profile}</p>
+                                                        <p className="block text-gray-700 text-2sm mb-2 font-raleway text-justify">{company.profile}</p>
                                                     </div>
                                                 </div>
-                                                <h6 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Information</h6>
+                                                <h6 className="block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">Information</h6>
                                                 <div className="row">
                                                     {company.mobile && (
                                                         <div className="col-sm-6">
-                                                            <p className="m-b-10 f-w-600">Phone</p>
-                                                            <a className="text-muted f-w-400">{company.mobile}</a>
+                                                            <p className="block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">Phone</p>
+                                                            <a className="text-muted block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">{company.mobile}</a>
                                                         </div>
                                                     )}
                                                     {company.sector && (
                                                         <div className="col-sm-6">
-                                                            <p className="m-b-10 f-w-600">Sector</p>
-                                                            <a className="text-muted f-w-400">{company.sector}</a>
+                                                            <p className="block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">Sector</p>
+                                                            <a className="text-muted block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">{company.sector}</a>
                                                         </div>
                                                     )}
                                                     {company.website && (
                                                         <div className="col-sm-6">
-                                                            <p className="m-b-10 f-w-600">Website</p>
-                                                            <a href="#" className="text-muted f-w-400">{company.website}</a>
+                                                            <p className="block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">Website</p>
+                                                            <a href="#" className="text-muted block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">{company.website}</a>
                                                         </div>
                                                     )}
                                                     {company.address && (
                                                         <div className="col-sm-6">
-                                                            <p className="m-b-10 f-w-600">Address</p>
-                                                            <a className="text-muted f-w-400">{company.address}</a>
+                                                            <p className="block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">Address</p>
+                                                            <a className="text-muted block text-gray-700 text-2sm mb-2 font-raleway text-justify font-semibold">{company.address}</a>
                                                         </div>
                                                     )}
                                                 </div>
