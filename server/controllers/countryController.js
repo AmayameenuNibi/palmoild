@@ -5,7 +5,7 @@ import Category from '../models/category.js';
 
 // @desc    Get all countries
 export const getCountries = asyncHandler(async (req, res) => {
-  const countries = await Country.find();
+  const countries = await Country.find().sort({ name: 1 }); 
   res.json(countries);
 });
 

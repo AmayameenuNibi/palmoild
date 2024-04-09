@@ -133,7 +133,7 @@ const CategoryScreen = () => {
           <button onClick={closeCatpopup} 
             className="close px-5 py-3 mt-2 text-sm text-center bg-white text-gray-800 font-bold text-2xl"> X </button>
           <div>
-            <h3 className="font-bold text-2xl">Members Login</h3>
+            <h3 className="font-bold text-2xl">Add Category</h3>
           </div>	  
           <div className="mt-10">
             <form className="bg-white" onSubmit={categoryFormData.id ? handleUpdateCategoryData : handleFormSubmit}>

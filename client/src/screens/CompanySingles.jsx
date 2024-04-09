@@ -49,7 +49,7 @@ const CompanySingles = () => {
     return (
         <div>
             <Helmet>
-                <title>{companyName}</title>
+                <title>Palm Oil Industry, {companyName}</title>
             </Helmet>
             <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
@@ -60,9 +60,9 @@ const CompanySingles = () => {
                         </label>
                         <div className="mb-4">              
                             {categories.map((category) => (
-                                <div class="" key={category._id}>
-                                    <Link to={`/categories/${category.name}`} >
-                                        <label class="font-lato text-gray-600 text-sm">{category.name}</label>
+                                <div className="" key={category._id}>
+                                    <Link to={`/categories/${category.slug}`} >
+                                        <label className="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
                             ))}
@@ -71,11 +71,11 @@ const CompanySingles = () => {
                     <div className="w-9/12 related_lab">
                         {company && (
                             <label className="">
-                                <b class="relative featured-companies font-raleway mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">{company.company}</b>
-                                <p class="text-gray-700 font-lato text-sm ml-2">
+                                <b className="relative featured-companies font-raleway mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">{company.company}</b>
+                                <p className="text-gray-700 font-lato text-sm ml-2">
                                     <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in 
-                                </p><p class="text-gray-700 font-lato text-sm">Palm Oil Industry.</p>
-                                <b class="relative featured-companies font-raleway mt-3 mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">Related Companies</b>
+                                </p><p className="text-gray-700 font-lato text-sm">Palm Oil Industry.</p>
+                                <b className="relative featured-companies font-raleway mt-3 mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">Related Companies</b>
                             </label>
                         )}
                         {loading ? (
@@ -89,7 +89,7 @@ const CompanySingles = () => {
                                                 <div className="w-8/12 inline-block">
                                                     <div className="first_top">
                                                         <div className="white_">
-                                                            <h3 class="text-gray-800 text-gray-700 font-lato text-sm">
+                                                            <h3 className="text-gray-800 text-gray-700 font-lato text-sm my-1">
                                                                 {userInfo ? (
                                                                     <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(

@@ -12,7 +12,7 @@ const CategorySingle = () => {
     const [companies, setCompanies] = useState([]);
     const [categories, setCategories] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
-    const [itemsPerPage] = useState(20); 
+    const [itemsPerPage] = useState(50); 
     const [loading, setLoading] = useState(true);
     const { userInfo } = useSelector((state) => state.auth);
 
@@ -56,9 +56,9 @@ const CategorySingle = () => {
                         </label>
                         <div className="mb-4">              
                             {categories.map((category) => (
-                                <div class="" key={category._id}>
-                                    <Link to={`/categories/${category.name.toLowerCase()}`} >
-                                        <label class="font-lato text-gray-600 text-sm">{category.name}</label>
+                                <div className="" key={category._id}>
+                                    <Link to={`/categories/${category.slug}`} >
+                                        <label className="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
                             ))}
@@ -76,10 +76,10 @@ const CategorySingle = () => {
                                     <>
                                         {currentCompanies.map((company, index) => (
                                             <div className="listing row-tab" key={company._id}>
-                                                <div className="w-8/12 inline-block my-3">
+                                                <div className="w-8/12 inline-block my-1">
                                                     <div className="first_top">
                                                         <div className="white_">
-                                                            <h3 class="text-gray-800 text-gray-700 font-lato text-sm">
+                                                            <h3 className="text-gray-800 text-gray-700 font-lato text-sm">
                                                                 {userInfo ? (
                                                                     <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(

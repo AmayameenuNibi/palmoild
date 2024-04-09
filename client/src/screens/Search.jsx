@@ -27,11 +27,21 @@ const Search = () => {
   const currentCompanies = companies.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
-    if(searchTerm === '') {
-      fetchCompanies();
+    const checkIsFavorite = async () => {
+      try {
+        const response = await axios.get(`${ BACKEND_URL }api/favorites/check/${selectedCompany._id}/${userInfo._id}`);
+        const result = response.data.isFavorite;
+        setIsFavoriteCompany(result === "favorite");
+      } catch (error) {
+        console.error('Error checking favorite:', error);
+      }
+    };
+  
+    if (selectedCompany) {
+      checkIsFavorite();
     }
-  }, []);
-
+  }, [selectedCompany, userInfo]);
+  
   const fetchCompanies = async () => {
     try {
       const response = await axios.get(`${ BACKEND_URL }api/companies`);
@@ -49,23 +59,6 @@ const Search = () => {
     }
   };
 
-  useEffect(() => {
-    const checkIsFavorite = async () => {
-      try {
-        const response = await axios.get(`${ BACKEND_URL }api/favorites/check/${selectedCompany._id}/${userInfo._id}`);
-        const result = response.data.isFavorite;
-        setIsFavoriteCompany(result === "favorite");
-      } catch (error) {
-        console.error('Error checking favorite:', error);
-      }
-    };
-  
-    if (selectedCompany) {
-      checkIsFavorite();
-    }
-  }, [selectedCompany, userInfo]);
-  
-  
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
@@ -98,7 +91,13 @@ const Search = () => {
     } else {
       await handleSearch(value, selectedCategories, selectedCountries);
     }
-  };  
+  };
+
+  useEffect(() => {
+    if(searchTerm === '') {
+      fetchCompanies();
+    }
+  }, []);
 
   const handleSearch = async (searchTerm, selectedCategories, selectedCountries) => {
     try {

@@ -186,9 +186,9 @@ const UserCompany = () => {
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false}
         closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-      <section class="bg-white">
-        <div class="container mx-auto my-0 w-8/12 pt-10">
-            <h2 class="text-xl text-gray-600 mb-10">Please complete your ad listing details</h2>
+      <section className="bg-white">
+        <div className="container mx-auto my-0 w-8/12 pt-10">
+            <h2 className="text-xl text-gray-600 mb-10">Please complete your ad listing details</h2>
             <form onSubmit={handleFormSubmit} encType="multipart/form-data">
               {logoPreview ? <img src={logoPreview} width="75px" height="55px" alt={formData.company} /> : null}
               {statusData.status == '1' ? (
@@ -200,22 +200,22 @@ const UserCompany = () => {
                 name="user_id"
                 value={formData.user_id}
                 onChange={handleInputChange}
-                class="w-full rounded border-gray-400 border h-10"/>
+                className="w-full rounded border-gray-400 border h-10"/>
               
               <div className="w-6/12 inline-block pr-4 pb-4">
-                  <label htmlFor="company" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700"> COMPANY NAME <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <label htmlFor="company" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700"> COMPANY NAME <span className="text-red-500 text-xl pl-1">*</span></label>
                   <input 
                       type="text" id="company" name="company" value={formData.company} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"
+                      className="w-full rounded border border-gray-400 h-10 pl-2"
                       required />
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="category_id" className="pb-3 block text-sm  uppercase font-raleway py-3 font-semibold text-gray-700">
                       Category
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <select 
                       id="category_id" name="category_id" value={formData.category_id} onChange={handleDropdownChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2">
+                      className="w-full rounded border border-gray-400 h-10 pl-2">
                       {categories.map((category) => (
                       <option key={category._id} value={category._id}>
                           {category.name}
@@ -226,10 +226,10 @@ const UserCompany = () => {
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="country_id" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       COUNTRY
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <select 
                       id="country_id" name="country_id" value={formData.country_id} onChange={handleDropdownChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2">
+                      className="w-full rounded border border-gray-400 h-10 pl-2">
                       <option value="">Select a country</option>
                       {countries.map((country) => (
                       <option key={country._id} value={country._id}>
@@ -241,10 +241,10 @@ const UserCompany = () => {
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="site_id" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Site
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <select 
                       id="site_id" name="site_id" value={formData.site_id} onChange={handleDropdownChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2">
+                      className="w-full rounded border border-gray-400 h-10 pl-2">
                       <option value="">Select a site</option>
                       {sites.map((site) => (
                       <option key={site._id} value={site._id}>
@@ -256,59 +256,59 @@ const UserCompany = () => {
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="logo" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Logo
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="file" id="logo" name="logo" accept="image/*" onChange={handleLogoChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="title" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Title
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="title" name="title" value={formData.title} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="website" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Website URL
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="website" name="website" value={formData.website} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="mobile" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Mobile
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="mobile" name="mobile" value={formData.mobile} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="email" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Email
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="email" name="email" value={formData.email} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="address" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Address
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <input
                       type="text" id="address" name="address" value={formData.address} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"
+                      className="w-full rounded border border-gray-400 h-10 pl-2"
                       required />
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="description" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Description
-                  <span class="text-red-500 text-xl pl-1">*</span></label>
+                  <span className="text-red-500 text-xl pl-1">*</span></label>
                   <textarea
                       id="description" name="description" value={formData.description} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="facebook_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
@@ -317,7 +317,7 @@ const UserCompany = () => {
                   <input
                       type="text" id="facebook_url" name="facebook_url" value={formData.facebook_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="twitter_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
@@ -326,7 +326,7 @@ const UserCompany = () => {
                   <input
                       type="text" id="twitter_url" name="twitter_url" value={formData.twitter_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="linkedin_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
@@ -335,7 +335,7 @@ const UserCompany = () => {
                   <input
                       type="text" id="linkedin_url" name="linkedin_url" value={formData.linkedin_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="insta_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
@@ -343,7 +343,7 @@ const UserCompany = () => {
                   </label>
                   <input
                       type="text" id="insta_url" name="insta_url" value={formData.insta_url} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-10 pl-2"/>
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="brochure_url" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
@@ -352,7 +352,7 @@ const UserCompany = () => {
                   <input
                       type="text" id="brochure_url" name="brochure_url" value={formData.brochure_url}
                       onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-10 pl-2 "
+                      className="w-full rounded border border-gray-400 h-10 pl-2 "
                   />
               </div> 
               <div className="w-full inline-block pr-4 pb-4">
@@ -360,18 +360,18 @@ const UserCompany = () => {
                       Profile
                   </label>
                   <textarea id="profile" name="profile" value={formData.profile} onChange={handleInputChange}
-                      class="w-full rounded border border-gray-400 h-20 pl-2"/>
+                      className="w-full rounded border border-gray-400 h-20 pl-2"/>
               </div>
               <div>
                   {staff.map((staffMember, index) => (
-                  <div class="block mb-5" key={index}>
+                  <div className="block mb-5" key={index}>
                       <input
                           type="text"
                           name="name"
                           value={staffMember.name}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Name"
-                          class="w-6/12 border h-10 pl-2 inline-block text-center"
+                          className="w-6/12 border h-10 pl-2 inline-block text-center"
                           required />
                       <input
                           type="email"
@@ -379,7 +379,7 @@ const UserCompany = () => {
                           value={staffMember.email}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Email"
-                          class="w-6/12 border h-10 pl-2 inline-block text-center"
+                          className="w-6/12 border h-10 pl-2 inline-block text-center"
                           required />
                       <input
                           type="tel"
@@ -387,24 +387,24 @@ const UserCompany = () => {
                           value={staffMember.mobile}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Mobile"
-                          class="w-6/12 border h-10 pl-2 inline-block text-center"
+                          className="w-6/12 border h-10 pl-2 inline-block text-center"
                           required />
                       <input
                           type="text"
                           name="designation"
-                          class="w-6/12 border h-10 pl-2 inline-block text-center"
+                          className="w-6/12 border h-10 pl-2 inline-block text-center"
                           value={staffMember.designation}
                           onChange={(e) => handleChange(e, index)}
                           placeholder="Designation"
                           required />
                       {index > 0 && (
-                      <button type="button" onClick={() => handleRemoveStaff(index)} class="text-red-500 pb-2">
+                      <button type="button" onClick={() => handleRemoveStaff(index)} className="text-red-500 pb-2">
                           Remove
                       </button>
                       )}
                   </div>
                   ))}
-                  <button type="button" onClick={handleAddStaff} class="text-green-500 pb-2">
+                  <button type="button" onClick={handleAddStaff} className="text-green-500 pb-2">
                   Add Staff
                   </button>
               </div>

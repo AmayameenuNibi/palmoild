@@ -84,7 +84,7 @@ const CompanyScreen = () => {
                                                         <img style={{ width:'80px', height:'50px' }} src={default_img} />
                                                     </>:
                                                     <>
-                                                        <img class="font-lato text-gray-600 text-sm p-2" src={`${ BACKEND_URL }uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
+                                                        <img className="font-lato text-gray-600 text-sm p-2" src={`${ BACKEND_URL }uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
                                                     </>
                                                     }
                                                 </td>
@@ -102,20 +102,24 @@ const CompanyScreen = () => {
                                             </tr>
                                         ))}
                                     </tbody>
+                                    
                                 </table>
+                                
                             </div>
                         ) : (
                             <div className="text-center p-5">No companies found.</div>
                         )}
-
-                        <ReactPaginate
-                            pageCount={Math.ceil(companies.length / itemsPerPage)}
-                            pageRangeDisplayed={5} 
-                            marginPagesDisplayed={2} 
-                            onPageChange={handlePageChange}
-                            containerClassName={'pagination'}
-                            activeClassName={'active'}
-                        />
+                        <div className='mt-4 w-3/4'>
+                            <ReactPaginate
+                                pageCount={Math.ceil(companies.length / itemsPerPage)}
+                                pageRangeDisplayed={5} 
+                                marginPagesDisplayed={2} 
+                                onPageChange={handlePageChange}
+                                containerClassName={'pagination'}
+                                activeClassName={'active'}
+                            />
+                        </div>
+                        
                     </>
                 )}        
             </div>

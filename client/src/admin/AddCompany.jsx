@@ -184,24 +184,18 @@ const AddCompany = () => {
                 }
                 <input 
                     type="hidden"  id="user_id" name="user_id" value={formData.user_id}  onChange={handleInputChange}
-                    className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                    className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 
                 <div className="mb-4">
-                    <label htmlFor="company" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Company Name:
-                    </label>
                     <input 
-                        type="text" id="company" name="company" value={formData.company} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text" id="company" name="company" placeholder='Company Name:' value={formData.company} onChange={handleInputChange}
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"
                         required />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="category_id" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Category:
-                    </label>
                     <select 
-                        id="category_id" name="category_id" value={formData.category_id} onChange={handleDropdownChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline">
+                        id="category_id" name="category_id" value={formData.category_id} onChange={handleDropdownChange} placeholder='Category:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold">
                         {categories.map((category) => (
                         <option key={category._id} value={category._id}>
                             {category.name}
@@ -210,12 +204,9 @@ const AddCompany = () => {
                     </select>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="country_id" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Country:
-                    </label>
                     <select 
                         id="country_id" name="country_id" value={formData.country_id} onChange={handleDropdownChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline">
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold">
                         <option value="">Select a country</option>
                         {countries.map((country) => (
                         <option key={country._id} value={country._id}>
@@ -225,12 +216,9 @@ const AddCompany = () => {
                     </select>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="site_id" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Site:
-                    </label>
                     <select 
-                        id="site_id" name="site_id" value={formData.site_id} onChange={handleDropdownChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline">
+                        id="site_id" name="site_id" value={formData.site_id} onChange={handleDropdownChange} placeholder='Site: '
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold">
                         <option value="">Select a site</option>
                         {sites.map((site) => (
                         <option key={site._id} value={site._id}>
@@ -240,151 +228,113 @@ const AddCompany = () => {
                     </select>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="logo" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
+                    <label htmlFor="logo" className="w-full px-6 py-3 font-lato text-gray-600 text-sm font-semibold">
                         Logo:
                     </label>
                     <input
                         type="file" id="logo" name="logo" accept="image/*" onChange={handleLogoChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="profile" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Profile:
-                    </label>
-                    <textarea id="profile" name="profile" value={formData.profile} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <textarea id="profile" name="profile" value={formData.profile} onChange={handleInputChange} placeholder='Profile: '
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
+                </div>
+                <div className="mb-4"><input
+                        type="text" id="title" name="title" value={formData.title} onChange={handleInputChange} placeholder='Title: '
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Title:
-                    </label>
-                    <input
-                        type="text" id="title" name="title" value={formData.title} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="website" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Website URL:
-                    </label>
                     <input
                         type="text" id="website" name="website" value={formData.website} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                        placeholder='Website URL:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="mobile" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Mobile:
-                    </label>
-                    <input
-                        type="text" id="mobile" name="mobile" value={formData.mobile} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <input 
+                        type="text" id="mobile" name="mobile" value={formData.mobile} onChange={handleInputChange} placeholder='Mobile:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Email:
-                    </label>
                     <input
-                        type="text" id="email" name="email" value={formData.email} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                        type="text" id="email" name="email" value={formData.email} onChange={handleInputChange} placeholder='Email:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="address" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Address:
-                    </label>
                     <input
-                        type="text" id="address" name="address" value={formData.address} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text" id="address" name="address" value={formData.address} onChange={handleInputChange} placeholder='Address:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"
                         required />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Description:
-                    </label>
                     <textarea
-                        id="description" name="description" value={formData.description} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                        id="description" name="description" value={formData.description} onChange={handleInputChange} placeholder='Description:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="facebook_url" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Facebook URL:
-                    </label>
                     <input
                         type="text" id="facebook_url" name="facebook_url" value={formData.facebook_url}
                         onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                        placeholder='Facebook URL:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="twitter_url" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Twitter URL:
-                    </label>
                     <input
-                        type="text" id="twitter_url" name="twitter_url" value={formData.twitter_url}
+                        type="text" id="twitter_url" name="twitter_url" value={formData.twitter_url} placeholder='Twitter URL:'
                         onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="linkedin_url" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        LinkedIn URL:
-                    </label>
                     <input
-                        type="text" id="linkedin_url" name="linkedin_url" value={formData.linkedin_url}
+                        type="text" id="linkedin_url" name="linkedin_url" value={formData.linkedin_url} placeholder='LinkedIn URL:'
                         onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="insta_url" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Instagram URL:
-                    </label>
                     <input
-                        type="text" id="insta_url" name="insta_url" value={formData.insta_url} onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"/>
+                        type="text" id="insta_url" name="insta_url" value={formData.insta_url} onChange={handleInputChange} placeholder='Instagram URL:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="brochure_url" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Brochure URL:
-                    </label>
                     <input
-                        type="text" id="brochure_url" name="brochure_url" value={formData.brochure_url}
+                        type="text" id="brochure_url" name="brochure_url" value={formData.brochure_url} placeholder='Brochure URL:'
                         onChange={handleInputChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="status" className="block text-gray-700 text-sm font-bold mb-2 mt-2 font-raleway">
-                        Status:
-                    </label>
-                    <select id="status" name="status" value={formData.status}  onChange={handleDropdownChange}
-                        className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline">
+                    <select id="status" name="status" value={formData.status}  onChange={handleDropdownChange} placeholder='Status:'
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold">
                         <option value="true">Active</option>
                         <option value="false">Inactive</option>
                     </select>
                 </div>
                 <div>
                     {staff.map((staffMember, index) => (
-                        <div key={index} className="text-sm font-raleway shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline">
+                        <div key={index} className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold">
                             <input
                                 type="text"
-                                className="focus:outline-none focus:shadow-outline"
+                                className="focus:outline-none focus:shadow-outline font-lato text-gray-600 font-semibold"
                                 name="name"
                                 value={staffMember.name}
                                 onChange={(e) => handleChange(e, index)}
                                 placeholder="Name" />
                             <input
                                 type="email"
-                                className="focus:outline-none focus:shadow-outline"
+                                className="focus:outline-none focus:shadow-outline font-lato text-gray-600 font-semibold"
                                 name="email"
                                 value={staffMember.email}
                                 onChange={(e) => handleChange(e, index)}
                                 placeholder="Email" />
                             <input
                                 type="tel"
-                                className="focus:outline-none focus:shadow-outline"
+                                className="focus:outline-none focus:shadow-outline font-lato text-gray-600 font-semibold"
                                 name="mobile"
                                 value={staffMember.mobile}
                                 onChange={(e) => handleChange(e, index)}
                                 placeholder="Mobile" />
                             <input
                                 type="text"
-                                className="focus:outline-none focus:shadow-outline"
+                                className="focus:outline-none focus:shadow-outline font-lato text-gray-600 font-semibold"
                                 name="designation"
                                 value={staffMember.designation}
                                 onChange={(e) => handleChange(e, index)}
@@ -396,13 +346,13 @@ const AddCompany = () => {
                             )}
                         </div>
                     ))}
-                    <button type="button" onClick={handleAddStaff}>
+                    <button type="button" onClick={handleAddStaff} className="bg-slate-50 text-sm font-semibold mx-1 px-5 py-2 text-gray-800 border border-gray-200 rounded">
                         Add Staff
                     </button>
                 </div>
                 <button
                     type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     {companyId ? 'Edit Company' : 'Add Company'}
                 </button>
             </form>

@@ -31,10 +31,12 @@ export const getCompanies = asyncHandler(async (req, res) => {
         _id: 1,
         company: 1,
         company_slug: 1,
+        address:1,
         logo: 1,
         country_id: 1,
         website: 1,
         mobile: 1,
+        address:1,
         facebook_url: 1,
         twitter_url: 1,
         linkedin_url: 1,
@@ -50,7 +52,24 @@ export const getCompanies = asyncHandler(async (req, res) => {
       }
     },
     {
-      $sort: { company: 1 } // Sort by company name in ascending order
+      $sort: { company: 1 } 
+    }
+  ];
+  const companies = await Company.aggregate(pipeline);
+  res.json(companies);
+});
+
+export const getCompanyList = asyncHandler(async (req, res) => {
+  const pipeline = [
+    {
+      $project: {
+        _id: 1,
+        company: 1,
+        company_slug: 1,
+      }
+    },
+    {
+      $sort: { company: 1 } 
     }
   ];
   const companies = await Company.aggregate(pipeline);
@@ -325,7 +344,25 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             {
               autocomplete: {
                 query: searchTerm,
-                path: "title",
+                path: "address",
+              },
+            },
+            {
+              autocomplete: {
+                query: searchTerm,
+                path: "mobile",
+              },
+            },
+            {
+              autocomplete: {
+                query: searchTerm,
+                path: "category_name",
+              },
+            },
+            {
+              autocomplete: {
+                query: searchTerm,
+                path: "country",
               },
             },
           ],
@@ -367,6 +404,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
         title: 1,
         category_id: 1,
         email:1,
+        address:1,
         categoryName: { $arrayElemAt: ['$category.name', 0] },
         countryName: { $arrayElemAt: ['$country.name', 0] },
       },
@@ -397,6 +435,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
                 brochure_url:company.brochure_url,
                 profile: company.profile,
                 title: company.title,
+                address: company.address,
                 categoryName: company.categoryName,
             }));
         res.json(results);
@@ -420,6 +459,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
                 brochure_url:company.brochure_url,
                 profile: company.profile,
                 title: company.title,
+                address: company.address,
                 categoryName: company.categoryName,
             }));
         res.json(results);
@@ -444,6 +484,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
                 brochure_url:company.brochure_url,
                 profile: company.profile,
                 title: company.title,
+                address: company.address,
                 categoryName: company.categoryName,
             }));
         res.json(results);
@@ -472,6 +513,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
               brochure_url:company.brochure_url,
               profile: company.profile,
               title: company.title,
+              address: company.address,
               categoryName: company.category_id.name,
           }));
           res.json(result);
@@ -495,6 +537,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
               brochure_url:company.brochure_url,
               profile:company.profile,
               title:company.title,
+              address: company.address,
               categoryName: company.category_id.name,
           }));
           res.json(result);
@@ -519,6 +562,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           brochure_url:company.brochure_url,
           profile:company.profile,
           title:company.title,
+          address: company.address,
           categoryName: company.category_id.name,
       }));
       res.json(result);
@@ -542,6 +586,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           brochure_url:company.brochure_url,
           profile:company.profile,
           title:company.title,
+          address: company.address,
           categoryName: company.category_id.name // Access the name field from the populated category
       }));
       res.json(result);
@@ -582,6 +627,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           category_id: 1,
           email: 1,
           user_id: 1,
+          address:1,
           categoryName: { $arrayElemAt: ['$category.name', 0] },
           countryName: { $arrayElemAt: ['$country.name', 0] },
         }

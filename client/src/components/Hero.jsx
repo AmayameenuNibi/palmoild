@@ -1,52 +1,46 @@
-import { useEffect, useState,React }  from 'react'
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import plseed_img from '../images/plseed.png'
-import vlo_img from '../images/vlo.jpg'
-import traders_img from '../images/traders.png'
-import plantations from '../images/plantations.png'
-import refiners from '../images/refiners.png'
-import equipment from '../images/equipment.png'
-import oleochemical from '../images/oleochemical.png'
-import crude_oil from '../images/crude-oil.png'
-import refined_oil from '../images/refined-oil.png'
-import shipping from '../images/shipping.png'
-import suppliers from '../images/suppliers.png'
-import { BACKEND_URL } from "../constans";
+import plseed_img from '../images/plseed.png';
+import vlo_img from '../images/vlo.jpg';
+import traders_img from '../images/traders.png';
+import plantations from '../images/plantations.png';
+import refiners from '../images/refiners.png';
+import equipment from '../images/equipment.png';
+import oleochemical from '../images/oleochemical.png';
+import crude_oil from '../images/crude-oil.png';
+import refined_oil from '../images/refined-oil.png';
+import shipping from '../images/shipping.png';
+import suppliers from '../images/suppliers.png';
+import { BACKEND_URL } from '../constans';
 import { Helmet } from 'react-helmet';
 
 const HomeScreen = () => {
-    const [asscompanies, setAssCompanies] = useState([]);
-    const [orcompanies, setOrCompanies] = useState([]);
-    const [affcompanies, setAffCompanies] = useState([]);
     const { userInfo } = useSelector((state) => state.auth);
-    
+    const [categoriesWithCompanies, setCategoriesWithCompanies] = useState([]);
+
     useEffect(() => {
-        const fetchCompanies = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${ BACKEND_URL }api/categories/Associate`);
+                const response = await fetch(`${BACKEND_URL}api/categories/categories-companies`);
                 const data = await response.json();
-                const limitedData = data.slice(0, 10);
-                setAssCompanies(limitedData);
-                const responses = await fetch(`${ BACKEND_URL }api/categories/Ordinary`);
-                const datas = await responses.json();
-                const limitedDatas = datas.slice(0, 10);
-                setOrCompanies(limitedDatas);
-                const responsess = await fetch(`${ BACKEND_URL }api/categories/Affiliate`);
-                const datass = await responsess.json();
-                const limitedDatass = datass.slice(0, 10);
-                setAffCompanies(limitedDatass);
+                setCategoriesWithCompanies(data);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Error fetching data:', error);
             }
-        };            
-        fetchCompanies();
+        };
+
+        fetchData();
     }, []);
     
     return (
         <div>
             <Helmet>
                 <title>PalmOil Directory</title>
+                <meta name="description" content="PalmOil Directory" />
+                <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
+                    speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
+                    biodiesel,palm biodiesel"/>    
             </Helmet>
             <div className="bg-cream">
                 <div className="max-w-screen-xl px-8 mx-auto flex flex-col lg:flex-row items-start">
@@ -135,202 +129,33 @@ const HomeScreen = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col md:flex-row items-center md:space-x-10 my-8">
-                    <div data-aos="fade-down" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={traders_img} style={{ width: '50%',margin:'auto' }} alt='TRADERS'/>
-                            </div>
-                            <div className="contentBox T1">
-                                <h3>Associate</h3>
-                                {asscompanies.map(company => (
-                                    (userInfo ? (
-                                        <p>
-                                            <Link to={`company/${company.company_slug}`}>
-                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
-                                            </Link>
-                                        </p>
-                                    ) : (
-                                        <p>
-                                            <Link to={`company/${company.company_slug}`}>
-                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
-                                            </Link>
-                                        </p>
-                                    ))
-                                ))}
-                                <a class="viewal" href="/categories/associate"><span>View All</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-down" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={plantations} style={{ width: '50%',margin:'auto' }} alt="PLANTATIONS" />
-                            </div>
-                            <div className="contentBox T2">
-                                <h3>Ordinary</h3>
-                                {orcompanies.map(company => (
-                                    (userInfo ? (
-                                        <p>
-                                            <Link to={`company/${company.company_slug}`}>
-                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
-                                            </Link>
-                                        </p>
-                                    ) : (
-                                        <p>
-                                            <Link to={`company/${company.company_slug}`}>
-                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
-                                            </Link>
-                                        </p>
-                                    ))
-                                ))}
-                                <a className="viewal" href="/categories/ordinary"><span>View All</span></a>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {categoriesWithCompanies.map((category, index) => (
+                        <div key={index}  data-aos="fade-down" className="container-02 aos-init">
+                            <div className="glassmorphic-card" data-tilt data-tilt-glare>
+                                <div className="imgBox">
+                                    <img src={getImageForCategory(category.category)} style={{ width: '50%', margin: 'auto' }} alt={category.category} />
+                                </div>
+                                <div className="contentBox T1">
+                                    <div>
+                                        <h3>{category.category}</h3>
+                                        <ul>
+                                            {category.companies.map((company, index) => (
+                                                <li key={index}>
+                                                    <Link to={`company/${company.company_slug}`}>
+                                                        {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <Link className="viewal" to={`categories/${category.slug}`}>
+                                        View All
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div data-aos="fade-down" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={refiners} style={{ width: '50%',margin:'auto' }} alt="REFINERS"/>
-                            </div>
-                            <div className="contentBox T3">
-                                <h3>Affiliate</h3>
-                                {affcompanies.map(company => (
-                                    (userInfo ? (
-                                        <p>
-                                            <Link to={`company/${company.company_slug}`}>
-                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
-                                            </Link>
-                                        </p>
-                                    ) : (
-                                        <p>
-                                            <Link to={`company/${company.company_slug}`}>
-                                                {company.company.length > 26 ? `${company.company.slice(0, 26)}...` : company.company}
-                                            </Link>
-                                        </p>
-                                    ))
-                                ))}
-                                <a class="viewal" href="/categories/affiliate"><span>View All</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col md:flex-row items-center md:space-x-10  mt-8">
-                    <div data-aos="fade-right" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={equipment} style={{ width: '50%',margin:'auto' }} alt="EQUIPMENT MANUFACTURERS"/>
-                            </div>
-                            <div className="contentBox T4">
-                                <h3>EQUIPMENT MANUFACTURERS</h3>
-                                <p>PT. Nagamas Palmoil Lestari</p>
-                                <p>Ioi Edible Oils Sdn Bhd</p>
-                                <p>PT. BATARA ELOK SEMESTA TERPADU</p>
-                                <p>Mewah-oils Sdn Bhd</p>
-                                <p>FGV Iffco Oil Products Sdn Bhd</p>
-                                <p>PT Incasi Raya</p>
-                                <p>Lao Thong Seng Co. Ltd.</p>
-                                <a class="viewal" href="#"><span>View All</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-right" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={oleochemical} style={{ width: '50%',margin:'auto' }} alt="OLEOCHEMICALS"/>
-                            </div>
-                            <div className="contentBox T5">
-                                <h3>OLEOCHEMICALS</h3>
-                                <p>Dubois - Natural Ester Sdn Bhd</p>
-                                <p>Sumwin Solutions Malaysia Sdn Bhd</p>
-                                <p>Loders Croklaan - Poland</p>
-                                <p>Fine Organic Industries Pvt.ltd.</p>
-                                <p>Bbc S.r.l.</p>
-                                <p>Orion Chemique Sdn Bhd</p>
-                                <p>P&g Chemicals</p>
-                                <p>Peter Cremer Central Europe S.r.o.</p>
-                                <a class="viewal" href="#"><span>View All</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-right" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={crude_oil} style={{ width: '50%',margin:'auto' }} alt="CRUDE PALM OIL"/>
-                            </div>
-                            <div className="contentBox T6">
-                                <h3>CRUDE PALM OIL</h3>
-                                <p>PT Indo Sepadan Jaya Tanjung Selamat Palm Oil Mill</p>
-                                <p>Southern Group</p>
-                                <p>Crestmont Sdn Bhd</p>
-                                <p>Prima Semasa Sdn Bhd</p>
-                                <p>Grupo Jaremar</p>
-                                <p>Indupalma Ltda</p>
-                                <p>Ga Global Resources Sdn Bhd</p>
-                                <a class="viewal" href="#"><span>View All</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col md:flex-row items-center md:space-x-10  mt-8 mb-8">
-                    <div data-aos="fade-up" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={refined_oil} style={{ width: '50%',margin:'auto' }} alt="refined_oil"/>
-                            </div>
-                            <div className="contentBox T7">
-                                <h3>REFINED PALM OIL</h3>
-                                <p>Pan Century Edible Oils Sdn Bhd</p>
-                                <p>Sime Darby Kempas Sdn Bhd</p>
-                                <p>Wilmar Edible Oils Sdn Bhd</p>
-                                <p>Innoset Capital Sdn Bhd</p>
-                                <p>Ngo Chew Hong Oils And Fats Sdn Bhd</p>
-                                <p>Continental Resources Sdn Bhd</p>
-                                <p>Intercontinental Specialty Fats Sdn Bhd</p>
-                                <a class="viewal" href="#"><span>View All</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={shipping} style={{ width: '50%',margin:'auto' }} alt="shipping"/>
-                            </div>
-                            <div className="contentBox T8">
-                                <h3>SHIPPING / LOGISTICS</h3>
-                                <p>Pacific Terminals</p>
-                                <p>Kl Maritime ( M) Sdn Bhd</p>
-                                <p>PT.BONA TRANS PERSADA</p>
-                                <p>PT Sumatra Bulkers</p>
-                                <p>PT Indonesia Logistic Partners</p>
-                                <p>Pan Union Shipping Pte Ltd</p>
-                                <p>G.a. Chartering Pte Ltd</p>
-                                <p>Johann Logistics Sdn Bhd</p>
-                                <p>PT. Segara Transindo Mandiri</p>
-                                <a class="viewal" href="#"><span>View All</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" className="container-02 aos-init">
-                        <div className="glassmorphic-card" data-tilt data-tilt-glare>
-                            <div className="imgBox">
-                                <img src={suppliers} style={{ width: '50%',margin:'auto' }} alt="suppliers"/>
-                            </div>
-                            <div className="contentBox T9">
-                                <h3>PLANTATION SUPPLIERS</h3>
-                                <p>Royal Dutch Shell Plc</p>
-                                <p>Global Wax Solutions S.l.</p>
-                                <p>Landkrone Naturkost Und Naturwaren Gmbh</p>
-                                <p>Palm View Trade</p>
-                                <p>Hitkari Industries Ltd</p>
-                                <p>Paras Chemcare Pvt Ltd</p>
-                                <p>Containers Printers Pte Ltd</p>
-                                <p>Ireks Gmbh</p>
-                                <p>C&n Petroleum Equipment</p>
-                                <a class="viewal" href="#"><span>View All</span></a>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </div>
@@ -338,3 +163,27 @@ const HomeScreen = () => {
 }
 
 export default HomeScreen
+const getImageForCategory = (category) => {
+    switch (category) {
+        case 'Associations':
+            return traders_img;
+        case 'Banks/Investors':
+            return plantations;
+        case 'Biodiesel':
+            return refiners;
+        case 'Brokers':
+            return equipment;
+        case 'Carbon Trading':
+            return oleochemical;
+        case 'Conference and Events':
+            return crude_oil;
+        case 'Consultants':
+            return refined_oil;
+        case 'Consumer Goods Manufacturers':
+            return shipping;
+        case 'Environmental/Nature Conservation':
+            return suppliers;
+        default:
+            return null;
+    }
+};

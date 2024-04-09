@@ -1,11 +1,21 @@
 import Category from '../models/category.js';
 import Company from '../models/company.js';
 
+function convertToUrlFormat(name) {
+  if (!name) {
+      return ''; 
+  }
+  name = ''.concat(name).toLowerCase(); 
+  name = name.replace(/[^\w\s]/gi, ''); 
+  name = name.replace(/\s+/g, '-'); 
+  return name;
+}
 // Create a new category
 export const createCategory = async (req, res) => {
   try {
     const { site_id, name } = req.body;
-    const newCategory = new Category({ site_id, name });
+    const slug=convertToUrlFormat(name);
+    const newCategory = new Category({ site_id, name ,slug});
     const savedCategory = await newCategory.save();
     res.status(201).json(savedCategory);
   } catch (error) {
@@ -33,9 +43,10 @@ export const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const { site_id, name } = req.body;
+    const slug=convertToUrlFormat(name);
     const updatedCategory = await Category.findByIdAndUpdate(
       id,
-      { site_id, name },
+      { site_id, name ,slug},
       { new: true }
     );
     res.status(200).json(updatedCategory);
@@ -65,9 +76,63 @@ function shuffle(array) {
   return array;
 }
 
+async function getCategoryCompanyList(categorySlug) {
+  const pipeline = [
+    {
+      $lookup: {
+        from: "categories",
+        localField: "category_id",
+        foreignField: "_id",
+        as: "category"
+      }
+    },
+    {
+      $match: {
+        "category.slug": { $regex: new RegExp(categorySlug, "i") }
+      }
+    },
+    {
+      $project: {
+        _id: 1,
+        company: 1,
+        company_slug: 1,
+      }
+    },
+    {
+      $sort: {
+        company: 1
+      }
+    }
+  ];
+  const companies = await Company.aggregate(pipeline);
+  return companies;
+}
+
+export const getCategoriesWithCompanies = async (req, res) => {
+  try {
+    const categories = await Category.find().limit(9);
+    const result = [];
+    for (const category of categories) {
+      const categoryCompanies = await getCategoryCompanyList(category.slug);
+      const shuffledCompanies = shuffle(categoryCompanies);
+      const first10Companies = shuffledCompanies.slice(0, 10);
+      result.push({
+        category: category.name,
+        slug: category.slug,
+        companies: first10Companies
+      });
+    }    
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error fetching categories with companies:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
 export const getCategoryCompanies = async (req, res) => {
   try {
-    const categoryName = req.params.categoryName.toLowerCase(); // Convert to lowercase
+    const categorySlug = req.params.categoryName; // Convert to lowercase
     const pipeline = [
       {
         $lookup: {
@@ -79,7 +144,7 @@ export const getCategoryCompanies = async (req, res) => {
       },
       {
         $match: {
-          "category.name": { $regex: new RegExp(categoryName, "i") } // Case insensitive match
+          "category.slug": { $regex: new RegExp(categorySlug, "i") } 
         }
       },
       {
@@ -91,7 +156,7 @@ export const getCategoryCompanies = async (req, res) => {
       },
       {
         $sort: {
-          company: 1 // Sort by company name in ascending order
+          company: 1 
         }
       }
     ];

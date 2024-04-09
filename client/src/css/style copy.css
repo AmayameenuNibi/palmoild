@@ -3,7 +3,7 @@ html, body {
   margin: 0;
 }
 
-#root, .main-content { /* Assuming your main content wrapper has the class .main-content */
+#root, .main-content { /* Assuming your main content wrapper has the className .main-content */
   display: flex;
   flex-direction: column;
   min-height: 70vh;

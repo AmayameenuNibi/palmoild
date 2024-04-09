@@ -11,6 +11,7 @@ import {
   searchCompanies,
   getFeaturedCompanies,
   getRelatedCompanies, 
+  getCompanyList,
   } from '../controllers/companyController.js';
 
 const router = express.Router();
@@ -31,6 +32,7 @@ const upload = multer({ storage: storage });
 // Routes for companies
 router.post('/', upload.single('logo'), createCompany);
 router.get('/', getCompanies);
+router.get('/list', getCompanyList);
 router.get('/featuredlist', getFeaturedCompanies);
 router.get('/single/:companyId', getSingleCompanies);
 router.get('/search', searchCompanies);

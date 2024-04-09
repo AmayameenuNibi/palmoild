@@ -8,7 +8,7 @@ const CategoryList = () => {
   
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); 
-  const [itemsPerPage] = useState(20); 
+  const [itemsPerPage] = useState(50); 
   const [loading, setLoading] = useState(true);
 
   const fetchCategories = async () => {
@@ -48,7 +48,7 @@ const CategoryList = () => {
                                             <span className="floater singe">{index+1 + (currentPage* itemsPerPage)}</span>
                                             <div className="white_">
                                                 <h3><b key={category._id}>
-                                                <Link to={`/categories/${category.name.toLowerCase()}`}>{category.name}</Link>
+                                                <Link to={`/categories/${category.slug}`}>{category.name}</Link>
                                                 </b></h3>
                                             </div>
                                         </div>

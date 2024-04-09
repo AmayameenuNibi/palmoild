@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BACKEND_URL } from "../constans";
+import { BACKEND_URL } from '../constans';
 
 const Users = () => {
   const [activeUsers, setActiveUsers] = useState([]);
@@ -12,10 +12,10 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const activeResponse = await axios.get(`${ BACKEND_URL }api/users/active`);
+        const activeResponse = await axios.get(`${BACKEND_URL}api/users/active`);
         setActiveUsers(activeResponse.data);
 
-        const inactiveResponse = await axios.get(`${ BACKEND_URL }api/users/inactive`);
+        const inactiveResponse = await axios.get(`${BACKEND_URL}api/users/inactive`);
         setInactiveUsers(inactiveResponse.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -27,12 +27,12 @@ const Users = () => {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`${ BACKEND_URL }api/users/${userId}`);
+      await axios.delete(`${BACKEND_URL}api/users/${userId}`);
       toast.success('User removed');
-      const activeResponse = await axios.get(`${ BACKEND_URL }api/users/active`);
+      const activeResponse = await axios.get(`${BACKEND_URL}api/users/active`);
       setActiveUsers(activeResponse.data);
 
-      const inactiveResponse = await axios.get(`${ BACKEND_URL }api/users/inactive`);
+      const inactiveResponse = await axios.get(`${BACKEND_URL}api/users/inactive`);
       setInactiveUsers(inactiveResponse.data);
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -46,15 +46,18 @@ const Users = () => {
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />     
-      <div className="relative block w-3/4 px-10 mb-5 mt-5 text-right">        
-        <ul className="flex text-right">
-          <li className={activeTab === 'active' ? 'active-tab' : ''}>
-            <button class="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded" className={`text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-4 rounded inline-block mb-4 ${activeTab === 'active' ? 'active' : ''}`} onClick={() => handleTabChange('active')}>Active Users</button>
-          </li>
-          <li className={activeTab === 'inactive' ? 'active-tab' : ''}>
-            <button class="text-gray-700 font-raleway px-3 py-1.5 text-sm bg-gray-200 mt-5 rounded" className={`text-gray-700 font-raleway px-3 py-1.5 text-sm bg-green-200 mt-4 rounded inline-block mb-4 ${activeTab === 'inactive' ? 'active' : ''}`} onClick={() => handleTabChange('inactive')}>Inactive Users</button>
-          </li>
-        </ul>
+      
+      <div className='mt-5'>
+        <div className="relative block w-3/4 px-10 mb-5 mt-5 text-right">        
+          <ul className="flex text-right">
+            <li className={activeTab === 'active mx-2' ? 'active-tab mx-2' : 'mx-2'}>
+              <button className={`text-white font-raleway px-3 py-1.5 text-sm rounded inline-block mb-4 ${activeTab === 'active' ? 'bg-green-500' : 'bg-gray-200'}`} onClick={() => handleTabChange('active')}>Active Users</button>
+            </li>
+            <li className={activeTab === 'inactive' ? 'active-tab' : ''}>
+              <button className={`text-gray-700 font-raleway px-3 py-1.5 text-sm rounded inline-block mb-4 ${activeTab === 'inactive' ? 'bg-green-500' : 'bg-gray-200'}`} onClick={() => handleTabChange('inactive')}>Inactive Users</button>
+            </li>
+          </ul>
+        </div>
       </div>
       {activeTab === 'active' && (
         <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center">

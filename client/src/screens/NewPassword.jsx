@@ -21,32 +21,30 @@ const NewPassword = () => {
         }
     };
     return (
-        <div className="relative bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">            <div>
-            <h3 className="font-bold text-2xl">Reset your password</h3>
+        <div className="relative bg-white w-3/12 mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">            <div>
+            <h3 className="font-bold text-2xl text-center font-raleway">Reset your password</h3>
         </div>	  
-        <div className="mt-10">
+        <div className="mt-5">
             <form className="flex flex-col" onSubmit={handleSubmit}>
-                <div className="mb-6 pt-3 rounded bg-gray-200">
-                    <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="password" > New Password </label>
-                    <input 
+                <div className="mb-3 pt-3"><input 
                         type="password" 
                         name="password" 
+                        placeholder='New Password' 
                         value={FormData.password}
                         onChange={(e) => setFormData({ ...FormData, password: e.target.value })}
                         required
-                        className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
-                <div className="mb-6 pt-3 rounded bg-gray-200">
-                    <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="email" > Confirm Password </label>
-                    <input 
+                <div className="mb-3 pt-3"><input 
                         type="re_password" 
                         name="re_password" 
+                        placeholder='Confirm Password'
                         value={FormData.re_password}
                         onChange={(e) => setFormData({ ...FormData, re_password: e.target.value })}
                         required
-                        className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"/>
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 </div>
-                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"type="submit">
+                <button className="mt-3 text-raleway text-sm bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md shadow-lg hover:shadow-xl transition duration-200" type="submit">
                     Send password reset email
                 </button>
             </form>

@@ -121,10 +121,12 @@ const CMSScreen = () => {
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-        <div className="relative block w-3/4 justify-center px-10 mb-5 mt-5 items-center">        
-          <button className="create-cat-btn" onClick={openCmspopup} >Create CMS</button>          
-        </div>
-        <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center">
+      <div className="relative block w-3/4 px-10 mb-5 mt-5 text-right">        
+        <button className="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded inline-block" onClick={openCmspopup}>
+          Create CMS
+        </button> 
+      </div>
+      <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center">
         <div className="table-responsive">
           <table className="mt-4 w-3/4 border-collapse border border-gray-400">
             <thead>

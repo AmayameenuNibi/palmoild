@@ -163,7 +163,7 @@ const Search = () => {
         <div className="mb-10">
           <div className="frame-c">          
             <input 
-              class="text-lg"
+              className="text-lg"
               type="text"
               value={searchTerm}
               onChange={handleInputChange}
@@ -171,7 +171,7 @@ const Search = () => {
             <div className="frame-c-child"></div>
             <div className="frame-d"></div>
             <button 
-              class="bg-green-400 p-5 text-white text-lg" 
+              className="bg-green-400 p-5 text-white text-lg" 
               onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
               Search
             </button>
@@ -185,22 +185,22 @@ const Search = () => {
               <label className="block text-gray-600 text-lg mb-2">
                 Categories:
               </label>
-              <div class="mb-2" key="AllCategories">
+              <div className="mb-2" key="AllCategories">
                 <input 
                   type="checkbox" 
                   id="AllCategories" 
                   name="AllCategories" 
                   checked={selectedCategories.includes("All")}
                   onChange={() => handleCategoryChange("All")} />
-                <label class="text-gray-800 ml-2" htmlFor="AllCategories">All Categories</label>
+                <label className="text-gray-800 ml-2" htmlFor="AllCategories">All Categories</label>
               </div>
               {categories.map((category) => (
-                <div class="mb-2" key={category._id}>
+                <div className="mb-2" key={category._id}>
                   <input type="checkbox" id={category._id} name={category._id}
                     checked={selectedCategories.includes(category._id)}
                     onChange={() => handleCategoryChange(category._id)}
                   />
-                  <label class="text-gray-500 ml-2" htmlFor={category._id}>{category.name}</label>
+                  <label className="text-gray-500 ml-2" htmlFor={category._id}>{category.name}</label>
                 </div>
               ))}
             </div>
@@ -208,14 +208,14 @@ const Search = () => {
                 Countries:
             </label>
             <div className="mb-4 max-h-96 overflow-y-auto">              
-              <div class="mb-2" key="AllCountries">
+              <div className="mb-2" key="AllCountries">
                 <input type="checkbox" id="AllCountries" name="AllCountries" checked={selectedCountries.includes("All")}
                   onChange={() => handleCountryChange("All")}
                 />
                 <label className="text-gray-800 ml-2" htmlFor="AllCountries">All Countries</label>
               </div>
               {countries.map((country) => (
-                <div class="mb-2" key={country._id}>
+                <div className="mb-2" key={country._id}>
                   <input type="checkbox" id={country._id} name={country._id}
                     checked={selectedCountries.includes(country._id)}
                     onChange={() => handleCountryChange(country._id)}
@@ -231,10 +231,10 @@ const Search = () => {
               {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                 <>
                     {featuredCompanies.map((featured, index) => (
-                      <div key={featured._id} class="row listing featured from-white bg-gradient-to-r from-white to-green-200 border border-slate-500">
-                        <div class="col-md-8">
-                          <div class="first_top">
-                            <div class="white_">
+                      <div key={featured._id} className="row listing featured from-white bg-gradient-to-r from-white to-green-200 border border-slate-500">
+                        <div className="col-md-8">
+                          <div className="first_top">
+                            <div className="white_">
                               <h3><b>
                                 <button onClick={() => handleCompanyClick(featured)}>
                                     {featured.company}
@@ -242,9 +242,9 @@ const Search = () => {
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="second_left"></div>
-                            <div class="brown">
+                        <div className="col-md-4">
+                            <div className="second_left"></div>
+                            <div className="brown">
                                 <h3><b>Featured</b></h3>
                             </div>
                         </div>

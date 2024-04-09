@@ -234,87 +234,84 @@ const RegisterScreen = () => {
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-      <section class="bg-white">
-        <div class="container mx-auto my-0 w-8/12 pt-10">
-          <h2 class="text-xl text-gray-600 mb-10">Register</h2>
-          <div class="social_bt">
+      <section className="bg-white">
+        <div className="container mx-auto my-0 w-8/12 pt-10">
+          <h2 className="font-bold text-2xl text-center font-raleway">Register</h2>
+          <div className="social_bt mt-8">
               <button
                     type="submit"
                     className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mr-2 mt-4 sig font-semibold"
-                    > <img src={goog} alt="Google" class="pr-2"/>
+                    > <img src={goog} alt="Google" className="pr-2"/>
                     Sign in with Google
                   </button>
                   <button
                     type="submit"
                     className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"> 
-                    <img src={link} alt="Linked In" class="pr-2"/>
+                    <img src={link} alt="Linked In" className="pr-2"/>
                       Sign in with LinkedIn
                   </button>
                   <button
                     type="submit"
                     className="text-center w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm ml-2 px-6 py-3 mt-4 mb-4 sig font-semibold"
-                   > <img src={fb} alt="Facebook" class="pr-2"/>
+                   > <img src={fb} alt="Facebook" className="pr-2"/>
                     Sign in with Facebook
                   </button>
               </div>
-              <div className="or_with mx-5 text-center relative my-5">
-                <p className="font-lato text-sm text-gray-500">Or with email</p>
-              </div>
-          <form ref={form}  onSubmit={handleSubmit}>
-            <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Contact Name" > Contact Name <span class="text-red-500 text-xs">*</span></label>
+              <div className="or_with pl-5 mr-5 text-center relative my-5"><p className="font-lato text-sm text-gray-500">Or with email</p></div>
+          <form className="mt-8" ref={form}  onSubmit={handleSubmit}>
+            <div className="w-6/12 inline-block pr-4 pb-4">
               <input 
                 type="text"
                 name="name"
                 id="name"
+                placeholder='Contact Name  *'
                 value={formData.name}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10 font-lato text-gray-600 text-sm" />
+                className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold" />
                 {validationErrors.name && <p className="text-red-500 text-xs italic">{validationErrors.name}</p>}
             </div>
-            <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="email" >Email Address <span class="text-red-500 text-xs">*</span></label>
+            <div className="w-6/12 inline-block pr-4 pb-4">
               <input 
                 type="text" 
                 name="email" 
                 id="email" 
+                placeholder='Email Address  *'
                 value={formData.email}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10 font-lato text-gray-600 text-sm"/>
+                className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 {validationErrors.email && <p className="text-red-500 text-xs italic">{validationErrors.email}</p>}
             </div>
-            <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Company Name" > Company Name <span class="text-red-500 text-xs">*</span></label>
+            <div className="w-6/12 inline-block pr-4 pb-4">
               <input 
                 type="text" 
                 name="company" 
                 id="company" 
+                placeholder='Company  *'
                 value={formData.company}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10 font-lato text-gray-600 text-sm"/>
+                className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
             </div>
-            <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Address" > Address <span class="text-red-500 text-xs">*</span></label>
+            <div className="w-6/12 inline-block pr-4 pb-4">
               <input 
                 type="text" 
                 name="address" 
                 id="address" 
+                placeholder='Address  *'
                 value={formData.address}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10 font-lato text-gray-600 text-2sm"/>
-                {validationErrors.address && <p className="text-red-500 text-xs italic">{validationErrors.address}</p>}
+                className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
+                {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
             </div>
-            <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="pb-2 block text-sm font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Country" > Country <span class="text-red-500 text-xs">*</span></label>
+            <div className="w-6/12 inline-block pr-4 pb-4">
               <select
                   id="country_id"
-                  class="w-full rounded border h-10 font-lato text-gray-600 text-sm"
+                  className="w-full rounded border px-6 py-3 font-lato text-gray-400 text-sm focus:outline-none font-semibold"
                   type="text"
                   name="country_id"
                   value={formData.country_id}
                   onChange={handleInputChange} >
-                  <option className="text-white" value="">
+                  <option className="text-sm font-lato text-gray-600 font-semibold" value="">
                       Country *
                   </option>
                   {countries.map((country) => (
@@ -325,40 +322,41 @@ const RegisterScreen = () => {
               </select>
               {validationErrors.country_id && <p className="text-red-500 text-xs italic">{validationErrors.country_id}</p>}
             </div>
-            <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Mobile" > Mobile <span class="text-red-500 text-xs">*</span></label>
+            <div className="w-6/12 inline-block pr-4 pb-4">
               <input 
                 type="text" 
                 name="mobile" 
-                id="mobile"                           
+                id="mobile" 
+                placeholder="Mobile Number  *"
                 value={formData.mobile}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10 font-lato text-gray-600 text-sm"/>
+                className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 {validationErrors.mobile && <p className="text-red-500 text-xs italic">{validationErrors.mobile}</p>}
             </div>
-            <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="password" > Password <span class="text-red-500 text-xs">*</span></label>
+            <div className="w-6/12 inline-block pr-4 pb-4">
               <input 
                 type="password" 
                 id="password" 
                 name="password"
+                placeholder="Password  *"
                 value={formData.password}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10 font-lato text-gray-600 text-sm"/>
+                className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 {validationErrors.password && <p className="text-red-500 text-xs italic">{validationErrors.password}</p>}
             </div>
-            <div class="w-6/12 inline-block pr-4 pb-4">
-              <label className="font-lato text-gray-600 font-semibold text-sm uppercase tracking-wide inline-block mb-4" htmlFor="Confirm Password" > Confirm Password <span class="text-red-500 text-xs">*</span></label>
+            <div className="w-6/12 inline-block pr-4 pb-4">
               <input 
                 type="password" 
                 name="confirmPassword" 
-                id="confirmPassword" 
+                id="confirmPassword"
+                placeholder= "Confirm Password  *"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                class="w-full rounded border h-10 font-lato text-gray-600 text-sm"/>
+                className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
                 {validationErrors.confirmPassword && <p className="text-red-500 text-xs italic">{validationErrors.confirmPassword}</p>}
             </div>
-            <div class="col-sm-5 mt-10"><input class="button nomargin" type="submit" name="yt0" value="Signup"></input></div>
+            <div className="my-5 mr-3.5 text-center">
+              <input className="w-5/12 text-raleway text-sm bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" type="submit" name="yt0" value="Signup"></input></div>
           </form>
         </div>
       </section> 

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
   name: String,
+  slug: String,
   site_id: String,
 });
 

@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import '../css/spinner.css'
 import { BACKEND_URL } from "../constans";
+import { Helmet } from 'react-helmet';
 
 const CompanyList = () => {
     const [loading, setLoading] = useState(true);
@@ -16,23 +17,22 @@ const CompanyList = () => {
     const { userInfo } = useSelector((state) => state.auth);
 
     useEffect(() => {
+        const fetchCompanies = async () => {
+            try {
+                const response = await axios.get(`${ BACKEND_URL }api/companies`);
+                setCompanies(response.data);
+                const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
+                setCategories(cat_response.data);
+                const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
+                setFeaturedcompanies(featureresponse.data);
+                setLoading(false); 
+            } catch (error) {
+                console.error('Error fetching companies:', error);
+                setLoading(false); 
+            }
+        };
         fetchCompanies();
-    }, []);
-
-    const fetchCompanies = async () => {
-        try {
-            const response = await axios.get(`${ BACKEND_URL }api/companies`);
-            setCompanies(response.data);
-            const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
-            setCategories(cat_response.data);
-            const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
-            setFeaturedcompanies(featureresponse.data);
-            setLoading(false); 
-        } catch (error) {
-            console.error('Error fetching companies:', error);
-            setLoading(false); 
-        }
-    };
+    }, []);    
 
     const handlePageChange = ({ selected }) => {
         setCurrentPage(selected);
@@ -44,6 +44,13 @@ const CompanyList = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>PalmOil Directory</title>
+                <meta name="description" content="PalmOil Directory" />
+                <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
+                    speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
+                    biodiesel,palm biodiesel"/>    
+            </Helmet>
             <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">
@@ -53,9 +60,9 @@ const CompanyList = () => {
                         </label>
                         <div className="mb-4">              
                             {categories.map((category) => (
-                                <div class="" key={category._id}>
-                                    <Link to={`/categories/${category.name.toLowerCase()}`} >
-                                        <label class="font-lato text-gray-600 text-sm">{category.name}</label>
+                                <div className="" key={category._id}>
+                                    <Link to={`/categories/${category.slug}`} >
+                                        <label className="font-lato text-gray-600 text-sm">{category.name}</label>
                                     </Link>                  
                                 </div>
                             ))}
@@ -63,28 +70,28 @@ const CompanyList = () => {
                     </div>
                     <div className="w-9/12">
                         <div className="relative mb-6">
-                            <div class="row-tab listing featured">
+                            <div className="row-tab listing featured">
                             {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
                                 <>
                                     {featuredCompanies.map((featured, index) => (
-                                        <div key={featured._id} class="p-4 flex items-center from-white bg-gradient-to-r from-white to-green-200">
-                                        <div class="w-8/12 inline-block">
-                                          <div class="relative">
-                                            <div class="featr">
+                                        <div key={featured._id} className="p-4 flex items-center from-white bg-gradient-to-r from-white to-green-200">
+                                        <div className="w-8/12 inline-block">
+                                          <div className="relative">
+                                            <div className="featr">
                                                 {userInfo ? (
-                                                    <Link class="text-gray-600 font-lato text-sm" to={`/companies/${featured.company_slug}`}>{featured.company}</Link>
+                                                    <Link className="text-gray-600 font-lato text-sm" to={`/company/${featured.company_slug}`}>{featured.company}</Link>
                                                 ) :(
-                                                    <Link class="text-gray-600 font-lato text-sm" to={`/company/${featured.company_slug}`}>{featured.company}</Link>
+                                                    <Link className="text-gray-600 font-lato text-sm" to={`/company/${featured.company_slug}`}>{featured.company}</Link>
                                                 )}                                                 
-                                                <p class="text-gray-600 font-lato text-sm">{featured.mobile}</p>
-                                                <p class="text-gray-600 font-lato text-sm">{featured.email}</p>
-                                                <p class="text-green-600 font-lato text-sm">{featured.website}</p>
+                                                <p className="text-gray-600 font-lato text-sm">{featured.mobile}</p>
+                                                <p className="text-gray-600 font-lato text-sm">{featured.email}</p>
+                                                <p className="text-green-600 font-lato text-sm">{featured.website}</p>
                                             </div>
                                           </div>
                                         </div>
-                                        <div class="w-4/12 inline-block text-right">
-                                            <div class="brown">
-                                                <h3 class="font-lato text-white bg-blue-600 text-xs inline-block px-2 py-1 rounded-sm fe">Featured</h3>
+                                        <div className="w-4/12 inline-block text-right">
+                                            <div className="brown">
+                                                <h3 className="font-lato text-white bg-blue-600 text-xs inline-block px-2 py-1 rounded-sm fe">Featured</h3>
                                             </div>
                                         </div>
                                       </div>
@@ -102,13 +109,13 @@ const CompanyList = () => {
                             {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
                             <>
                                 {currentCompanies.map((company, index) => (
-                                    <div className="listing row-tab my-3" key={company._id}>
+                                    <div className="listing row-tab my-1" key={company._id}>
                                         <div className="w-8/12 inline-block">
                                             <div className="first_top">
                                                 <div className="white_">
-                                                    <h3 class="text-gray-800 text-gray-700 font-lato text-sm">
+                                                    <h3 className="text-gray-800 text-gray-700 font-lato text-sm">
                                                         {userInfo ? (
-                                                            <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
+                                                            <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
                                                         ) :(
                                                             <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
                                                         )}                                                        

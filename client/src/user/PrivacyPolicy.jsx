@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import background from '../images/vlo.jpg'
 import { BACKEND_URL } from "../constans";
 
 import { Helmet } from 'react-helmet';
@@ -10,7 +9,7 @@ const PrivacyPolicy = () => {
   const fetchPrivacyData = async () => {
     try {
       const response = await axios.get(`${BACKEND_URL}api/cmsdata/privacy-policy`);
-      setprivacyData(response.data.cms_content);
+      setprivacyData(response.data);
     } catch (error) {
       console.error('Error fetching about data:', error);
     }
@@ -23,7 +22,9 @@ const PrivacyPolicy = () => {
   return (
     <div>
       <Helmet>
-          <title>PrivacyPolicy</title>
+          <title>{privacyData.seo_title}</title>
+          <meta name="description" content={privacyData.seo_description} />
+          <meta name="Keywords" content={privacyData.seo_keywords} />
       </Helmet>
 	    <section className="bg-white border-b py-8" id="about">
 		    <div className="container max-w-5xl mx-auto">
@@ -32,7 +33,7 @@ const PrivacyPolicy = () => {
 		      </div>
           <div 
             className="text-justify text-gray-600 mb-8 px-5"
-            dangerouslySetInnerHTML={{ __html: privacyData }}
+            dangerouslySetInnerHTML={{ __html: privacyData.cms_content }}
           />
 		    </div>
 	    </section>	
