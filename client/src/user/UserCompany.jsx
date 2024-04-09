@@ -191,9 +191,14 @@ const UserCompany = () => {
             <h2 className="text-xl text-gray-600 mb-10">Please complete your ad listing details</h2>
             <form onSubmit={handleFormSubmit} encType="multipart/form-data">
               {logoPreview ? <img src={logoPreview} width="75px" height="55px" alt={formData.company} /> : null}
-              {statusData.status == '1' ? (
-                <img src={`${ BACKEND_URL }uploads/${formData.logo}`} width="75px" height="55px" alt="Company Logo" />
-              ) : null}
+              {statusData.status === '1' && formData.logo && typeof formData.logo === 'string' && formData.logo.trim() !== '' && (
+                  <img 
+                    src={`${BACKEND_URL}uploads/${formData.logo}`} 
+                    width="75px" 
+                    height="55px" 
+                    alt="Company Logo" />
+              )}
+
               <input
                 type="hidden"
                 id="user_id"
@@ -256,7 +261,7 @@ const UserCompany = () => {
               <div className="w-6/12 inline-block pr-4 pb-4">
                   <label htmlFor="logo" className="pb-3 block text-sm uppercase font-raleway py-3 font-semibold text-gray-700">
                       Logo
-                  <span className="text-red-500 text-xl pl-1">*</span></label>
+                  </label>
                   <input
                       type="file" id="logo" name="logo" accept="image/*" onChange={handleLogoChange}
                       className="w-full rounded border border-gray-400 h-10 pl-2"/>

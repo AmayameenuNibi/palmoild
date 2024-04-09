@@ -56,6 +56,8 @@ export const getCompanies = asyncHandler(async (req, res) => {
     }
   ];
   const companies = await Company.aggregate(pipeline);
+  console.log(".......");
+  console.log("hai");
   res.json(companies);
 });
 

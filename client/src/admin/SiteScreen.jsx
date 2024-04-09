@@ -51,6 +51,10 @@ const SiteScreen = () => {
   const openSitePopup = () => {
     const popup = document.getElementById("sitepopup");
     popup.classList.toggle("show");
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" 
+    });
   };
 
   const closeSitePopup = () => {

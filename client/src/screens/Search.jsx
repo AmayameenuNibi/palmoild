@@ -378,7 +378,7 @@ const Search = () => {
                             <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Profile</td>
                             <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.profile}</td>
                           </tr>
-                          {selectedCompany.mobile !== '' && (
+                          {selectedCompany.mobile.trim() !== '' && (
                             <tr>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">
                                 <h6 className="text-gray-500 ml-2 ml-2 font-lato text-sm "><b>Contact Details</b></h6>
@@ -386,23 +386,23 @@ const Search = () => {
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.mobile}</td>
                             </tr>
                           )}
-                          {selectedCompany.email !== '' && (
+                          {selectedCompany.email.trim() !== '' && (
                             <tr>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Email</td>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.email}</td>
                             </tr>
                           )}
                           <tr>
-                            {selectedCompany.twitter_url !== '' && (
+                            {selectedCompany.twitter_url.trim() !== ''  && (
                               <p className="text-gray-500 ml-2 ml-2 font-lato text-sm ">twitter_url: {selectedCompany.twitter_url}</p>
                             )}
-                            {selectedCompany.facebook_url !== '' && (
+                            {selectedCompany.facebook_url.trim() !== '' && (
                               <p className="text-gray-500 ml-2 ml-2 font-lato text-sm ">facebook_url: {selectedCompany.facebook_url}</p>
                             )}
-                            {selectedCompany.linkedin_url !== '' && (
+                            {selectedCompany.linkedin_url.trim() !== '' && (
                               <p className="text-gray-500 ml-2 ml-2 font-lato text-sm ">linkedin_url: {selectedCompany.linkedin_url}</p>
                             )}
-                            {selectedCompany.insta_url !== '' && (
+                            {selectedCompany.insta_url.trim() !== '' && (
                               <p className="text-gray-500 ml-2 ml-2 font-lato text-sm ">insta_url: {selectedCompany.insta_url}</p>
                             )}
                           </tr>

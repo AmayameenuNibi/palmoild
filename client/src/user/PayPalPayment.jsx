@@ -112,7 +112,7 @@ const PayPalButton = () => {
                             amount_paid:'10',
                             transaction_id:details.id, 
                         };
-                        
+                        handleSubmits(details.id);                        
                         emailjs.send('service_vnf567f', 'template_lhgje57', templateParams).then(
                             (response) => {
                                 console.log('SUCCESS!', response.status, response.text);

@@ -87,6 +87,10 @@ const CategoryScreen = () => {
   const openCatpopup = () => {
     const popup = document.getElementById("categorypopup");
     popup.classList.toggle("show");
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" 
+    });
   };
 
   const closeCatpopup = () => {

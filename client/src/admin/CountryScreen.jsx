@@ -76,6 +76,10 @@ const CountryScreen = () => {
   const openCountryPopup = () => {
     const popup = document.getElementById("countrypopup");
     popup.classList.toggle("show");
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" 
+    });
   };
   const closeCountryPopup = () => {
     setFormData({id:'', name: '' }); 

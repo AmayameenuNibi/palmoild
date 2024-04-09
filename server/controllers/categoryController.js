@@ -132,7 +132,7 @@ export const getCategoriesWithCompanies = async (req, res) => {
 
 export const getCategoryCompanies = async (req, res) => {
   try {
-    const categorySlug = req.params.categoryName; // Convert to lowercase
+    const categorySlug = req.params.categoryName; 
     const pipeline = [
       {
         $lookup: {

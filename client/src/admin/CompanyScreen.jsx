@@ -79,19 +79,25 @@ const CompanyScreen = () => {
                                         {currentCompanies.map((company) => (
                                             <tr key={company._id}>
                                                 <td className="p-2">
-                                                    {!company.logo ? 
-                                                    <>
-                                                        <img style={{ width:'80px', height:'50px' }} src={default_img} />
-                                                    </>:
-                                                    <>
-                                                        <img className="font-lato text-gray-600 text-sm p-2" src={`${ BACKEND_URL }uploads/${company.logo}`} width="75px" height="55px" alt={company.company} />
-                                                    </>
-                                                    }
+                                                    {company.logo.trim() === '' ? (
+                                                        <>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <img
+                                                                className="font-lato text-gray-600 text-sm p-2"
+                                                                src={`${BACKEND_URL}uploads/${company.logo.trim()}`}
+                                                                width="75px"
+                                                                height="55px"
+                                                                alt={company.company}
+                                                            />
+                                                        </>
+                                                    )}
                                                 </td>
                                                 <td className="font-lato text-gray-600 text-sm p-2">{company.company}</td>
                                                 <td className="font-lato text-gray-600 text-sm p-2">{company.categoryName}</td>
                                                 <td className="font-lato text-gray-600 text-sm p-2">{company.countryName}</td>
-                                                <td className="font-lato text-gray-600 text-sm p-2">{company.user_id}</td>
+                                                <td className="font-lato text-gray-600 text-sm p-2">{company.website}</td>
                                                 <td className="font-lato text-gray-600 text-sm p-2 text-center">
                                                 <Link className="font-lato text-sm bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 rounded focus:outline-none focus:shadow-outline md:inline-block"
                                                     to={`/edit-company/${company._id}`}>Edit</Link> 
@@ -104,22 +110,20 @@ const CompanyScreen = () => {
                                     </tbody>
                                     
                                 </table>
-                                
+                                <div className='mt-4 w-3/4'>
+                                    <ReactPaginate
+                                        pageCount={Math.ceil(companies.length / itemsPerPage)}
+                                        pageRangeDisplayed={5} 
+                                        marginPagesDisplayed={2} 
+                                        onPageChange={handlePageChange}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                    />
+                                </div>                                
                             </div>
                         ) : (
                             <div className="text-center p-5">No companies found.</div>
-                        )}
-                        <div className='mt-4 w-3/4'>
-                            <ReactPaginate
-                                pageCount={Math.ceil(companies.length / itemsPerPage)}
-                                pageRangeDisplayed={5} 
-                                marginPagesDisplayed={2} 
-                                onPageChange={handlePageChange}
-                                containerClassName={'pagination'}
-                                activeClassName={'active'}
-                            />
-                        </div>
-                        
+                        )}                      
                     </>
                 )}        
             </div>

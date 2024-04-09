@@ -173,15 +173,17 @@ const AddCompany = () => {
         <div className="relative bg-white  p-8 md:p-12 my-10">                
             <form className="bg-white company-row" onSubmit={handleFormSubmit} encType="multipart/form-data">
                 <div>
-                    <h3 className="text-white font-raleway px-3 py-1.5 text-sm inline-block mb-4">Create Company</h3>
+                    <h2 className="font-bold text-2xl text-center font-raleway mb-1">
+                        {companyId ? 'Edit Company' : 'Add Company'}
+                    </h2>
                 </div>
-                {!formData.logo ? 
-                    <>                    
-                    </>:
-                    <>
-                        <img src={`${ BACKEND_URL }uploads/${formData.logo}`} width="75px" height="55px" alt={company.company} />
-                    </>
-                }
+                {formData.logo && typeof formData.logo === 'string' && formData.logo.trim() !== '' && (
+                  <img 
+                    src={`${BACKEND_URL}uploads/${formData.logo}`} 
+                    width="75px" 
+                    height="55px" 
+                    alt="Company Logo" />
+                )}
                 <input 
                     type="hidden"  id="user_id" name="user_id" value={formData.user_id}  onChange={handleInputChange}
                     className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>

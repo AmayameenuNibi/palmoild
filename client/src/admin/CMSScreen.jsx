@@ -19,16 +19,15 @@ const CMSScreen = () => {
     status:'',
   });
 
-  const fetchCms = async () => {
-    try {
-        const response = await axios.get(`${ BACKEND_URL }api/cmsdata`);
-        setCmsData(response.data);
-    } catch (error) {
-        console.error('Error fetching cms:', error);
-    }
-  };
-
   useEffect(() => {
+    const fetchCms = async () => {
+      try {
+          const response = await axios.get(`${ BACKEND_URL }api/cmsdata`);
+          setCmsData(response.data);
+      } catch (error) {
+          console.error('Error fetching cms:', error);
+      }
+    };
     fetchCms();
   }, []);
 
@@ -38,7 +37,15 @@ const CMSScreen = () => {
         await axios.post(`${ BACKEND_URL }api/cmsdata`, cmsFormData);
         closeCmspopup();
         fetchCms(); 
-        formdatavalue();
+        setCmsFormData({      
+          cms_title: '', 
+          cms_key:'', 
+          cms_content:'', 
+          seo_title:'', 
+          seo_description: '', 
+          seo_keywords:'',
+          status:'' 
+        });
         toast.success('CMS added successfully!');
     } catch (error) {
         toast.error('Error adding cms');
@@ -46,19 +53,19 @@ const CMSScreen = () => {
   };
 
   const handleUpdateCms = (cms) => {
-    setCmsFormData({
+    setCmsFormData(prevState => ({
+        ...prevState,
         id: cms._id,
         cms_title: cms.cms_title,
-        cms_content:cms.cms_content,
-        cms_key:cms.cms_key,
-        seo_title:cms.seo_title,
-        seo_description:cms.seo_description,
-        seo_keywords:cms.seo_keywords,
-        status:cms.status,
-    });
+        cms_content: cms.cms_content,
+        cms_key: cms.cms_key,
+        seo_title: cms.seo_title,
+        seo_description: cms.seo_description,
+        seo_keywords: cms.seo_keywords,
+        status: cms.status,
+    }));
     openCmspopup();
-  };
-
+};
   const handleUpdateCmsData = async (e) => {
     e.preventDefault();
     try {
@@ -73,7 +80,15 @@ const CMSScreen = () => {
       });
       fetchCms();
       closeCmspopup();
-      formdatavalue();
+      setCmsFormData({      
+        cms_title: '', 
+        cms_key:'', 
+        cms_content:'', 
+        seo_title:'', 
+        seo_description: '', 
+        seo_keywords:'',
+        status:'' 
+      });
       toast.success('CMS updated successfully!');
     } catch (error) {
       toast.error('Error updating cms');
@@ -91,18 +106,7 @@ const CMSScreen = () => {
     } catch (error) {
         toast.error('Error deleting cms');
     }
-  }; 
-
-  const formdatavalue = () => {
-    setCmsFormData({      
-      cms_title: '', 
-      cms_key:'', 
-      seo_title:'', 
-      seo_description: '', 
-      seo_keywords:'',
-      status:'' 
-    });
-}
+  };  
 
   const openCmspopup = () => {
     const popup = document.getElementById("categorypopup");
@@ -110,8 +114,7 @@ const CMSScreen = () => {
   };
 
   const closeCmspopup = () => {
-    document.querySelector('.categorypopup').classList.remove('show');
-    formdatavalue();
+    document.querySelector('.categorypopup').classList.remove('show');    
   };
 
   const handleDropdownChange = (e) => {
@@ -120,7 +123,6 @@ const CMSScreen = () => {
 
   return (
     <div>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <div className="relative block w-3/4 px-10 mb-5 mt-5 text-right">        
         <button className="text-white font-raleway px-3 py-1.5 text-sm bg-green-500 mt-5 rounded inline-block" onClick={openCmspopup}>
           Create CMS
@@ -128,26 +130,27 @@ const CMSScreen = () => {
       </div>
       <div className="relative block md:w-full justify-center px-10 mb-5 mt-5 items-center">
         <div className="table-responsive">
-          <table className="mt-4 w-3/4 border-collapse border border-gray-400">
+          <table className="mt-4 w-3/4 text-left">
             <thead>
               <tr>
-                <th className="border border-gray-400 p-2">CMS Title</th>
-                <th className="border border-gray-400 p-2">CMS Key</th>
-                <th className="border border-gray-400 p-2">SEO Title</th>
+                <th className="font-lato text-gray-600 text-sm p-2 font-semibold">CMS Title</th>
+                <th className="font-lato text-gray-600 text-sm p-2 font-semibold">CMS Key</th>
+                <th className="font-lato text-gray-600 text-sm p-2 font-semibold">Actions</th>
               </tr>
             </thead>
             <tbody>
               {cmsData.map((cms) => (
                 <tr key={cms._id}>
-                  <td className="border border-gray-400 p-2">{cms.cms_title}</td>
-                  <td className="border border-gray-400 p-2">{cms.cms_key}</td>
-                  <td className="border border-gray-400 p-2">{cms.seo_title}</td>
-                  <td className="border border-gray-400 p-2">
-                    <button onClick={() => handleUpdateCms(cms)}
+                  <td className="font-lato text-gray-600 text-sm p-2">{cms.cms_title}</td>
+                  <td className="font-lato text-gray-600 text-sm p-2">{cms.cms_key}</td>
+                  <td className="font-lato text-gray-600 text-sm p-2">
+                    <button
+                      onClick={() => handleUpdateCms(cms)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 focus:outline-none focus:shadow-outline">
                       Edit
                     </button>
-                    <button onClick={() => handleDeleteCms(cms._id)}
+                    <button
+                      onClick={() => handleDeleteCms(cms._id)}
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">
                       Delete
                     </button>
@@ -177,7 +180,7 @@ const CMSScreen = () => {
                   id="cms_title"
                   name="cms_title"
                   value={cmsFormData.cms_title}
-                  onChange={(e) => setCmsFormData({ ...cmsFormData, cms_title: e.target.value })}
+                  onChange={(e) => setCmsFormData({ ...cmsFormData, cms_title:  e.target.value })}
                   className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   required/>
               </div>
@@ -202,7 +205,7 @@ const CMSScreen = () => {
                   id="cms_key"
                   name="cms_key"
                   value={cmsFormData.cms_key}
-                  onChange={(e) => setCmsFormData({ ...cmsFormData, cms_key: e.target.value })}
+                  onChange={(e) => setCmsFormData({ ...cmsFormData, cms_key:  e.target.value })}
                   className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   required/>
               </div>
