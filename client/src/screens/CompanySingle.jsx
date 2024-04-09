@@ -25,11 +25,14 @@ const CompanySingle = () => {
     const createdAtDateString = createdAtDate ? createdAtDate.toLocaleDateString() : '';
 
     return (
-        <div>
-            <Helmet>
-                <title>{companyName}</title>
-            </Helmet>
+        <div>            
             {company && (
+                <>
+                <Helmet>
+                    <title>PalmOil Directory, {company.company}</title>
+                    <meta name="keywords" content={`${company.company}, ${company.categoryName}, palm oil company ${company.countryName},list of palm oil companies in ${company.countryName}`} />
+                    <meta name="description" content={`${company.company}, Connect with Palm Oil importers, buyers, suppliers, equipment manufacturers worldwide`} />
+                </Helmet>
                 <div className="page-content page-container" id="page-content">
                     <div className="padding desktop-1 pt-7">
                         <div className="row container d-flex justify-content-center">
@@ -39,7 +42,13 @@ const CompanySingle = () => {
                                         <div className="col-sm-12 col-md-4 bg-c-lite-green user-profile">
                                             <div className="card-block text-center text-white">
                                                 <div className="m-b-25">
-                                                    <img src={`${ BACKEND_URL }uploads/${company.logo}`} className="img-radius h-full" alt="User-Profile-Image"/>
+                                                {company.logo && typeof company.logo === 'string' && company.logo.trim() !== '' && (
+                                                    <img 
+                                                        src={`${BACKEND_URL}uploads/${company.logo}`} 
+                                                        width="75px" 
+                                                        height="55px" 
+                                                        alt="Company Logo" />
+                                                )}
                                                 </div>
                                                 <h5 className="f-w-600">{company.company}</h5>
                                                 <p>{company.categoryName}</p>
@@ -98,6 +107,7 @@ const CompanySingle = () => {
                         </div>
                     </div>
                 </div>
+                </>
             )}
         </div>
     );

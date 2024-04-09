@@ -301,7 +301,7 @@ const RegisterScreen = () => {
                 value={formData.address}
                 onChange={handleInputChange}
                 className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
-                {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
+                {validationErrors.address && <p className="text-red-500 text-xs italic">{validationErrors.address}</p>}
             </div>
             <div className="w-6/12 inline-block pr-4 pb-4">
               <select

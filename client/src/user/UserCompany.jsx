@@ -410,7 +410,7 @@ const UserCompany = () => {
                   </div>
                   ))}
                   <button type="button" onClick={handleAddStaff} className="text-green-500 pb-2">
-                  Add Staff
+                  Add Contact
                   </button>
               </div>
               <button

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { BACKEND_URL } from "../constans";
 import '../css/spinner.css'
+import { Helmet } from 'react-helmet';
 
 const CategorySingle = () => {
     const { categoryName } = useParams();
@@ -47,6 +48,13 @@ const CategorySingle = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>PalmOil Directory, {categoryName}</title>
+                <meta name="description" content="PalmOil Directory" />
+                <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
+                    speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
+                    biodiesel,palm biodiesel"/>    
+            </Helmet>
             <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">

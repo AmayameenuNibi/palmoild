@@ -48,9 +48,13 @@ const CompanySingles = () => {
 
     return (
         <div>
+            {company && (
             <Helmet>
-                <title>Palm Oil Industry, {companyName}</title>
+                <title>PalmOil Directory, {company.company}</title>
+                <meta name="keywords" content={`${company.company}, ${company.categoryName}, palm oil company ${company.countryName},list of palm oil companies in ${company.countryName}`} />
+                <meta name="description" content={`${company.company}, Connect with Palm Oil importers, buyers, suppliers, equipment manufacturers worldwide`} />
             </Helmet>
+            )}
             <div className="desktop-1 pt-7">
                 <div className="desktop-1-child"></div>        
                 <div className="row listing row-tab">

@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 import { BACKEND_URL } from '../constans';
 import '../css/spinner.css';
 import buttonimage from '../images/download.png';
+import { Helmet } from 'react-helmet';
 
 const Search = () => {
   const [loading, setLoading] = useState(true);
@@ -22,22 +23,6 @@ const Search = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [featuredCompanies, setFeaturedcompanies] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-
-  useEffect(() => {
-    const checkIsFavorite = async () => {
-      try {
-        const response = await axios.get(`${ BACKEND_URL }api/favorites/check/${selectedCompany._id}/${userInfo._id}`);
-        const result = response.data.isFavorite;
-        setIsFavoriteCompany(result === "favorite");
-      } catch (error) {
-        console.error('Error checking favorite:', error);
-      }
-    };
-  
-    if (selectedCompany) {
-      checkIsFavorite();
-    }
-  }, [selectedCompany, userInfo]);
   
   const fetchCompanies = async (page) => {
     try { 
@@ -47,12 +32,6 @@ const Search = () => {
       setCategories(cat_response.data);
       const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
       setCountries(countriesResponse.data);
-      // const response = await axios.get(`${BACKEND_URL}api/companies`, {
-      //     params: { page, perPage: itemsPerPage }
-      // });
-      // const data = response.data[0]; 
-      // setCompanies(data.companies);
-      // setTotalPages(data.totalPages); 
       setLoading(false);
     } catch (error) {
       console.error('Error fetching companies:', error);
@@ -121,6 +100,22 @@ const Search = () => {
     }
   };
 
+  useEffect(() => {
+    const checkIsFavorite = async () => {
+      try {
+        const response = await axios.get(`${ BACKEND_URL }api/favorites/check/${selectedCompany._id}/${userInfo._id}`);
+        const result = response.data.isFavorite;
+        setIsFavoriteCompany(result === "favorite");
+      } catch (error) {
+        console.error('Error checking favorite:', error);
+      }
+    };
+  
+    if (selectedCompany) {
+      checkIsFavorite();
+    }
+  }, [selectedCompany, userInfo]);
+
   const handleCompanyClick = (company) => {
     setSelectedCompany(company);
   };
@@ -179,6 +174,13 @@ const Search = () => {
 
   return (
     <div>
+      <Helmet>
+          <title>PalmOil Directory</title>
+          <meta name="description" content="PalmOil Directory" />
+          <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
+              speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
+              biodiesel,palm biodiesel"/>    
+      </Helmet>
       <div className="desktop-1 pt-7 respons_search">
         <div className="row">
           <div className="w-3/12 pr-3.5">

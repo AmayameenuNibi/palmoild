@@ -71,9 +71,9 @@ const Favorites = () => {
                                             {companies.map((company, index) => (
                                                 <tr key={company._id} className="">
                                                     <td className="font-lato text-gray-600 text-sm p-2">{company.company}</td>
-                                                    <td className="font-lato text-gray-600 text-sm p-2">{company.staff_mobiles}</td>
-                                                    <td className="font-lato text-gray-600 text-sm p-2">{company.staff_emails}</td>
-                                                    <td className="font-lato text-gray-600 text-sm p-2">{company.categoryName}</td>
+                                                    <td className="font-lato text-gray-600 text-sm p-2">{company.staff_mobiles.slice(1)}</td>
+                                                    <td className="font-lato text-gray-600 text-sm p-2">{company.staff_emails.slice(1)}</td>
+                                                    <td className="font-lato text-gray-600 text-sm p-2">{company.categoryName.slice(1)}</td>
                                                     <td className="font-lato text-gray-600 text-sm p-2">{company.countryName}</td>
                                                     <td className="font-lato text-gray-600 text-sm p-2">
                                                         <a className="delete text-red-600" title="Delete" href="#" onClick={() => handleRemoveFavorite(company._id)}>

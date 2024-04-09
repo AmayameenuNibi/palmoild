@@ -58,7 +58,7 @@ const Header = () => {
         const res = await login({ email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
         closePopup();
-        navigate('/');
+        navigate('/search');
         setEmail('');
         setPassword('');
         toast.success('Login Successful');
@@ -113,8 +113,7 @@ const Header = () => {
         <div className="row responsive_">
           <div className="responsive-head">
             <div className="relative logoim">
-              <a className="desk-logo" href="/"><img src={logo_img} alt="Logo" /></a>
-              <a className="mobile-logo" href="/"><img src={mobile_logo} alt="Logo" /></a>
+              <a  href="/"><img src={logo_img} alt="Logo" /></a>
             </div>
             <button
               className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
