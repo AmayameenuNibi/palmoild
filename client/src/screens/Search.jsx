@@ -93,7 +93,6 @@ const Search = () => {
       const data = response.data[0]; 
       setCompanies(data.companies);
       setTotalPages(data.totalPages); 
-      setLoading(false);
     } catch (error) {
       console.error('Error searching:', error);
       setLoading(false);
