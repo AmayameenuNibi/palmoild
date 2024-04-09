@@ -10,7 +10,7 @@ import buttonimage from '../images/download.png';
 const Search = () => {
   const [loading, setLoading] = useState(true);
   const [companies, setCompanies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(50);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState([]);
@@ -21,10 +21,7 @@ const Search = () => {
   const [isFavoriteCompany, setIsFavoriteCompany] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
   const [featuredCompanies, setFeaturedcompanies] = useState([]);
-
-  const indexOfLastItem = (currentPage + 1) * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentCompanies = companies.slice(indexOfFirstItem, indexOfLastItem);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const checkIsFavorite = async () => {
@@ -42,17 +39,21 @@ const Search = () => {
     }
   }, [selectedCompany, userInfo]);
   
-  const fetchCompanies = async () => {
-    try {
-      const response = await axios.get(`${ BACKEND_URL }api/companies`);
-      setCompanies(response.data);
-      setLoading(false);
+  const fetchCompanies = async (page) => {
+    try { 
       const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
-      setFeaturedcompanies(featureresponse.data);
+      setFeaturedcompanies(featureresponse.data);      
       const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
       setCategories(cat_response.data);
       const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
       setCountries(countriesResponse.data);
+      // const response = await axios.get(`${BACKEND_URL}api/companies`, {
+      //     params: { page, perPage: itemsPerPage }
+      // });
+      // const data = response.data[0]; 
+      // setCompanies(data.companies);
+      // setTotalPages(data.totalPages); 
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching companies:', error);
       setLoading(false);
@@ -60,7 +61,7 @@ const Search = () => {
   };
 
   const handlePageChange = ({ selected }) => {
-    setCurrentPage(selected);
+    setCurrentPage(selected + 1);    
   };
 
   const downloadSearchResultsAsExcel = async () => {
@@ -87,19 +88,17 @@ const Search = () => {
     const value = e.target.value;
     setSearchTerm(value);
     if (value.trim() === '') { 
-      await handleSearch('', selectedCategories, selectedCountries); 
+      await handleSearch('', selectedCategories, selectedCountries,currentPage); 
     } else {
-      await handleSearch(value, selectedCategories, selectedCountries);
+      await handleSearch(value, selectedCategories, selectedCountries,currentPage);
     }
   };
-
   useEffect(() => {
-    if(searchTerm === '') {
-      fetchCompanies();
-    }
-  }, []);
+    fetchCompanies(currentPage);
+    handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage);
+  }, [currentPage]); 
 
-  const handleSearch = async (searchTerm, selectedCategories, selectedCountries) => {
+  const handleSearch = async (searchTerm, selectedCategories, selectedCountries,page) => {
     try {
       let url = `${ BACKEND_URL }api/companies/search`;
       const params = new URLSearchParams();      
@@ -109,8 +108,12 @@ const Search = () => {
       if (params.toString()) {
         url += `?${params.toString()}`;
       }
-      const response = await axios.get(url);
-      setCompanies(response.data);
+      const response = await axios.get(url, {
+          params: { page, perPage: itemsPerPage }
+      });
+      const data = response.data[0]; 
+      setCompanies(data.companies);
+      setTotalPages(data.totalPages); 
       setLoading(false);
     } catch (error) {
       console.error('Error searching:', error);
@@ -147,13 +150,13 @@ const Search = () => {
       } else {
         setSelectedCategories(categories.map(category => category._id));
       }
-      await handleSearch(searchTerm, selectedCategories, selectedCountries);
+      await handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage);
     } else {
       const updatedCategories = selectedCategories.includes(categoryId)
         ? selectedCategories.filter(id => id !== categoryId)
         : [...selectedCategories, categoryId];
       setSelectedCategories(updatedCategories);
-      await handleSearch(searchTerm, updatedCategories, selectedCountries);
+      await handleSearch(searchTerm, updatedCategories, selectedCountries,currentPage);
     }    
   }; 
     
@@ -164,13 +167,13 @@ const Search = () => {
       } else {
         setSelectedCountries(countries.map(country => country._id));
       }
-      await handleSearch(searchTerm, selectedCategories, selectedCountries);
+      await handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage);
     } else {
       const updatedCountries = selectedCountries.includes(countryId)
         ? selectedCountries.filter(id => id !== countryId)
         : [...selectedCountries, countryId];
       setSelectedCountries(updatedCountries);
-      await handleSearch(searchTerm, selectedCategories, updatedCountries);
+      await handleSearch(searchTerm, selectedCategories, updatedCountries,currentPage);
     }      
   };
 
@@ -190,7 +193,7 @@ const Search = () => {
               placeholder="Products, Companies" />
             <span className="w-3/12 text-right inline-block"><i className="icon-email2"></i><button 
               className="bg-lime-500 text-white text-sm px-5 mx-1 py-2 border border-lime-500 hover:bg-green-500 rounded" 
-              onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries)}>
+              onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage)}>
               Search
             </button>
             <button className="let bg-slate-50 text-sm mx-1 px-5 py-2 text-gray-800 border border-gray-200 rounded hover:text-gray-500" onClick={downloadSearchResultsAsExcel}><img src={buttonimage} alt="download" /> Export</button></span>
@@ -264,40 +267,40 @@ const Search = () => {
             <div className="favourites-container relative">
               <h4 className="text-lg z-10 mt-2 relative featured-companies font-raleway mb-2  font-semibold text-gray-600 bg-white pr-1.5 inline-block">Featured Companies</h4>
               <div className="row-tab listing featured from-white bg-gradient-to-r from-white to-green-300 border border-slate-500">
-              {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
-                <>
-                    {featuredCompanies.map((featured, index) => (
-                      <div key={featured._id} className="border-b-1 border-l-4 p-3 m-1.5 mb-3 ml-0 border-gray-400">
-                        <div className="w-8/12 inline-block">
-                          <div className="relative">
-                            <div className="white_">
-                              <h3 className="font-lato text-black font-bold">
-                                <button className="text-md font-lato text-gray-900 font-semibold hover:underline " onClick={() => handleCompanyClick(featured)}>
-                                    {featured.company}
-                                </button></h3>
+                {Array.isArray(featuredCompanies) && featuredCompanies.length > 0 ? (
+                  <>
+                      {featuredCompanies.map((featured, index) => (
+                        <div key={featured._id} className="border-b-1 border-l-4 p-3 m-1.5 mb-3 ml-0 border-gray-400">
+                          <div className="w-8/12 inline-block">
+                            <div className="relative">
+                              <div className="white_">
+                                <h3 className="font-lato text-black font-bold">
+                                  <button className="text-md font-lato text-gray-900 font-semibold hover:underline " onClick={() => handleCompanyClick(featured)}>
+                                      {featured.company}
+                                  </button></h3>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="w-4/12 inline-block text-right">
-                            <div className="brown">
-                                <h3 className="text-md font-lato font-semibold text-gray-900">Featured</h3>
-                            </div>
-                        </div>
-                      </div> 
-                    ))}
-                </>
-            ) : (
-                <p></p>
-            )}  
-            </div>
+                          <div className="w-4/12 inline-block text-right">
+                              <div className="brown">
+                                  <h3 className="text-md font-lato font-semibold text-gray-900">Featured</h3>
+                              </div>
+                          </div>
+                        </div> 
+                      ))}
+                  </>
+                ) : (
+                    <p></p>
+                )}  
+              </div>
             </div>   
             {loading ? (
               <div className="spinner"></div> 
             ) : (
               <>
-                {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
+                {Array.isArray(companies) && companies.length > 0 ? (
                   <>
-                    {currentCompanies.map((company, index) => (
+                    {companies.map((company, index) => (
                       <div className="listing row-tab" key={company._id}>
                         <div className="w-8/12 inline-block">
                           <div className="first_top">
@@ -320,15 +323,15 @@ const Search = () => {
                         </div>
                       </div>
                     ))}
-                    {companies.length > itemsPerPage && (
-                      <ReactPaginate
-                        pageCount={Math.ceil(companies.length / itemsPerPage)}
-                        pageRangeDisplayed={5}
-                        marginPagesDisplayed={2}
-                        onPageChange={handlePageChange}
-                        containerClassName={'pagination'}
-                        activeClassName={'active'}
-                      />
+                    {totalPages > 1 && (
+                        <ReactPaginate
+                            pageCount={totalPages} 
+                            pageRangeDisplayed={5} 
+                            marginPagesDisplayed={2} 
+                            onPageChange={handlePageChange}
+                            containerClassName={'pagination'}
+                            activeClassName={'active'}
+                        />
                     )}
                   </>
                 ) : (

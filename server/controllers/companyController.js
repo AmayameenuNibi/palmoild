@@ -9,6 +9,15 @@ import Staff from '../models/staff.js';
 
 //........Get all Companies............
 export const getCompanies = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 50;
+  const countPipeline = [
+    {
+      $count: "total"
+    }
+  ];
+  const totalCountResult = await Company.aggregate(countPipeline);
+  const totalCount = totalCountResult.length > 0 ? totalCountResult[0].total : 0;
   const pipeline = [
     {
       $lookup: {
@@ -55,10 +64,16 @@ export const getCompanies = asyncHandler(async (req, res) => {
       $sort: { company: 1 } 
     }
   ];
+  const skip = (page - 1) * perPage;
+  pipeline.push({ $skip: skip }, { $limit: perPage });
   const companies = await Company.aggregate(pipeline);
-  console.log(".......");
-  console.log("hai");
-  res.json(companies);
+  const totalPages = Math.ceil(totalCount / perPage); 
+  const result = [];
+  result.push({
+    totalPages: totalPages,
+    companies: companies
+  });
+  res.status(200).json(result);
 });
 
 export const getCompanyList = asyncHandler(async (req, res) => {
@@ -77,8 +92,6 @@ export const getCompanyList = asyncHandler(async (req, res) => {
   const companies = await Company.aggregate(pipeline);
   res.json(companies);
 });
-
-
 //........Create a new Company...........
 export const createCompany = asyncHandler(async (req, res) => {
   try {
@@ -322,6 +335,8 @@ export const deleteCompany = asyncHandler(async (req, res) => {
 
 //.........Search company from companies list.........
 export const searchCompanies = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 50;
   const searchTerm = req.query.term;
   const category_id = req.query.category_id;
   const country_id = req.query.country_id;
@@ -411,94 +426,101 @@ export const searchCompanies = asyncHandler(async (req, res) => {
         countryName: { $arrayElemAt: ['$country.name', 0] },
       },
     },
+    {
+      $sort: { company: 1 } 
+    }
   ];
 
-  if (searchTerm !== '') {    
+  if (searchTerm !== '') {   
     if (category_id !== '' && category_id !== 'All' && country_id !== '' && country_id !== 'All') {
-        const categoryIds = category_id.split(',').map(id => id.trim()); 
-        const countryIds = country_id.split(',').map(id => id.trim()); 
+        const categoryIds = category_id.split(',').map(id => id.trim());
+        const countryIds = country_id.split(',').map(id => id.trim());
+        const totalCountPipeline = [
+            {
+                $match: {
+                    category_id: { $in: categoryIds.map(id => new mongoose.Types.ObjectId(id)) },
+                    country_id: { $in: countryIds.map(id => new mongoose.Types.ObjectId(id)) }
+                }
+            },
+        {
+                $count: "total"
+            }
+        ];
+        const totalCountResult = await Company.aggregate(totalCountPipeline);
+        const totalItems = totalCountResult.length > 0 ? totalCountResult[0].total : 0;
+        const totalPages = Math.ceil(totalItems / perPage);
+        const skip = (page - 1) * perPage;
         const result = await Company.aggregate(pipeline);
-        const results = result
-            .filter(company => 
-                categoryIds.includes(String(company.category_id)) && countryIds.includes(String(company.country_id)))
-            .map(company => ({
-                _id: company._id,
-                company: company.company,
-                email:company.email,
-                company_slug: company.company_slug,
-                logo: company.logo,
-                countryName: company.country_id.name,
-                website: company.website,
-                mobile: company.mobile,
-                twitter_url:company.twitter_url,
-                facebook_url: company.facebook_url,
-                linkedin_url: company.linkedin_url,
-                insta_url: company.insta_url,
-                brochure_url:company.brochure_url,
-                profile: company.profile,
-                title: company.title,
-                address: company.address,
-                categoryName: company.categoryName,
-            }));
-        res.json(results);
+        const filteredResults = result.filter(company =>
+            categoryIds.includes(String(company.category_id)) && countryIds.includes(String(company.country_id))
+        );
+        const paginatedResults = filteredResults.slice(skip, skip + perPage);
+        const results = [{
+            totalPages: totalPages,
+            companies: paginatedResults
+        }];
+        res.status(200).json(results);
+
     } else if (country_id !== '' && country_id !== 'All') {
-        const result = await Company.aggregate(pipeline);
-        const results = result
-            .filter(company => country_id.split(',').includes(String(company.country_id)))
-            .map(company => ({
-                _id: company._id,
-                company: company.company,
-                email:company.email,
-                company_slug: company.company_slug,
-                logo: company.logo,
-                countryName: company.country_id.name,
-                website: company.website,
-                mobile: company.mobile,
-                twitter_url:company.twitter_url,
-                facebook_url: company.facebook_url,
-                linkedin_url: company.linkedin_url,
-                insta_url: company.insta_url,
-                brochure_url:company.brochure_url,
-                profile: company.profile,
-                title: company.title,
-                address: company.address,
-                categoryName: company.categoryName,
-            }));
-        res.json(results);
+      const result = await Company.aggregate(pipeline);
+      const filteredResults = result.filter(company => country_id.split(',').includes(String(company.country_id)));
+      const totalItems = filteredResults.length;
+      const totalPages = Math.ceil(totalItems / perPage);
+      const skip = (page - 1) * perPage;
+      const paginatedResults = filteredResults.slice(skip, skip + perPage);
+      const results = [];
+      results.push({
+        totalPages: totalPages,
+        companies: paginatedResults
+      });
+      res.status(200).json(results);
+    
     } else if (category_id !== '' && category_id !== 'All') {
-        const categoryIds = category_id.split(',').map(id => id.trim()); // Split and trim the category_id string into an array
+        const categoryIds = category_id.split(',').map(id => id.trim()); 
         const result = await Company.aggregate(pipeline);
-        const results = result
-            .filter(company => categoryIds.includes(String(company.category_id)))
-            .map(company => ({
-                _id: company._id,
-                company: company.company,
-                email:company.email,
-                company_slug: company.company_slug,
-                logo: company.logo,
-                countryName: company.country_id.name,
-                website: company.website,
-                mobile: company.mobile,
-                twitter_url:company.twitter_url,
-                facebook_url: company.facebook_url,
-                linkedin_url: company.linkedin_url,
-                insta_url: company.insta_url,
-                brochure_url:company.brochure_url,
-                profile: company.profile,
-                title: company.title,
-                address: company.address,
-                categoryName: company.categoryName,
-            }));
-        res.json(results);
+        const filteredResults = result.filter(company => categoryIds.includes(String(company.category_id)));
+        const totalItems = filteredResults.length;
+        const totalPages = Math.ceil(totalItems / perPage);
+        const skip = (page - 1) * perPage;
+        const paginatedResults = filteredResults.slice(skip, skip + perPage);
+        const results = [];
+        results.push({
+          totalPages: totalPages,
+          companies: paginatedResults
+        });
+        res.status(200).json(results);  
+
     } else { 
-        const result = await Company.aggregate(pipeline);
-        res.json(result);
+      const page = parseInt(req.query.page) || 1;
+      const perPage = parseInt(req.query.perPage) || 50;  
+      const countPipeline = [
+        { $count: "totalCount" }
+      ];
+      const totalCountResult = await Company.aggregate([...pipeline, ...countPipeline]);
+      const totalCount = totalCountResult.length > 0 ? totalCountResult[0].totalCount : 0;
+      const totalPages = Math.ceil(totalCount / perPage);
+      const skip = (page - 1) * perPage;
+      pipeline.push({ $skip: skip }, { $limit: perPage });
+      const companies = await Company.aggregate(pipeline);
+      const result = [];
+      result.push({
+        totalPages: totalPages,
+        companies: companies
+      });
+      res.status(200).json(result);        
     }    
   } else if (category_id !== '' && category_id !== 'All') {
       if (country_id !== '' && country_id !== 'All' && category_id !== '' && category_id !== 'All') {
+          const page = parseInt(req.query.page) || 1;
+          const perPage = parseInt(req.query.perPage) || 50;
+          const totalCount = await Company.countDocuments({ country_id: { $in: country_id.split(',').map(id => id.trim()) }, category_id: { $in: category_id.split(',').map(id => id.trim()) } });
+          const totalPages = Math.ceil(totalCount / perPage);
+          const skip = (page - 1) * perPage;
           const companies = await Company.find({ country_id: { $in: country_id.split(',').map(id => id.trim()) }, category_id: { $in: category_id.split(',').map(id => id.trim()) } })
               .populate('category_id', 'name')
-              .populate('country_id', 'name'); 
+              .populate('country_id', 'name')
+              .skip(skip)
+              .limit(perPage);
           const result = companies.map(company => ({
               _id: company._id,
               company: company.company,
@@ -518,36 +540,59 @@ export const searchCompanies = asyncHandler(async (req, res) => {
               address: company.address,
               categoryName: company.category_id.name,
           }));
-          res.json(result);
+          const results = [];
+          results.push({
+            totalPages: totalPages,
+            companies: result
+          });
+          res.status(200).json(results); 
       } else { 
-          const companies = await Company.find({ category_id: { $in: category_id.split(',').map(id => id.trim()) } })
+          const totalCount = await Company.countDocuments({ category_id: { $in: category_id.split(',').map(id => id.trim()) } });
+          const totalPages = Math.ceil(totalCount / perPage);
+          const skip = (page - 1) * perPage;
+          const companies = await Company.find(
+            { category_id: { $in: category_id.split(',').map(id => id.trim()) } })
               .populate('category_id', 'name')
-              .populate('country_id', 'name'); 
+              .populate('country_id', 'name')
+              .skip(skip)
+              .limit(perPage);
           const result = companies.map(company => ({
               _id: company._id,
               company: company.company,
-              email:company.email,
+              email: company.email,
               company_slug: company.company_slug,
-              logo:company.logo,
-              countryName:company.country_id.name,
-              website:company.website,
-              mobile:company.mobile,
-              twitter_url:company.twitter_url,
+              logo: company.logo,
+              countryName: company.country_id.name,
+              website: company.website,
+              mobile: company.mobile,
+              twitter_url: company.twitter_url,
               facebook_url: company.facebook_url,
               linkedin_url: company.linkedin_url,
               insta_url: company.insta_url,
-              brochure_url:company.brochure_url,
-              profile:company.profile,
-              title:company.title,
+              brochure_url: company.brochure_url,
+              profile: company.profile,
+              title: company.title,
               address: company.address,
-              categoryName: company.category_id.name,
+              categoryName: company.category_id.name
           }));
-          res.json(result);
+          const results = [];
+          results.push({
+            totalPages: totalPages,
+            companies: result
+          });
+          res.status(200).json(results);          
       }    
   } else if (country_id !== '' && country_id !== 'All') {
+      const page = parseInt(req.query.page) || 1;
+      const perPage = parseInt(req.query.perPage) || 50;
+      const totalCount = await Company.countDocuments({ country_id: { $in: country_id.split(',').map(id => id.trim()) } });
+      const totalPages = Math.ceil(totalCount / perPage);
+      const skip = (page - 1) * perPage;
       const companies = await Company.find({ country_id: { $in: country_id.split(',').map(id => id.trim()) } })
           .populate('category_id', 'name')
-          .populate('country_id', 'name'); 
+          .populate('country_id', 'name')
+          .skip(skip)
+          .limit(perPage); 
       const result = companies.map(company => ({
           _id: company._id,
           company: company.company,
@@ -567,11 +612,24 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           address: company.address,
           categoryName: company.category_id.name,
       }));
-      res.json(result);
+      const results = [];
+      results.push({
+        totalPages: totalPages,
+        companies: result
+      });
+      res.status(200).json(results); 
   } else if (country_id === 'All' && category_id === 'All') {
+      const page = parseInt(req.query.page) || 1;
+      const perPage = parseInt(req.query.perPage) || 50;
+      const totalCount = await Company.countDocuments();
+      const totalPages = Math.ceil(totalCount / perPage);
+      const skip = (page - 1) * perPage;    
       const companies = await Company.find()
           .populate('category_id', 'name')
-          .populate('country_id', 'name'); 
+          .populate('country_id', 'name')
+          .skip(skip)
+          .limit(perPage);
+          
       const result = companies.map(company => ({
           _id: company._id,
           company: company.company,
@@ -589,10 +647,23 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           profile:company.profile,
           title:company.title,
           address: company.address,
-          categoryName: company.category_id.name // Access the name field from the populated category
+          categoryName: company.category_id.name 
       }));
-      res.json(result);
+      const results = [];
+      results.push({
+        totalPages: totalPages,
+        companies: result
+      });    
   }else{
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 50;
+    const countPipeline = [
+      {
+        $count: "total"
+      }
+    ];
+    const totalCountResult = await Company.aggregate(countPipeline);
+    const totalCount = totalCountResult.length > 0 ? totalCountResult[0].total : 0;
     const pipeline = [
       {
         $lookup: {
@@ -615,10 +686,12 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           _id: 1,
           company: 1,
           company_slug: 1,
+          address:1,
           logo: 1,
           country_id: 1,
           website: 1,
           mobile: 1,
+          address:1,
           facebook_url: 1,
           twitter_url: 1,
           linkedin_url: 1,
@@ -629,17 +702,24 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           category_id: 1,
           email: 1,
           user_id: 1,
-          address:1,
           categoryName: { $arrayElemAt: ['$category.name', 0] },
           countryName: { $arrayElemAt: ['$country.name', 0] },
         }
       },
       {
-        $sort: { company: 1 } // Sort by company name in ascending order
+        $sort: { company: 1 } 
       }
     ];
+    const skip = (page - 1) * perPage;
+    pipeline.push({ $skip: skip }, { $limit: perPage });
     const companies = await Company.aggregate(pipeline);
-    res.json(companies);
+    const totalPages = Math.ceil(totalCount / perPage); 
+    const result = [];
+    result.push({
+      totalPages: totalPages,
+      companies: companies
+    });
+    res.status(200).json(result);
   }
 
 });

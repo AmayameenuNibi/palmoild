@@ -12,30 +12,36 @@ const CompanyList = () => {
     const [companies, setCompanies] = useState([]);
     const [featuredCompanies, setFeaturedcompanies] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); 
+    const [totalPages, setTotalPages] = useState(1);
     const [categories, setCategories] = useState([]);
     const [itemsPerPage] = useState(50); 
     const { userInfo } = useSelector((state) => state.auth);
+    
+    const fetchCompanies = async (page) => {
+        try {
+            const response = await axios.get(`${BACKEND_URL}api/companies`, {
+                params: { page, perPage: itemsPerPage }
+            });
+            const data = response.data[0]; 
+            setCompanies(data.companies);
+            setTotalPages(data.totalPages);
 
-    useEffect(() => {
-        const fetchCompanies = async () => {
-            try {
-                const response = await axios.get(`${ BACKEND_URL }api/companies`);
-                setCompanies(response.data);
-                const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
-                setCategories(cat_response.data);
-                const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
-                setFeaturedcompanies(featureresponse.data);
-                setLoading(false); 
-            } catch (error) {
-                console.error('Error fetching companies:', error);
-                setLoading(false); 
-            }
-        };
-        fetchCompanies();
-    }, []);    
+            const cat_response = await axios.get(`${ BACKEND_URL }api/categories`);
+            setCategories(cat_response.data);
+            const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
+            setFeaturedcompanies(featureresponse.data);
+            setLoading(false); 
+        } catch (error) {
+            console.error('Error fetching companies:', error);
+            setLoading(false); 
+        }
+    };
+    useEffect(() => {        
+        fetchCompanies(currentPage);
+    }, [currentPage]);    
 
     const handlePageChange = ({ selected }) => {
-        setCurrentPage(selected);
+        setCurrentPage(selected + 1);
     };
 
     const indexOfLastItem = (currentPage + 1) * itemsPerPage;
@@ -106,9 +112,9 @@ const CompanyList = () => {
                             <div className="spinner"></div> 
                         ) : (
                             <>                            
-                            {Array.isArray(currentCompanies) && currentCompanies.length > 0 ? (
+                            {Array.isArray(companies) && companies.length > 0 ? (
                             <>
-                                {currentCompanies.map((company, index) => (
+                                {companies.map((company, index) => (
                                     <div className="listing row-tab my-1" key={company._id}>
                                         <div className="w-8/12 inline-block">
                                             <div className="first_top">
@@ -130,16 +136,14 @@ const CompanyList = () => {
                                         </div>
                                     </div>
                                 ))}
-                                {companies.length > itemsPerPage && (
                                 <ReactPaginate
-                                    pageCount={Math.ceil(companies.length / itemsPerPage)}
+                                    pageCount={totalPages}
                                     pageRangeDisplayed={5}
                                     marginPagesDisplayed={2}
                                     onPageChange={handlePageChange}
                                     containerClassName={'pagination'}
                                     activeClassName={'active'}
                                 />
-                                )}
                             </>
                             ) : (
                                 !loading && <div className="font-lato text-sm text-gray-700 pt-10">No results found.</div>
