@@ -231,6 +231,30 @@ const RegisterScreen = () => {
     }
   }, [navigate, userInfo]);
 
+  const handleGoogleAuth = () => {
+    try {
+      window.location.href = `${ BACKEND_URL }auth/google/callback`;
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
+  const handleLinkedAuth = () => {
+    try {
+      window.location.href = `${ BACKEND_URL }auth/linkedin/callback`;
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
+  const handleFacebookAuth = () => {
+    try {
+      window.location.href = `${ BACKEND_URL }auth/facebook/callback`;
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  }
+
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
@@ -241,19 +265,20 @@ const RegisterScreen = () => {
               <button
                     type="submit"
                     className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mr-2 mt-4 sig font-semibold"
-                    > <img src={goog} alt="Google" className="pr-2"/>
+                    onClick={handleGoogleAuth} > <img src={goog} alt="Google" className="pr-2"/>
                     Sign in with Google
                   </button>
                   <button
                     type="submit"
-                    className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"> 
+                    className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"
+                    onClick={handleLinkedAuth} > 
                     <img src={link} alt="Linked In" className="pr-2"/>
                       Sign in with LinkedIn
                   </button>
                   <button
                     type="submit"
                     className="text-center w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm ml-2 px-6 py-3 mt-4 mb-4 sig font-semibold"
-                   > <img src={fb} alt="Facebook" className="pr-2"/>
+                    onClick={handleFacebookAuth} > <img src={fb} alt="Facebook" className="pr-2"/>
                     Sign in with Facebook
                   </button>
               </div>

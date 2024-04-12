@@ -94,9 +94,17 @@ const Header = () => {
     }
   };
 
+  const handleLinkedAuth = () => {
+    try {
+      window.location.href = `${ BACKEND_URL }auth/linkedin/callback`;
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
   const handleFacebookAuth = () => {
     try {
-      window.location.href = `${ BACKEND_URL }auth/facebook`;
+      window.location.href = `${ BACKEND_URL }auth/facebook/callback`;
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -145,9 +153,7 @@ const Header = () => {
                     <Link to="/about-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">ABOUT US</Link>
                     <Link to="/companies" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">COMPANIES</Link>
                     <Link to="/contact-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">CONTACT </Link>
-                    <a href="/subscribe" className="moving-bt px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white md:mt-0 md:ml-4 hover:bg-green-600" >
-                      <span></span> <span></span> <span></span> <span></span> SUBSCRIBE
-                    </a>
+                    <Link to="/subscribe" className="moving-bt px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white md:mt-0 md:ml-4 hover:bg-green-600"><span></span> <span></span> <span></span> <span></span> SUBSCRIBE </Link>
                     <a className="popup px-6 py-5 font-semibold mt-2 text-sm bg-transparent md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline" onClick={logoutHandler}>LOGOUT</a>
 
                   </>
@@ -188,19 +194,20 @@ const Header = () => {
               <button
                     type="submit"
                     className="w-3.5/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"
-                    onClick={handleGoogleAuth}> <img src={goog} alt="Google" className="pr-2"/>
+                    onClick={handleGoogleAuth} > <img src={goog} alt="Google" className="pr-2"/>
                     Sign in with Google
                   </button>
                   <button
                     type="submit"
-                    className="w-3.5/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"> 
+                    className="w-3.5/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"
+                    onClick={handleLinkedAuth} > 
                     <img src={link} alt="Linked In" className="pr-2"/>
                       Sign in with LinkedIn
                   </button>
                   <button
                     type="submit"
                     className="text-center w-3.5/12 rounded-md border font-raleway text-gray-600 text-sm mx-2 px-6 py-3 mt-4 mb-4 sig font-semibold"
-                    onClick={handleFacebookAuth}> <img src={fb} alt="Facebook" className="pr-2"/>
+                    onClick={handleFacebookAuth} > <img src={fb} alt="Facebook" className="pr-2"/>
                     Sign in with Facebook
                   </button>
               </div>

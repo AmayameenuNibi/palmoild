@@ -70,9 +70,12 @@ const UserCompany = () => {
   };
 
   useEffect(() => {
+    if (userInfo.status === 0) {
+      navigate('/subscribe');
+    }
     fetchOptions();
     fetchCompanyDetails(userInfo._id);
-  }, [statusData.status, statusData.companyId]);
+  }, [userInfo.status,statusData.status, statusData.companyId]);
 
   const fetchCompanyDetails = async (userId) => {
     try {
@@ -124,12 +127,12 @@ const UserCompany = () => {
       if (statusData.status === '1') {
         const response = await axios.put(`${ BACKEND_URL }api/companies/${statusData.companyId}`, formDataToSend);
         const companyData = response.data;
-        navigate(`/companies/${companyData.company_slug}`);
+        // navigate(`/companies/${companyData.company_slug}`);
         toast.success('Company details Updated Successfully');
       } else {
         const response = await axios.post(`${ BACKEND_URL }api/companies`, formDataToSend);
         const companyData = response.data;
-        navigate(`/companies/${companyData.company_slug}`);
+        // navigate(`/companies/${companyData.company_slug}`);
         toast.success('Company details Added Successfully');
       }
       formdatavalue();
@@ -183,7 +186,14 @@ const UserCompany = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: userInfo.status === 0 ? 'none' : 'block' }}>
+      <Helmet>
+          <title>PalmOil Directory, My Company</title>
+          <meta name="description" content="PalmOil Directory" />
+          <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
+              speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
+              biodiesel,palm biodiesel"/>    
+      </Helmet>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false}
         closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <section className="bg-white">

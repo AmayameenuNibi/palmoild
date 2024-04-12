@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from "../constans";
 import '../css/spinner.css'
 import { Helmet } from 'react-helmet';
@@ -9,6 +10,7 @@ const Favorites = () => {
     const { userInfo } = useSelector((state) => state.auth);
     const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     // Define fetchCompanies outside of useEffect
     const fetchCompanies = async () => {
@@ -30,8 +32,11 @@ const Favorites = () => {
     };
 
     useEffect(() => {
+        if (userInfo.status === 0) {
+            navigate('/subscribe');
+        }
         fetchCompanies();
-    }, [userInfo]);
+    }, [userInfo.status]);
 
     const handleRemoveFavorite = async (Companyid) => {
         try {

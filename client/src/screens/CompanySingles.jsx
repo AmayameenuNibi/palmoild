@@ -95,7 +95,7 @@ const CompanySingles = () => {
                                                         <div className="white_">
                                                             <h3 className="text-gray-800 text-gray-700 font-lato text-sm my-1">
                                                                 {userInfo ? (
-                                                                    <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
+                                                                    <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(
                                                                     <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
                                                                 )} 

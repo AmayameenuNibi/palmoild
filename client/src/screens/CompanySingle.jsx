@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { BACKEND_URL } from "../constans";
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 const CompanySingle = () => {
     const { companyName } = useParams();
     const [company, setCompany] = useState(null);
-    
+    const { userInfo } = useSelector((state) => state.auth);
+
     const fetchCompanyDetails = async (companyName) => {
         try {
             const response = await fetch(`${ BACKEND_URL }api/companies/${companyName}`);
@@ -25,7 +27,7 @@ const CompanySingle = () => {
     const createdAtDateString = createdAtDate ? createdAtDate.toLocaleDateString() : '';
 
     return (
-        <div>            
+        <div style={{ display: userInfo.status === 0 ? 'none' : 'block' }}>            
             {company && (
                 <>
                 <Helmet>

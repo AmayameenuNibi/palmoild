@@ -13,9 +13,9 @@ function convertToUrlFormat(name) {
 // Create a new category
 export const createCategory = async (req, res) => {
   try {
-    const { site_id, name } = req.body;
+    const { site_id, name,status } = req.body;
     const slug=convertToUrlFormat(name);
-    const newCategory = new Category({ site_id, name ,slug});
+    const newCategory = new Category({ site_id, name ,status,slug});
     const savedCategory = await newCategory.save();
     res.status(201).json(savedCategory);
   } catch (error) {
@@ -23,11 +23,22 @@ export const createCategory = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
+export const getCategorieAdmin = async (req, res) => {
+  try {
+    const categories = await Category.find().sort({ name: 1 }).lean();
+    if (categories.length === 0) {
+      return res.status(404).json({ error: 'No categories found' });
+    }
+    res.status(200).json(categories);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 // Get all categories
 export const getCategories = async (req, res) => {
   try {
-    const categories = await Category.find().sort({ name: 1 }).lean();
+    const categories = await Category.find({status: "1" }).sort({ name: 1 }).lean();
     if (categories.length === 0) {
       return res.status(404).json({ error: 'No categories found' });
     }
@@ -42,11 +53,11 @@ export const getCategories = async (req, res) => {
 export const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const { site_id, name } = req.body;
+    const { site_id, status, name } = req.body;
     const slug=convertToUrlFormat(name);
     const updatedCategory = await Category.findByIdAndUpdate(
       id,
-      { site_id, name ,slug},
+      { site_id, name ,status,slug},
       { new: true }
     );
     res.status(200).json(updatedCategory);
@@ -110,15 +121,16 @@ async function getCategoryCompanyList(categorySlug) {
 
 export const getCategoriesWithCompanies = async (req, res) => {
   try {
-    const categories = await Category.find().limit(9);
+    const categories = ['traders', 'plantations', 'refiners','equipment-manufacturers','oleochemicals','crude-palm-oil','red-palm-oil','shipping-logistics','plantation-suppliers'];
+    const category = ['Traders', 'Plantations', 'Refiners','Equipment manufacturers','Oleochemicals','Crude Palm Oil','Red Palm Oil','Shipping Logistics','Plantation Suppliers'];
     const result = [];
-    for (const category of categories) {
-      const categoryCompanies = await getCategoryCompanyList(category.slug);
+    for (const slug of categories) {
+      const categoryCompanies = await getCategoryCompanyList(slug);
       const shuffledCompanies = shuffle(categoryCompanies);
       const first10Companies = shuffledCompanies.slice(0, 10);
       result.push({
-        category: category.name,
-        slug: category.slug,
+        category:category,
+        slug: slug, 
         companies: first10Companies
       });
     }    

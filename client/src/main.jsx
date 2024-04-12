@@ -50,35 +50,35 @@ const router = createBrowserRouter(
     <Route path='/' element={<App />}>
       <Route index={true} path='/' element={<HomeScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
-      <Route path='/admin-country' element={<CountryScreen />} />
-      <Route path='/admin-company' element={<CompanyScreen />} />
-      <Route path='/admin-site' element={<SiteScreen />} />
-      <Route path='/admin-category' element={<CategoryScreen />} />
-      <Route path='/admin-cms' element={<CMSScreen />} />
       <Route path='/contact-us' element={<ContactScreen />} />
       <Route path='/about-us' element={<AboutScreen />} />
       <Route path='/support' element={<SupportScreen />} />
-      <Route path='/categories' element={<CategoryList />} />
-      <Route path="/categories/:categoryName" element={<CategorySingle />} />      
-      <Route path='/countries' element={<CountryList />} />
-      <Route path="/countries/:countryName" element={<CountrySingle />} />
-      <Route path='/companies' element={<CompanyList />} />
-      <Route path="/companies/:companyName" element={<CompanySingle />} />
-      <Route path="/company/:companyName" element={<CompanySingles />} />
-      <Route path='/company' element={<UserCompany />} />
-      <Route path='/add-company' element={<AddCompany />} />
-      <Route path='/edit-company/:companyId' element={<AddCompany />} />
-      <Route path='/admin-users' element={<Users />} />
-      <Route path='/search' element={<Search />} />
-      <Route path='/subscribe' element={<Payment />} />
       <Route path='/forget-password' element={<ForgetPassword />} />
       <Route path="/user/newpassword/:token" element={<NewPassword/>} />
-      <Route path='/favorites' element={<Favorites />} />
       <Route path='/privacy-policy' element={<PrivacyPolicy />} />
       <Route path='/cancellation' element={<Cancellation />} />
       <Route path='/terms' element={<TermsScreen />} />
       <Route path='' element={<PrivateRoute />}>
+        <Route path='/admin-country' element={<CountryScreen />} />
+        <Route path='/admin-company' element={<CompanyScreen />} />
+        <Route path='/admin-site' element={<SiteScreen />} />
+        <Route path='/admin-category' element={<CategoryScreen />} />
+        <Route path='/admin-cms' element={<CMSScreen />} />      
         <Route path='/profile' element={<ProfileScreen />} />
+        <Route path='/categories' element={<CategoryList />} />
+        <Route path="/categories/:categoryName" element={<CategorySingle />} />      
+        <Route path='/countries' element={<CountryList />} />
+        <Route path="/countries/:countryName" element={<CountrySingle />} />
+        <Route path='/companies' element={<CompanyList />} />
+        <Route path="/companies/:companyName" element={<CompanySingle />} />
+        <Route path="/company/:companyName" element={<CompanySingles />} />
+        <Route path='/company' element={<UserCompany />} />
+        <Route path='/add-company' element={<AddCompany />} />
+        <Route path='/edit-company/:companyId' element={<AddCompany />} />
+        <Route path='/admin-users' element={<Users />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/subscribe' element={<Payment />} />
+        <Route path='/favorites' element={<Favorites />} />            
       </Route>
       <Route  element={<NotFound />} /> 
     </Route>

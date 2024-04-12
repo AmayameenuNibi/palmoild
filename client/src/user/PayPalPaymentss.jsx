@@ -7,7 +7,9 @@ import { toast } from 'react-toastify';
 import { useSubscribeMutation } from "../slices/usersApiSlice";
 import emailjs from '@emailjs/browser';
 import { BACKEND_URL } from "../constans";
-import { Helmet } from 'react-helmet';
+import paymentbg from '../images/subscribe.png';
+import paypal from '../images/paypal-y.png';
+import cards from '../images/cards.png';
 
 const PayPalButton = () => {
     const [formData, setFormData] = useState({
@@ -16,7 +18,17 @@ const PayPalButton = () => {
         country_id: '',
         mobile: '',
     });
-    
+    const [subscribeData, setsubscribeData] = useState('');
+  
+  const fetchSubscribeData = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}api/cmsdata/subscribe`);
+      setsubscribeData(response.data);
+    } catch (error) {
+      console.error('Error fetching about data:', error);
+    }
+  };  
+
     const { userInfo } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -71,6 +83,7 @@ const PayPalButton = () => {
     const [countries, setCountries] = useState([]);
     
     useEffect(() => {
+        fetchSubscribeData();
         const fetchCountriesAndCategories = async () => {
             try {
                 const countriesResponse = await axios.get(`${ BACKEND_URL }api/countries`);
@@ -135,14 +148,6 @@ const PayPalButton = () => {
     }, []);
 
     return (
-        <div>
-        <Helmet>
-            <title>PalmOil Directory, Subscribe</title>
-            <meta name="description" content="PalmOil Directory" />
-            <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
-                speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
-                biodiesel,palm biodiesel"/>    
-        </Helmet>
         <div className="relative bg-white w-6/12 mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">           	  
             <div className="mt-8">                
                 <div className="update-block" style={{ display: userInfo.company ? 'none' : 'block' }}>
@@ -209,12 +214,35 @@ const PayPalButton = () => {
                         </button>           
                     </form>
                 </div>  
+                <section class="popmeup show text-center">
+                    <div class="relative w-4/12 mx-auto mt-20 px-10">
+                        <img class="w-full p-14" src={paymentbg} alt="subscribe" />
+                        <div class="absolute centre">
+                            <h3 class="font-raleway text-gray-700 font-bold text-2xl text-center m-5">Buy Palm Oil Directory</h3>
+                            <div class="strip px-7 py-5">
+                                <h3 class="font-raleway text-gray-600 text-2xl"> USD <span class=" font-bold ">$74.95</span></h3>
+                                <a href="#" class="paypalpay inline-block mt-1" ><img src={paypal} alt="paypal" /> </a>
+                                <img class="carding" src={cards} alt="subscribe" />
+                            </div>
+
+                            <div class="btn_holder pb-4">
+                                <a href="#" data-toggle="modal" data-target="#myModal" class=" pb-4 float-left font-lato font-bold text-gray-600 text-lg ml-3"><i class="icon-list-alt"></i> View Sample Listing</a>
+                                <a class=" pb-4 font-bold mr-3 float-right font-lato text-gray-600 text-lg" href="#" data-toggle="modal" data-target="#learn-more"><i class="icon-info-sign"></i> Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+{/*
                 <div className="payment-block" style={{ display: userInfo.company ? 'block' : 'none' }}>
-                    <div id="paypal-button-container"></div> 
-                </div>          
+                <div 
+                    className="text-justify text-gray-600 mb-8 px-5"
+                    dangerouslySetInnerHTML={{ __html: subscribeData.cms_content }}
+                />
+          <div id="paypal-button-container"></div> 
+                </div>  */}        
             </div>
-        </div>  
-        </div>        
+        </div>          
     );
 };
 

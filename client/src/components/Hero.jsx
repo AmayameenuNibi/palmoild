@@ -50,14 +50,24 @@ const HomeScreen = () => {
                         </h1>
                         <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" className="leading-normal text-2xl mb-8 aos-init aos-animate">Largest Marketplace of companies in Palm Oil Industry.
                             Buyers, Sellers, Traders, Brokers, Plantations, Organizations from around the world.</p>
-                        <div data-aos="fade-up" data-aos-once="true" data-aos-delay="700" className="w-full md:flex items-center justify-center lg:justify-start md:space-x-5 aos-init aos-animate">
-                            <button className="lg:mx-0 bg-yellow-500 text-white font-bold py-4 px-6 focus:outline-none transform transition hover:scale-102 duration-300 ease-in-out">
-                                Pay Via Paypal
-                            </button>
-                            <div className="flex items-center text-center space-x-3 mt-5 md:mt-0 focus:outline-none transform transition hover:text-gray-800 ease-in-out">
-                                <span className="cursor-pointer">1 Year Subscription to Palmoildirectory.com <br/>- Only €69.33!</span>
-                            </div>
-                        </div>
+                        {userInfo ? 
+                        <>
+                            {userInfo.status===0 ?
+                                <>
+                                    <div data-aos="fade-up" data-aos-once="true" data-aos-delay="700" className="w-full md:flex items-center justify-center lg:justify-start md:space-x-5 aos-init aos-animate">
+                                        <button className="lg:mx-0 bg-yellow-500 text-white font-bold py-4 px-6 focus:outline-none transform transition hover:scale-102 duration-300 ease-in-out">
+                                            <Link to='/subscribe'>Pay Via Paypal</Link>
+                                        </button>
+                                        <div className="flex items-center text-center space-x-3 mt-5 md:mt-0 focus:outline-none transform transition hover:text-gray-800 ease-in-out">
+                                            <span className="cursor-pointer">1 Year Subscription to Palmoildirectory.com <br/>- Only €69.33!</span>
+                                        </div>
+                                    </div>
+                                </>
+                                :<></>
+                                }
+                        </> :
+                        <></> 
+                        };
                     </div>
                     <div className="w-full lg:w-6/12 relative" id="girl">
                         <img data-aos="fade-up" data-aos-once="true" className="w-10/12 mx-auto 2xl:-mb-20 floating-4 aos-init aos-animate" src={plseed_img} alt="Palm Seed" />
@@ -131,14 +141,14 @@ const HomeScreen = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {categoriesWithCompanies.map((category, index) => (
-                        <div key={index}  data-aos="fade-down" className="container-02 aos-init">
+                        <div key={index} data-aos="fade-down" className="container-02 aos-init">
                             <div className="glassmorphic-card" data-tilt data-tilt-glare>
                                 <div className="imgBox">
-                                    <img src={getImageForCategory(category.category)} style={{ width: '50%', margin: 'auto' }} alt={category.category} />
+                                    <img src={getImageForCategory(category.category[index])} style={{ width: '50%', margin: 'auto' }} alt={category.category[index]} />
                                 </div>
                                 <div className="contentBox T1">
                                     <div>
-                                        <h3>{category.category}</h3>
+                                        <h3>{category.category[index]}</h3>
                                         <ul>
                                             {category.companies.map((company, index) => (
                                                 <li key={index}>
@@ -157,6 +167,7 @@ const HomeScreen = () => {
                         </div>
                     ))}
                 </div>
+
             </div>
         </div>
     )
@@ -165,23 +176,23 @@ const HomeScreen = () => {
 export default HomeScreen
 const getImageForCategory = (category) => {
     switch (category) {
-        case 'Associations':
+        case 'Traders':
             return traders_img;
-        case 'Banks/Investors':
+        case 'Plantations':
             return plantations;
-        case 'Biodiesel':
+        case 'Refiners':
             return refiners;
-        case 'Brokers':
+        case 'Equipment manufacturers':
             return equipment;
-        case 'Carbon Trading':
+        case 'Oleochemicals':
             return oleochemical;
-        case 'Conference and Events':
+        case 'Crude Palm Oil':
             return crude_oil;
-        case 'Consultants':
+        case 'Red Palm Oil':
             return refined_oil;
-        case 'Consumer Goods Manufacturers':
+        case 'Shipping Logistics':
             return shipping;
-        case 'Environmental/Nature Conservation':
+        case 'Plantation Suppliers':
             return suppliers;
         default:
             return null;

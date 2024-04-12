@@ -89,7 +89,7 @@ const CategorySingle = () => {
                                                         <div className="white_">
                                                             <h3 className="text-gray-800 text-gray-700 font-lato text-sm">
                                                                 {userInfo ? (
-                                                                    <Link to={`/companies/${company.company_slug}`}>{company.company}</Link>
+                                                                    <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
                                                                 ) :(
                                                                     <Link to={`/company/${company.company_slug}`}>{company.company}</Link>
                                                                 )} 

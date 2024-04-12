@@ -9,6 +9,7 @@ const CategoryScreen = () => {
     id: '',
     site_id: '',
     name: '',
+    status:'',
   });
 
   const [categories, setCategories] = useState([]);
@@ -16,7 +17,7 @@ const CategoryScreen = () => {
 
   const fetchCategories = async () => {
     try {
-        const response = await axios.get(`${ BACKEND_URL }api/categories`);
+        const response = await axios.get(`${ BACKEND_URL }api/categories/admin-categories`);
         setCategories(response.data);
         const site_response = await axios.get(`${ BACKEND_URL }api/sites`);
         setSites(site_response.data);
@@ -32,13 +33,13 @@ const CategoryScreen = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-        await axios.post(`${ BACKEND_URL }api/categories`, categoryFormData);
-        openCatpopup();
-        fetchCategories(); 
-        setCategoryFormData({ name: '', site_id: '' }); 
-        toast.success('Category added successfully!');
+      await axios.post(`${ BACKEND_URL }api/categories`, categoryFormData);
+      openCatpopup();
+      fetchCategories(); 
+      setCategoryFormData({ name: '', site_id: '', status:'' }); 
+      toast.success('Category added successfully!');
     } catch (error) {
-        toast.error('Error adding category');
+      toast.error('Error adding category');
     }
   };
 
@@ -47,6 +48,7 @@ const CategoryScreen = () => {
       id: category._id,
       site_id: category.site_id,
       name: category.name,
+      status:category.status,
     });
     openCatpopup();
   };
@@ -57,13 +59,15 @@ const CategoryScreen = () => {
       await axios.put(`${ BACKEND_URL }api/categories/${categoryFormData.id}`, {
         site_id: categoryFormData.site_id,
         name: categoryFormData.name,
+        status: categoryFormData.status, // Ensure categoryFormData.status is correct here as well
       });
       fetchCategories();
       closeCatpopup();
       setCategoryFormData({ 
         id: '', 
         site_id: '', 
-        name: '' 
+        name: '',
+        status:'' 
       }); 
       toast.success('Category updated successfully!');
     } catch (error) {
@@ -109,6 +113,7 @@ const CategoryScreen = () => {
             <thead>
               <tr>
                 <th className="font-lato text-gray-600 text-sm p-2 font-semibold">Category Name</th>
+                <th className="font-lato text-gray-600 text-sm p-2 font-semibold">Status</th>
                 <th className="font-lato text-gray-600 text-sm p-2 font-semibold">Actions</th>
               </tr>
             </thead>
@@ -116,6 +121,7 @@ const CategoryScreen = () => {
               {categories.map((category) => (
                 <tr key={category._id}>
                   <td className="font-lato text-gray-600 text-sm p-2">{category.name}</td>
+                  <td className="font-lato text-gray-600 text-sm p-2">{category.status=='1' ? 'Active' :'Inactive' }</td>
                   <td className="font-lato text-gray-600 text-sm p-2">
                     <button onClick={() => handleUpdateCategory(category)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 focus:outline-none focus:shadow-outline">
@@ -172,6 +178,22 @@ const CategoryScreen = () => {
                   onChange={(e) => setCategoryFormData({ ...categoryFormData, name: e.target.value })}
                   className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   required/>
+              </div>
+              <div className="mb-4">
+                <label htmlFor="status" className="block text-gray-700 text-sm font-bold mb-2">
+                  Status:
+                </label>
+                <select
+                  id="status"
+                  name="status"
+                  value={categoryFormData.status}
+                  onChange={(e) => setCategoryFormData({ ...categoryFormData, status: e.target.value })}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  required >
+                  <option value=""> Select Status </option>
+                  <option value="1"> Active </option>
+                  <option value="0"> Inactive </option>
+                </select>
               </div>
               <button
                 type="submit"

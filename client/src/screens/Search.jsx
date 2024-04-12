@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import * as XLSX from 'xlsx';
 import { BACKEND_URL } from '../constans';
 import '../css/spinner.css';
 import buttonimage from '../images/download.png';
+import twitr from '../images/twitter.png';
+import fb from '../images/fb.png';
+import linkedn from '../images/link.png';
+import insta from '../images/insta.png';
 import { Helmet } from 'react-helmet';
 
 const Search = () => {
@@ -23,7 +28,16 @@ const Search = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [featuredCompanies, setFeaturedcompanies] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
   
+  useEffect(() => {
+    if (userInfo.status === 0) {
+      navigate('/subscribe');
+    }
+    fetchCompanies(currentPage);
+    handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage);
+  }, [userInfo.status,currentPage]); 
+
   const fetchCompanies = async (page) => {
     try { 
       const featureresponse = await axios.get(`${ BACKEND_URL }api/companies/featuredlist`);
@@ -72,10 +86,7 @@ const Search = () => {
       await handleSearch(value, selectedCategories, selectedCountries,currentPage);
     }
   };
-  useEffect(() => {
-    fetchCompanies(currentPage);
-    handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage);
-  }, [currentPage]); 
+  
 
   const handleSearch = async (searchTerm, selectedCategories, selectedCountries,page) => {
     try {
@@ -172,7 +183,7 @@ const Search = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: userInfo.status === 0 ? 'none' : 'block' }}>
       <Helmet>
           <title>PalmOil Directory</title>
           <meta name="description" content="PalmOil Directory" />
@@ -396,19 +407,21 @@ const Search = () => {
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.email}</td>
                             </tr>
                           )}
-                          <tr>
-                            {selectedCompany.twitter_url.trim() !== ''  && (
-                              <p className="text-gray-500 ml-2 ml-2 font-lato text-sm ">twitter_url: {selectedCompany.twitter_url}</p>
-                            )}
-                            {selectedCompany.facebook_url.trim() !== '' && (
-                              <p className="text-gray-500 ml-2 ml-2 font-lato text-sm ">facebook_url: {selectedCompany.facebook_url}</p>
-                            )}
-                            {selectedCompany.linkedin_url.trim() !== '' && (
-                              <p className="text-gray-500 ml-2 ml-2 font-lato text-sm ">linkedin_url: {selectedCompany.linkedin_url}</p>
-                            )}
-                            {selectedCompany.insta_url.trim() !== '' && (
-                              <p className="text-gray-500 ml-2 ml-2 font-lato text-sm ">insta_url: {selectedCompany.insta_url}</p>
-                            )}
+                          <tr colspan="2" class="social_buttons">
+                            <td colspan="2"><ul>
+                              {selectedCompany.twitter_url.trim() !== ''  && (
+                                <li className="image_sec text-gray-500 ml-2 ml-2 font-lato text-sm "><a href=""><img src={twitr} alt="twitter" /></a></li>
+                              )}
+                              {selectedCompany.facebook_url.trim() !== '' && (
+                                <li className="image_sec text-gray-500 ml-2 ml-2 font-lato text-sm "><a href=""><img src={fb} alt="facebook" /> </a></li>
+                              )}
+                              {selectedCompany.linkedin_url.trim() !== '' && (
+                                <li className="image_sec text-gray-500 ml-2 ml-2 font-lato text-sm "><a href=""><img src={linkedn} alt="linkedin" /></a></li>
+                              )}
+                              {selectedCompany.insta_url.trim() !== '' && (
+                                <li className="image_sec text-gray-500 ml-2 ml-2 font-lato text-sm "><a href=""><img src={insta} alt="instagram" /> </a></li>
+                              )}
+                            </ul></td>
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
