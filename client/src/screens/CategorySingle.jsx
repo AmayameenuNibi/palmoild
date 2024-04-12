@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { BACKEND_URL } from "../constans";
-import '../css/spinner.css'
+import '../css/spinner.css';
 import { Helmet } from 'react-helmet';
 
 const CategorySingle = () => {
@@ -26,6 +26,7 @@ const CategorySingle = () => {
                 const Catresponse = await axios.get(`${ BACKEND_URL }api/categories`);
                 setCategories(Catresponse.data);
                 setLoading(false);
+                window.scrollTo(0, 0); // Scroll to top when component mounts
             } catch (error) {
                 console.error('Error fetching categories:', error);
                 setLoading(false);

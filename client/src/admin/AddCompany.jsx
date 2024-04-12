@@ -112,12 +112,12 @@ const AddCompany = () => {
             if (companyId) {
                 const response = await axios.put(`${ BACKEND_URL }api/companies/${companyId}`, formDataToSend);
                 const companyData = response.data; 
-                navigate(`/companies/${companyData.company_slug}`);
+                navigate(`/admin-company`);
                 toast.success('Company details Updated Successfully');
             } else {
                 const response =await axios.post(`${ BACKEND_URL }api/companies`, formDataToSend);
                 const companyData = response.data; 
-                navigate(`/companies/${companyData.company_slug}`);
+                navigate(`/admin-company`);
                 toast.success('Company details Added Successfully');
             }
             formdatavalue();

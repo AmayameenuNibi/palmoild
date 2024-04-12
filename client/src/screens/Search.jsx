@@ -60,12 +60,12 @@ const Search = () => {
   const downloadSearchResultsAsExcel = async () => {
     try {
       const data = companies.map((company, index) => ({
-        No: index + 1 + currentPage * itemsPerPage,
         Company: company.company,
         Category: company.categoryName,
         Mobile: company.mobile,
         Country: company.countryName,
         Website: company.website,
+        Address:company.address,
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(data);
@@ -373,7 +373,7 @@ const Search = () => {
                             <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Category</td>
                             <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.categoryName}</td>
                           </tr>
-                          {selectedCompany.address !== '' && (
+                          {typeof selectedCompany.address === 'string' && selectedCompany.address.trim() !== '' && (
                             <tr>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Address</td>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.address}</td>
@@ -383,7 +383,7 @@ const Search = () => {
                             <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Country</td>
                             <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.countryName}</td>
                           </tr>
-                          {selectedCompany.website !== '' && (
+                          {typeof selectedCompany.website === 'string' && selectedCompany.website.trim() !== '' && (
                             <tr>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Website</td>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.website}</td>
@@ -393,7 +393,7 @@ const Search = () => {
                             <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Profile</td>
                             <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.profile}</td>
                           </tr>
-                          {selectedCompany.mobile.trim() !== '' && (
+                          {typeof selectedCompany.mobile === 'string' && selectedCompany.mobile.trim() !== '' && (
                             <tr>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">
                                 <h6 className="text-gray-500 ml-2 ml-2 font-lato text-sm "><b>Contact Details</b></h6>

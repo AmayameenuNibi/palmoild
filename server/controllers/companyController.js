@@ -373,7 +373,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             {
               autocomplete: {
                 query: searchTerm,
-                path: "category_name",
+                path: "category",
               },
             },
             {
@@ -429,38 +429,37 @@ export const searchCompanies = asyncHandler(async (req, res) => {
     {
       $sort: { company: 1 } 
     }
-  ];
-
-  if (searchTerm !== '') {   
+  ];          
+    
+  if (searchTerm !== '') { 
     if (category_id !== '' && category_id !== 'All' && country_id !== '' && country_id !== 'All') {
-        const categoryIds = category_id.split(',').map(id => id.trim());
-        const countryIds = country_id.split(',').map(id => id.trim());
-        const totalCountPipeline = [
-            {
-                $match: {
-                    category_id: { $in: categoryIds.map(id => new mongoose.Types.ObjectId(id)) },
-                    country_id: { $in: countryIds.map(id => new mongoose.Types.ObjectId(id)) }
-                }
-            },
-        {
-                $count: "total"
-            }
-        ];
-        const totalCountResult = await Company.aggregate(totalCountPipeline);
-        const totalItems = totalCountResult.length > 0 ? totalCountResult[0].total : 0;
-        const totalPages = Math.ceil(totalItems / perPage);
-        const skip = (page - 1) * perPage;
-        const result = await Company.aggregate(pipeline);
-        const filteredResults = result.filter(company =>
-            categoryIds.includes(String(company.category_id)) && countryIds.includes(String(company.country_id))
-        );
-        const paginatedResults = filteredResults.slice(skip, skip + perPage);
-        const results = [{
-            totalPages: totalPages,
-            companies: paginatedResults
-        }];
-        res.status(200).json(results);
-
+      const categoryIds = category_id.split(',').map(id => id.trim());
+      const countryIds = country_id.split(',').map(id => id.trim());
+      const totalCountPipeline = [
+          {
+              $match: {
+                  category_id: { $in: categoryIds.map(id => new mongoose.Types.ObjectId(id)) },
+                  country_id: { $in: countryIds.map(id => new mongoose.Types.ObjectId(id)) }
+              }
+          },
+      {
+              $count: "total"
+          }
+      ];
+      const totalCountResult = await Company.aggregate(totalCountPipeline);
+      const totalItems = totalCountResult.length > 0 ? totalCountResult[0].total : 0;
+      const totalPages = Math.ceil(totalItems / perPage);
+      const skip = (page - 1) * perPage;
+      const result = await Company.aggregate(pipeline);
+      const filteredResults = result.filter(company =>
+        categoryIds.includes(String(company.category_id)) && countryIds.includes(String(company.country_id))
+      );
+      const paginatedResults = filteredResults.slice(skip, skip + perPage);
+      const results = [{
+          totalPages: totalPages,
+          companies: paginatedResults
+      }];
+      res.status(200).json(results);
     } else if (country_id !== '' && country_id !== 'All') {
       const result = await Company.aggregate(pipeline);
       const filteredResults = result.filter(company => country_id.split(',').includes(String(company.country_id)));
@@ -519,6 +518,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
           const companies = await Company.find({ country_id: { $in: country_id.split(',').map(id => id.trim()) }, category_id: { $in: category_id.split(',').map(id => id.trim()) } })
               .populate('category_id', 'name')
               .populate('country_id', 'name')
+              .sort({ company: 1 })
               .skip(skip)
               .limit(perPage);
           const result = companies.map(company => ({
@@ -554,6 +554,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             { category_id: { $in: category_id.split(',').map(id => id.trim()) } })
               .populate('category_id', 'name')
               .populate('country_id', 'name')
+              .sort({ company: 1 })
               .skip(skip)
               .limit(perPage);
           const result = companies.map(company => ({
@@ -591,6 +592,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
       const companies = await Company.find({ country_id: { $in: country_id.split(',').map(id => id.trim()) } })
           .populate('category_id', 'name')
           .populate('country_id', 'name')
+          .sort({ company: 1 })
           .skip(skip)
           .limit(perPage); 
       const result = companies.map(company => ({
@@ -627,6 +629,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
       const companies = await Company.find()
           .populate('category_id', 'name')
           .populate('country_id', 'name')
+          .sort({ company: 1 })
           .skip(skip)
           .limit(perPage);
           
@@ -654,7 +657,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
         totalPages: totalPages,
         companies: result
       });    
-  }else{
+  } else{ 
     const page = parseInt(req.query.page) || 1;
     const perPage = parseInt(req.query.perPage) || 50;
     const countPipeline = [
