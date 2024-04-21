@@ -22,12 +22,15 @@ const PrivacyPolicy = () => {
   return (
     <div>
       <Helmet>
-          <title>{privacyData.seo_title}</title>
+          <title>{privacyData?.seo_title || "Privacy Policy"}</title>
           <meta name="description" content={privacyData.seo_description} />
           <meta name="Keywords" content={privacyData.seo_keywords} />
       </Helmet>
-	    <section className="bg-white border-b py-8" id="about">
+	    <section className="bg-white py-8" id="about">
 		    <div className="container max-w-5xl mx-auto">
+          <h2 className="font-bold text-2xl text-center font-raleway">
+            Privacy Policy
+          </h2>
           <div className="w-full mb-4">
 			      <div className="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"></div>
 		      </div>

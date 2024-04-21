@@ -65,7 +65,7 @@ const CMSScreen = () => {
         status: cms.status,
     }));
     openCmspopup();
-};
+  };
   const handleUpdateCmsData = async (e) => {
     e.preventDefault();
     try {

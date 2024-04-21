@@ -13,6 +13,7 @@ import './index.css';
 import store from './store';
 import { Provider } from 'react-redux';
 import CountryScreen from './admin/CountryScreen.jsx';
+import SearchCompanies from './screens/SearchCompanies.jsx';
 import SiteScreen from './admin/SiteScreen.jsx';
 import CategoryScreen from './admin/CategoryScreen.jsx';
 import CompanyScreen from './admin/CompanyScreen.jsx';
@@ -58,6 +59,15 @@ const router = createBrowserRouter(
       <Route path='/privacy-policy' element={<PrivacyPolicy />} />
       <Route path='/cancellation' element={<Cancellation />} />
       <Route path='/terms' element={<TermsScreen />} />
+      <Route path="/company/:companyName" element={<CompanySingles />} />
+      <Route path="/categories/:categoryName" element={<CategorySingle />} />      
+      <Route path='/categories' element={<CategoryList />} />
+      <Route path='/countries' element={<CountryList />} />
+      <Route path="/countries/:countryName" element={<CountrySingle />} />
+      <Route path='/companies' element={<CompanyList />} />
+      <Route path="/companies/:companyName" element={<CompanySingle />} />
+      <Route path='/company' element={<UserCompany />} />
+      
       <Route path='' element={<PrivateRoute />}>
         <Route path='/admin-country' element={<CountryScreen />} />
         <Route path='/admin-company' element={<CompanyScreen />} />
@@ -65,18 +75,11 @@ const router = createBrowserRouter(
         <Route path='/admin-category' element={<CategoryScreen />} />
         <Route path='/admin-cms' element={<CMSScreen />} />      
         <Route path='/profile' element={<ProfileScreen />} />
-        <Route path='/categories' element={<CategoryList />} />
-        <Route path="/categories/:categoryName" element={<CategorySingle />} />      
-        <Route path='/countries' element={<CountryList />} />
-        <Route path="/countries/:countryName" element={<CountrySingle />} />
-        <Route path='/companies' element={<CompanyList />} />
-        <Route path="/companies/:companyName" element={<CompanySingle />} />
-        <Route path="/company/:companyName" element={<CompanySingles />} />
-        <Route path='/company' element={<UserCompany />} />
         <Route path='/add-company' element={<AddCompany />} />
         <Route path='/edit-company/:companyId' element={<AddCompany />} />
         <Route path='/admin-users' element={<Users />} />
         <Route path='/search' element={<Search />} />
+        <Route path='/search-companies' element={<SearchCompanies />} />
         <Route path='/subscribe' element={<Payment />} />
         <Route path='/favorites' element={<Favorites />} />            
       </Route>

@@ -50,24 +50,29 @@ const HomeScreen = () => {
                         </h1>
                         <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" className="leading-normal text-2xl mb-8 aos-init aos-animate">Largest Marketplace of companies in Palm Oil Industry.
                             Buyers, Sellers, Traders, Brokers, Plantations, Organizations from around the world.</p>
-                        {userInfo ? 
-                        <>
-                            {userInfo.status===0 ?
+                        <div data-aos="fade-up" data-aos-once="true" data-aos-delay="700" className="w-full md:flex items-center justify-center lg:justify-start md:space-x-5 aos-init aos-animate">
+                            {userInfo ? 
                                 <>
-                                    <div data-aos="fade-up" data-aos-once="true" data-aos-delay="700" className="w-full md:flex items-center justify-center lg:justify-start md:space-x-5 aos-init aos-animate">
+                                    {userInfo.status===0 ?
+                                    <>
                                         <button className="lg:mx-0 bg-yellow-500 text-white font-bold py-4 px-6 focus:outline-none transform transition hover:scale-102 duration-300 ease-in-out">
                                             <Link to='/subscribe'>Pay Via Paypal</Link>
                                         </button>
-                                        <div className="flex items-center text-center space-x-3 mt-5 md:mt-0 focus:outline-none transform transition hover:text-gray-800 ease-in-out">
-                                            <span className="cursor-pointer">1 Year Subscription to Palmoildirectory.com <br/>- Only €69.33!</span>
-                                        </div>
-                                    </div>
-                                </>
-                                :<></>
-                                }
-                        </> :
-                        <></> 
-                        };
+                                            
+                                    </>
+                                    :<></>
+                                    }
+                                </> :
+                                <>
+                                    <button className="lg:mx-0 bg-yellow-500 text-white font-bold py-4 px-6 focus:outline-none transform transition hover:scale-102 duration-300 ease-in-out">
+                                        <Link to='/register'>Pay Via Paypal</Link>
+                                    </button>
+                                </> 
+                            }
+                            <div className="flex items-center text-center space-x-3 mt-5 md:mt-0 focus:outline-none transform transition hover:text-gray-800 ease-in-out">
+                                <span className="cursor-pointer">1 Year Subscription to Palmoildirectory.com <br/>- Only €69.33!</span>
+                            </div>
+                        </div>
                     </div>
                     <div className="w-full lg:w-6/12 relative" id="girl">
                         <img data-aos="fade-up" data-aos-once="true" className="w-10/12 mx-auto 2xl:-mb-20 floating-4 aos-init aos-animate" src={plseed_img} alt="Palm Seed" />

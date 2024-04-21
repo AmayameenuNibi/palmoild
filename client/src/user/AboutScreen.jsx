@@ -22,11 +22,11 @@ const AboutScreen = () => {
   return (
     <div>
       <Helmet>
-          <title>{aboutData.seo_title}</title>
+          <title>{aboutData?.seo_title || "About Us"}</title>
           <meta name="description" content={aboutData.seo_description} />
           <meta name="Keywords" content={aboutData.seo_keywords} />
       </Helmet>
-	    <section className="bg-white border-b py-8" id="about">
+	    <section className="bg-white py-8" id="about">
 		    <div className="container max-w-5xl mx-auto">
           <h2 className="font-bold text-2xl text-center font-raleway">
             About Us

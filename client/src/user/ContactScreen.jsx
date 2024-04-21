@@ -11,7 +11,7 @@ const ContactScreen = () => {
                 speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
                 biodiesel,palm biodiesel"/>    
         </Helmet>
-          <section className="bg-white border-b py-8" id="about">
+          <section className="bg-white py-8" id="about">
             <div className="container max-w-5xl mx-auto">
               <h2 className="font-bold text-2xl text-center font-raleway">
                 Contact Us

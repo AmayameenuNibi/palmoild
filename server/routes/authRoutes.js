@@ -8,14 +8,31 @@ dotenv.config();
 
 const router = express.Router();
 
-// authenticate the user using faceboook
-router.get("/auth/facebook", passport.authenticate("facebook"));
 router.get(
-  "/auth/facebook/callback",
-  passport.authenticate("facebook", { failureRedirect: "/login" }),
-  function (req, res) {
-    res.redirect(process.env.CLIENT_URL);
-  }
+  "/linkedin",
+  passport.authenticate("linkedin", {
+    scope: ["r_basicprofile", "r_emailaddress"],
+  })
+);
+router.get(
+  "/linkedin/callback",
+  passport.authenticate("linkedin", {
+    successRedirect: "/home",
+    failureRedirect: "/login/failed",
+  })
+);
+
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", { scope: ["profile"] })
+);
+
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    successRedirect: "/home",
+    failureRedirect: "/login/failed",
+  })
 );
 
 //authenticate the user using google

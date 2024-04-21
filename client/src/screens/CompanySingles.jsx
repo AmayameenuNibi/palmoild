@@ -5,6 +5,8 @@ import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import { BACKEND_URL } from "../constans";
 import { Helmet } from 'react-helmet';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLink } from '@fortawesome/free-solid-svg-icons'
 
 const CompanySingles = () => {
     const { companyName } = useParams();
@@ -77,7 +79,7 @@ const CompanySingles = () => {
                             <label className="">
                                 <b className="relative featured-companies font-raleway mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">{company.company}</b>
                                 <p className="text-gray-700 font-lato text-sm ml-2">
-                                    <Link to={'/subscribe'}>Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in 
+                                    <Link to={'/register'}><FontAwesomeIcon icon={faLink} /> Click here to subscribe to PalmOil Directory.com</Link> - Largest Marketplace of companies in 
                                 </p><p className="text-gray-700 font-lato text-sm">Palm Oil Industry.</p>
                                 <b className="relative featured-companies font-raleway mt-3 mb-3 text-2xl font-semibold text-gray-600 bg-white pr-1.5 z-10 inline-block">Related Companies</b>
                             </label>

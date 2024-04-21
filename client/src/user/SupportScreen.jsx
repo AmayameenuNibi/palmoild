@@ -26,7 +26,7 @@ const SupportScreen = () => {
           <meta name="description" content={supportData?.seo_description || ""} />
           <meta name="Keywords" content={supportData?.seo_keywords || ""} />
       </Helmet>
-	    <section className="bg-white border-b py-8" id="support">
+	    <section className="bg-white py-8" id="support">
 		    <div className="container max-w-5xl mx-auto">
           <h2 className="font-bold text-2xl text-center font-raleway">
                 Support

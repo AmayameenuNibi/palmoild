@@ -150,9 +150,10 @@ const Header = () => {
                 {userInfo.role === 0 && userInfo.status === 0 ? (
                   <>
                     <Link to="/" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">HOME</Link>
-                    <Link to="/about-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">ABOUT US</Link>
+                    <Link to="/search-companies" className="px-6 py-5 mt-2 text-sm bg-transparent md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline">SEARCH</Link>
                     <Link to="/companies" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">COMPANIES</Link>
                     <Link to="/contact-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">CONTACT </Link>
+                    <Link to="/about-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">ABOUT US</Link>
                     <Link to="/subscribe" className="moving-bt px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white md:mt-0 md:ml-4 hover:bg-green-600"><span></span> <span></span> <span></span> <span></span> SUBSCRIBE </Link>
                     <a className="popup px-6 py-5 font-semibold mt-2 text-sm bg-transparent md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline" onClick={logoutHandler}>LOGOUT</a>
 
@@ -173,6 +174,9 @@ const Header = () => {
               ) : (
                 <>
                   <Link to="/" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">HOME</Link>
+                  <Link to="/companies" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">COMPANIES</Link>
+                  <Link to="/contact-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">CONTACT </Link>
+                  <Link to="/about-us" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">ABOUT US</Link>
                   <Link to="/register" className="px-6 py-5 mt-2 text-sm font-semibold bg-transparent  md:mt-0 md:ml-0 hover:text-gray-900 text-white focus:outline-none focus:shadow-outline font-raleway tracking-wide">REGISTER</Link>
                   <a className="popup px-6 py-5 text-sm text-center  bg-green-900 text-white md:ml-10 cursor-pointer font-raleway font-semibold" onClick={openPopup}>LOGIN</a>
                 </>

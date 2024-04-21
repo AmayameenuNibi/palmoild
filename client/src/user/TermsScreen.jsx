@@ -22,11 +22,11 @@ const TermsScreen = () => {
   return (
     <div>
       <Helmet>
-          <title>{termsData.seo_title}</title>
+      <title>{termsData?.seo_title || "Terms and Conditions"}</title>
           <meta name="description" content={termsData.seo_description} />
           <meta name="Keywords" content={termsData.seo_keywords} />
       </Helmet>
-	    <section className="bg-white border-b py-8" id="about">
+	    <section className="bg-white py-8" id="about">
 		    <div className="container max-w-5xl mx-auto">
           <h2 className="font-bold text-2xl text-center font-raleway">
                 Terms and Conditions
