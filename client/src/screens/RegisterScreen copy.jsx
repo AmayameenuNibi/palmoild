@@ -258,20 +258,12 @@ const RegisterScreen = () => {
   };
 
   const handleLinkedAuth = () => {
-    try {
-      window.location.href = `${ BACKEND_URL }auth/linkedin/callback`;
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
+    window.open(`${BACKEND_URL}auth/linkedin`, "_self");
   };
 
-  const handleFacebookAuth = () => {
-    try {
-      window.location.href = `${ BACKEND_URL }auth/facebook/callback`;
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  }
+  const facebookAuth = () => {
+    window.open(`${BACKEND_URL}auth/facebook`, "_self");
+  };
 
   return (
     <div>
@@ -305,7 +297,7 @@ const RegisterScreen = () => {
               <button
                 type="submit"
                 className="text-center w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm ml-2 px-6 py-3 mt-4 mb-4 sig font-semibold"
-                onClick={handleFacebookAuth} > <img src={fb} alt="Facebook" className="pr-2"/>
+                onClick={facebookAuth} > <img src={fb} alt="Facebook" className="pr-2"/>
                 Sign in with Facebook
               </button>
             </div>
