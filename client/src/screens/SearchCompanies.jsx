@@ -428,7 +428,7 @@ const SearchCompanies = () => {
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.mobile}</td>
                             </tr>
                           )}
-                          {selectedCompany.email.trim() !== '' && (
+                          {typeof selectedCompany.email === 'string' && selectedCompany.email.trim() !== '' && (
                             <tr>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Email</td>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.email}</td>
@@ -436,16 +436,16 @@ const SearchCompanies = () => {
                           )}
                           <tr colspan="2" class="social_buttons">
                             <td colspan="2"><ul>
-                              {selectedCompany.twitter_url.trim() !== ''  && (
+                              {typeof selectedCompany.twitter_url === 'string' && selectedCompany.twitter_url.trim() !== '' && (
                                 <li className="image_sec text-gray-500 ml-2 ml-2 font-lato text-sm "><a href=""><img src={twitr} alt="twitter" /></a></li>
                               )}
-                              {selectedCompany.facebook_url.trim() !== '' && (
+                              {typeof selectedCompany.facebook_url === 'string' && selectedCompany.facebook_url.trim() !== '' && (
                                 <li className="image_sec text-gray-500 ml-2 ml-2 font-lato text-sm "><a href=""><img src={fb} alt="facebook" /> </a></li>
                               )}
-                              {selectedCompany.linkedin_url.trim() !== '' && (
+                              {typeof selectedCompany.linkedin_url === 'string' && selectedCompany.linkedin_url.trim() !== '' && (
                                 <li className="image_sec text-gray-500 ml-2 ml-2 font-lato text-sm "><a href=""><img src={linkedn} alt="linkedin" /></a></li>
                               )}
-                              {selectedCompany.insta_url.trim() !== '' && (
+                              {typeof selectedCompany.insta_url === 'string' && selectedCompany.insta_url.trim() !== '' && (
                                 <li className="image_sec text-gray-500 ml-2 ml-2 font-lato text-sm "><a href=""><img src={insta} alt="instagram" /> </a></li>
                               )}
                             </ul></td>
