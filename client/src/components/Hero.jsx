@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link ,useNavigate} from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "../slices/authSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import plseed_img from '../images/plseed.png';
 import vlo_img from '../images/vlo.jpg';
 import traders_img from '../images/traders.png';
@@ -17,9 +20,23 @@ import { Helmet } from 'react-helmet';
 
 const HomeScreen = () => {
     const { userInfo } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [categoriesWithCompanies, setCategoriesWithCompanies] = useState([]);
 
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const profileParam = urlParams.get('profile');
+        const message = urlParams.get('message');
+        if (profileParam) {
+            const profile = JSON.parse(decodeURIComponent(profileParam));
+            dispatch(setCredentials({ ...profile }));
+            navigate("/subscribe");
+        }
+        if (message) {
+            navigate("/");
+            toast.error("User already exists with this same email id");
+        }
         const fetchData = async () => {
             try {
                 const response = await fetch(`${BACKEND_URL}api/categories/categories-companies`);
@@ -35,6 +52,7 @@ const HomeScreen = () => {
     
     return (
         <div>
+            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
             <Helmet>
                 <title>PalmOil Directory</title>
                 <meta name="description" content="PalmOil Directory" />

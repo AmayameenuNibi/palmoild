@@ -28,6 +28,12 @@ const userSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    provider:{
+      type: String,
+    },
+    fbaccountId:{
+      type: String,
+    },
     status: {
       type: Number,
       default: 0,

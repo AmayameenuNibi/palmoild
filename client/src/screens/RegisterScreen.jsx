@@ -250,24 +250,31 @@ const RegisterScreen = () => {
   }, [navigate, userInfo]);
 
   const handleGoogleAuth = () => {
-    try {
-      window.location.href = `${ BACKEND_URL }auth/google/callback`;
+    try{
+      const res = window.open(`${BACKEND_URL}auth/google`, "_self");      
     } catch (err) {
       toast.error(err?.data?.message || err.error);
-    }
+    }    
   };
 
   const handleLinkedAuth = () => {
-    window.open(`${BACKEND_URL}auth/linkedin`, "_self");
+    try{
+      const res = window.open(`${BACKEND_URL}auth/linkedin`, "_self");      
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    } 
   };
 
   const facebookAuth = () => {
-    window.open(`${BACKEND_URL}auth/facebook`, "_self");
+    try{
+      const res = window.open(`${BACKEND_URL}auth/facebook`, "_self");      
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }  
   };
 
   return (
-    <div>
-      
+    <div>      
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <section className="bg-white">    
         <div className="container mx-auto my-0 w-8/12 pt-10">

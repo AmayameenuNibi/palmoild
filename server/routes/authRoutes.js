@@ -8,6 +8,141 @@ dotenv.config();
 
 const router = express.Router();
 
+//register or login user to DB
+router.get("/login/success", async (req, res) => {
+  try {
+    if (req.user) {
+      let credentials;
+      const userExists = await User.findOne({ email: req.user._json.email });
+      if (userExists) {
+        if(userExists.provider){
+          credentials = {
+            _id: userExists._id,
+            name: userExists.name,
+            email: userExists.email,
+            role: userExists.role,
+            status: userExists.status,
+          };
+          res.redirect(`${process.env.CLIENT_URL}?profile=${encodeURIComponent(JSON.stringify(credentials))}`);
+        }else{
+          res.redirect(`${process.env.CLIENT_URL}?profile=&&message='User already exist'`);
+        }        
+      } else {
+        const newUser = new User({
+          name: req.user._json.name,
+          email: req.user._json.email,
+          provider: req.user.provider,
+          password: Date.now(), // Dummy password
+        });
+        await newUser.save();
+        credentials = {
+          _id: newUser._id,
+          name: newUser.name,
+          email: newUser.email,
+          role: newUser.role,
+          status: newUser.status,
+        };
+        res.redirect(`${process.env.CLIENT_URL}?profile=${encodeURIComponent(JSON.stringify(credentials))}`);      }      
+    } else {
+      res.status(403).json({
+        message: "Not Authorized",
+      });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+
+router.get("/login-fb/success", async (req, res) => {
+  try {
+    if (req.user) {
+      let credentials;
+      const userExists = await User.findOne({ fbaccountId: req.user._json.id, provider: 'facebook'});
+      if (userExists) {
+        if(userExists.provider){
+          credentials = {
+            _id: userExists._id,
+            name: userExists.name,
+            role: userExists.role,
+            status: userExists.status,
+          };
+          res.redirect(`${process.env.CLIENT_URL}?profile=${encodeURIComponent(JSON.stringify(credentials))}`);
+        }else{
+          res.redirect(`${process.env.CLIENT_URL}?profile=&&message='User already exist'`);
+        }        
+      } else {
+        const newUser = new User({
+          name: req.user._json.displayName,
+          provider: 'facebook',
+          password: Date.now(), // Dummy password
+        });
+        await newUser.save();
+        credentials = {
+          _id: newUser._id,
+          name: newUser.name,
+          role: newUser.role,
+          status: newUser.status,
+        };
+        res.redirect(`${process.env.CLIENT_URL}/?profile=${encodeURIComponent(JSON.stringify(credentials))}`);      }      
+    } else {
+      res.status(403).json({
+        message: "Not Authorized",
+      });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+//authenticate the user using google
+
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/auth/login/success", 
+    failureRedirect: "/auth/login/failed", 
+  })
+);
+
+router.get("/facebook", passport.authenticate("facebook", { scope: ["email"] }));
+
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    successRedirect: "/auth/login-fb/success",
+    failureRedirect: "/auth/login/failed",
+  })
+);
+
+
+//login failed
+router.get("/login/failed", (req, res) => {
+  res.status(401);
+  throw new Error("Login Failed");
+});
+
+//logout
+router.get("/logout", (req, res) => {
+  console.log("2");
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect("/s");
+  });
+});
+
+
+
 router.get(
   "/linkedin",
   passport.authenticate("linkedin", {
@@ -22,84 +157,6 @@ router.get(
   })
 );
 
-router.get(
-  "/facebook",
-  passport.authenticate("facebook", { scope: ["profile"] })
-);
 
-router.get(
-  "/facebook/callback",
-  passport.authenticate("facebook", {
-    successRedirect: "/home",
-    failureRedirect: "/login/failed",
-  })
-);
-
-//authenticate the user using google
-router.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    successRedirect: process.env.CLIENT_URL,
-    failureRedirect: `${process.env.CLIENT_URL}/login/failed`,
-  })
-);
-
-//forward the request to goggle's authentication server
-router.get("/google", async (req, res) => {
-  try {
-    const response = await axios.get(
-      "https://accounts.google.com/o/oauth2/v2/auth",
-      {
-        params: req.query,
-      }
-    );
-    res.send(response);
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-//register or login user to DB
-router.get("/login/success", async (req, res) => {
-  if (req.user) {
-    const userExists = await User.findOne({ email: req.user._json.email });
-    if (userExists) {
-      generateToken(res, userExists._id);
-    } else {
-      const newUser = new User({
-        name: req.user._json.name,
-        email: req.user._json.email,
-        password: Date.now(), //dummy password
-      });
-      generateToken(res, newUser._id);
-      await newUser.save();
-    }
-    res.status(200).json({
-      user: { ...req.user },
-      message: "Succesfully logged in",
-      _id: userExists._id,
-    });
-  } else {
-    res.status(403).json({
-      message: "Not Authorized",
-    });
-  }
-});
-
-//login failed
-router.get("/login/failed", (req, res) => {
-  res.status(401);
-  throw new Error("Login Failed");
-});
-
-//logout
-router.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      console.log(err);
-    }
-    res.redirect("/");
-  });
-});
 
 export default router;

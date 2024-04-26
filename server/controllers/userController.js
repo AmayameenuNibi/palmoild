@@ -295,8 +295,10 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+// Define a controller function for handling login success
 
-export {
+
+export {  
   activeUser,
   inactiveUser,
   authUser,
@@ -307,6 +309,6 @@ export {
   updateUser,
   updateUserD,
   forgetPassword,
-  passwordreset,
-  deleteUser
+  passwordreset,  
+  deleteUser,  
 };

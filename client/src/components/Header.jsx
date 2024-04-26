@@ -87,28 +87,28 @@ const Header = () => {
   };
 
   const handleGoogleAuth = () => {
-    try {
-      window.location.href = `${ BACKEND_URL }auth/google/callback`;
+    try{
+      const res = window.open(`${BACKEND_URL}auth/google`, "_self");      
     } catch (err) {
       toast.error(err?.data?.message || err.error);
-    }
+    }    
   };
 
   const handleLinkedAuth = () => {
-    try {
-      window.location.href = `${ BACKEND_URL }auth/linkedin/callback`;
+    try{
+      const res = window.open(`${BACKEND_URL}auth/linkedin`, "_self");      
     } catch (err) {
       toast.error(err?.data?.message || err.error);
-    }
+    } 
   };
 
-  const handleFacebookAuth = () => {
-    try {
-      window.location.href = `${ BACKEND_URL }auth/facebook/callback`;
+  const facebookAuth = () => {
+    try{
+      const res = window.open(`${BACKEND_URL}auth/facebook`, "_self");      
     } catch (err) {
       toast.error(err?.data?.message || err.error);
-    }
-  }
+    }  
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -211,7 +211,7 @@ const Header = () => {
                   <button
                     type="submit"
                     className="text-center w-3.5/12 rounded-md border font-raleway text-gray-600 text-sm mx-2 px-6 py-3 mt-4 mb-4 sig font-semibold"
-                    onClick={handleFacebookAuth} > <img src={fb} alt="Facebook" className="pr-2"/>
+                    onClick={facebookAuth} > <img src={fb} alt="Facebook" className="pr-2"/>
                     Sign in with Facebook
                   </button>
               </div>

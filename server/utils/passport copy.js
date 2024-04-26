@@ -1,12 +1,10 @@
 import session from "express-session";
 import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as GoogleStategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import { Strategy as LinkedStrategy } from "passport-linkedin";
 
 const passportUtil = (app) => {
-  const GOOGLE_CLIENT_ID =process.env.clientID;
-  const GOOGLE_CLIENT_SECRET =process.env.clientSecret;
   app.use(
     session({
       secret: process.env.SESSION_SECRET,
@@ -21,14 +19,15 @@ const passportUtil = (app) => {
   app.use(passport.session());
 
   passport.use(
-    new GoogleStrategy(
+    new GoogleStategy(
       {
-        clientID: GOOGLE_CLIENT_ID,
-        clientSecret: GOOGLE_CLIENT_SECRET,
+        clientID: process.env.clientID,
+        clientSecret: process.env.clientSecret,
         callbackURL: "/auth/google/callback",
+        scope: ["profile", "email"],
       },
-      function (accessToken, refreshToken, profile, done) {
-        done(null, profile); 
+      (accessToken, refreshToken, profile, callback) => {
+        callback(null, profile);
       }
     )
   );
@@ -39,7 +38,7 @@ const passportUtil = (app) => {
         clientID: process.env.CLIENT_ID_FB,
         clientSecret: process.env.CLIENT_SECRET_FB,
         callbackURL: "/auth/facebook/callback",
-      },      
+      },
       function (accessToken, refreshToken, profile, done) {
         done(null, profile);
       }
