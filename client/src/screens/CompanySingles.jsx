@@ -38,6 +38,7 @@ const CompanySingles = () => {
 
     useEffect(() => {   
         fetchCompanyDetails(companyName);
+        window.scrollTo(0, 0);
     }, [companyName]); 
     
     const handlePageChange = ({ selected }) => {

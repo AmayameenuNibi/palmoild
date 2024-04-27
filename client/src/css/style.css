@@ -338,7 +338,7 @@ section.categorypopup.show {
   display: block;
   transition: 0.5s easein;
 }
-.categorypopup {
+.categoryupdatepopup {
   display: none;
   width: 100%;
   height: 100%;
@@ -351,34 +351,41 @@ section.categorypopup.show {
   background-image: linear-gradient(315deg, #ffffff7d 0%, #bfbfbf63 74%);
   transition: 0.5s easeout;
 }
-.categorypopupupdate {
-  display: none;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  padding: 8px 0;
-  position: absolute;
-  z-index: 9999;
-  background-color: #4caf504a;
-  background-image: linear-gradient(315deg, #ffffff7d 0%, #bfbfbf63 74%);
-  transition: 0.5s easeout;
-}
-.categorypopupupdate .show {
+.categoryupdatepopup .show {
   display: block;
 }
-section.categorypopupupdate.show {
+section.categoryupdatepopup.show {
   display: block;
   transition: 0.5s easein;
 }
-.categorypopupupdate {
+.categorycontentpopup {
   display: none;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   padding: 8px 0;
-  position: fixed;
+  position: absolute;
+  z-index: 9999;
+  background-color: #4caf504a;
+  background-image: linear-gradient(315deg, #ffffff7d 0%, #bfbfbf63 74%);
+  transition: 0.5s easeout;
+}
+.categorycontentpopup .show {
+  display: block;
+}
+section.categorycontentpopup.show {
+  display: block;
+  transition: 0.5s easein;
+}
+.countrypopup {
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 8px 0;
+  position: absolute;
   z-index: 9999;
   background-color: #4caf504a;
   background-image: linear-gradient(315deg, #ffffff7d 0%, #bfbfbf63 74%);
@@ -979,7 +986,8 @@ button.let img {
   top: 50%;
 }
 .social_bt {
-  text-align: justify;
+  /* text-align: justify; */
+  text-align: center;
 }
 .w-3\.4\/12 {
   width: 32%;
@@ -1295,7 +1303,7 @@ button.let img {
   width: 290px;
   height: 450px;
   margin: 10px;
-  border: 1px solid #ccc;
+  border: 2px solid #147a06;
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;

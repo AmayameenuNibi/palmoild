@@ -129,11 +129,11 @@ const CompanyList = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="w-4/12 inline-block">
+                                        {/* <div className="w-4/12 inline-block">
                                             <div className="second_left"></div>
                                             <div className="brown">
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 ))}
                                 <ReactPaginate

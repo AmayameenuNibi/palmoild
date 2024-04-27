@@ -44,6 +44,7 @@ import NotFound from "./screens/NotFoundPage.jsx";
 import Cancellation from './user/Cancellation.jsx';
 import PrivacyPolicy from './user/PrivacyPolicy.jsx';
 import TermsScreen from './user/TermsScreen.jsx';
+import PricingScreen from './user/PricingScreen.jsx';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const router = createBrowserRouter(
@@ -67,6 +68,7 @@ const router = createBrowserRouter(
       <Route path='/companies' element={<CompanyList />} />
       <Route path="/companies/:companyName" element={<CompanySingle />} />
       <Route path='/company' element={<UserCompany />} />
+      <Route path='/pricing' element={<PricingScreen />} />
       
       <Route path='' element={<PrivateRoute />}>
         <Route path='/admin-country' element={<CountryScreen />} />

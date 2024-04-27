@@ -48,7 +48,7 @@ export const fetchSingleCms = async (req, res) => {
 export const deleteCms = async (req, res) => {
     try {
         await CMS.findByIdAndDelete(req.params.id);
-        res.json({ message: 'CMS entry deleted' });
+        res.status(204).send();
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

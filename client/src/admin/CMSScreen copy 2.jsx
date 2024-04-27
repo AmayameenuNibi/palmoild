@@ -442,7 +442,7 @@ const CMSScreen = () => {
                   CMS Content:
                 </label>
                 <input
-                  type="hidden"
+                  type="text"
                   id="id"
                   name="id"
                   value={cmsid}

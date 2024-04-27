@@ -287,20 +287,20 @@ const RegisterScreen = () => {
                 <div className="Line" />
               </div>
             </div>
-            <div className="social_bt mt-8">
+            <div className="social_bt mt-8 text-center">
               <button
                 type="submit"
                 className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mr-2 mt-4 sig font-semibold"
                 onClick={handleGoogleAuth} > <img src={goog} alt="Google" className="pr-2"/>
                 Sign in with Google
               </button>
-              <button
+              {/* <button
                 type="submit"
                 className="w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm px-6 py-3 mx-2 mt-4 sig font-semibold"
                 onClick={handleLinkedAuth} > 
                 <img src={link} alt="Linked In" className="pr-2"/>
                   Sign in with LinkedIn
-              </button>
+              </button> */}
               <button
                 type="submit"
                 className="text-center w-3.4/12 rounded-md border font-raleway text-gray-600 text-sm ml-2 px-6 py-3 mt-4 mb-4 sig font-semibold"
