@@ -98,12 +98,12 @@ const CategorySingle = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="w-4/12 inline-block">
+                                                {/* <div className="w-4/12 inline-block">
                                                     <div className="second_left"></div>
                                                     <div className="brown">
                                                         <h3><b>{company.categoryName}</b></h3>
                                                     </div>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         ))}
                                         {companies.length > itemsPerPage && (
