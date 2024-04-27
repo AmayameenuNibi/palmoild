@@ -101,6 +101,50 @@ router.get("/login-fb/success", async (req, res) => {
   }
 });
 
+router.get("/login-link/success", async (req, res) => {
+  try {
+    if (req.user) {
+      let credentials;
+      const userExists = await User.findOne({ fbaccountId: req.user._json.id, provider: 'facebook'});
+      if (userExists) {
+        if(userExists.provider){
+          credentials = {
+            _id: userExists._id,
+            name: userExists.name,
+            role: userExists.role,
+            status: userExists.status,
+          };
+          res.redirect(`${process.env.CLIENT_URL}?profile=${encodeURIComponent(JSON.stringify(credentials))}`);
+        }else{
+          res.redirect(`${process.env.CLIENT_URL}?profile=&&message='User already exist'`);
+        }        
+      } else {
+        const newUser = new User({
+          name: req.user._json.displayName,
+          provider: 'facebook',
+          password: Date.now(), // Dummy password
+        });
+        await newUser.save();
+        credentials = {
+          _id: newUser._id,
+          name: newUser.name,
+          role: newUser.role,
+          status: newUser.status,
+        };
+        res.redirect(`${process.env.CLIENT_URL}/?profile=${encodeURIComponent(JSON.stringify(credentials))}`);      }      
+    } else {
+      res.status(403).json({
+        message: "Not Authorized",
+      });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
 //authenticate the user using google
 
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
@@ -124,6 +168,15 @@ router.get(
 );
 
 
+router.get("/linkedin",passport.authenticate("linkedin", {scope: ["r_basicprofile", "r_emailaddress"]}));
+router.get(
+  "/linkedin/callback",
+  passport.authenticate("linkedin", {
+    successRedirect: "/auth/login-link/success",
+    failureRedirect: "/auth/login/success",
+  })
+);
+
 //login failed
 router.get("/login/failed", (req, res) => {
   res.status(401);
@@ -140,23 +193,5 @@ router.get("/logout", (req, res) => {
     res.redirect("/s");
   });
 });
-
-
-
-router.get(
-  "/linkedin",
-  passport.authenticate("linkedin", {
-    scope: ["r_basicprofile", "r_emailaddress"],
-  })
-);
-router.get(
-  "/linkedin/callback",
-  passport.authenticate("linkedin", {
-    successRedirect: "/home",
-    failureRedirect: "/login/failed",
-  })
-);
-
-
 
 export default router;
