@@ -425,10 +425,10 @@ const Search = () => {
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
-                            <td className="float-right">
-                              <span><button className="btn btn-success font-lato text-sm" onClick={() => sendmail(11232)}>Send Mail</button></span>
-                              <span><button className="btn btn-primary font-lato text-sm" onClick={handleAddRemoveFavorite}>{isFavoriteCompany ? 'Remove from Favorites' : 'Add to Favorites'}</button></span>
-                              <span><button className="btn btn-danger font-lato text-sm" onClick={closeModal} data-dismiss="modal">Close</button></span>
+                            <td className="float-right text-center">
+                              <span><button className="btn btn-success font-lato text-sm mt-2 mb-3" onClick={() => sendmail(11232)}>Send Mail</button></span>
+                              <span><button className="btn btn-primary font-lato text-sm mt-2 mb-3" onClick={handleAddRemoveFavorite}>{isFavoriteCompany ? 'Remove from Favorites' : 'Add to Favorites'}</button></span>
+                              <span><button className="btn btn-danger font-lato text-sm mt-2 mb-3" onClick={closeModal} data-dismiss="modal">Close</button></span>
                             </td>
                           </tr>
                         </tbody>

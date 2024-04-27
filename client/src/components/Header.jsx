@@ -221,7 +221,7 @@ const Header = () => {
                   <input 
                     htmlFor="email" 
                     name="email"
-                    type="text" 
+                    type="email" 
                     id="email" 
                     placeholder='Email'
                     value={email}

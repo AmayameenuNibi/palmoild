@@ -327,7 +327,7 @@ const RegisterScreen = () => {
               </div>
               <div className="w-6/12 inline-block pr-4 pb-4">
                 <input 
-                  type="text" 
+                  type="email" 
                   name="email" 
                   id="email" 
                   placeholder='Email Address  *'
