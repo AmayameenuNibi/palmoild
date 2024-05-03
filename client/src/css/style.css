@@ -318,6 +318,26 @@ section.popmeup.show {
   display: block;
   transition: 0.5s easein;
 }
+.mailpopmeup {
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 8px 0;
+  position: fixed;
+  z-index: 9999;
+  background-color: #4caf504a;
+  background-image: linear-gradient(315deg, #ffffff7d 0%, #bfbfbf63 74%);
+  transition: 0.5s easeout;
+}
+.mailpopmeup .show {
+  display: block;
+}
+section.mailpopmeup.show {
+  display: block;
+  transition: 0.5s easein;
+}
 .categorypopup {
   display: none;
   width: 100%;
@@ -1346,5 +1366,4 @@ button.let img {
 .search-box:hover + .popup-box {
   display: block;
 }
-
 

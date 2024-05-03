@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import emailjs from '@emailjs/browser';
 import ReactPaginate from 'react-paginate';
 import * as XLSX from 'xlsx';
 import { BACKEND_URL } from '../constans';
@@ -12,6 +13,8 @@ import fb from '../images/fb.png';
 import linkedn from '../images/link.png';
 import insta from '../images/insta.png';
 import { Helmet } from 'react-helmet';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Search = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +32,62 @@ const Search = () => {
   const [featuredCompanies, setFeaturedcompanies] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
-  
+  const [email, setemail] = useState('');
+  const [companyname, setCompany] = useState('');
+
+  const [validationErrors, setValidationErrors] = useState({
+    to_email: '',
+    subject:'',
+    profile:''
+  });  
+
+  const validateForm = () => {
+    let isValid = true;
+    if (!FormData.to_email.trim()) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        to_email: 'Email name is required',
+      }));
+      isValid = false;
+    } else {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        to_email: '',
+      }));
+    }
+    if (!FormData.subject.trim()) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        subject: 'subject name is required',
+      }));
+      isValid = false;
+    } else {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        subject: '',
+      }));
+    }
+    if (!FormData.profile.trim()) {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        profile: 'Message name is required',
+      }));
+      isValid = false;
+    } else {
+      setValidationErrors(prevErrors => ({
+        ...prevErrors,
+        profile: '',
+      }));
+    }
+    return isValid;
+  };
+
+  const [FormData, setFormData] = useState({
+    to_email:'',
+    profile: '', 
+    subject: '',
+  });
+
   useEffect(() => {
     if (userInfo.status === 0) {
       navigate('/subscribe');
@@ -37,6 +95,21 @@ const Search = () => {
     fetchCompanies(currentPage);
     handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage);
   }, [userInfo.status,currentPage]); 
+
+  const fetchContact = async (companyId) => { 
+      try { 
+          const featureresponse = await axios.get(`${BACKEND_URL}api/staff/${companyId}`);
+          if (featureresponse.data.length > 0) {
+              const emails = featureresponse.data.map(item => item.email);
+              const emailsString = emails.join(', ');
+              setemail(emailsString);
+          } else {
+              setemail(null); 
+          }      
+      } catch (error) {
+          setLoading(false);
+      }
+  };
 
   const fetchCompanies = async (page) => {
     try { 
@@ -48,7 +121,6 @@ const Search = () => {
       setCountries(countriesResponse.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching companies:', error);
       setLoading(false);
     }
   };
@@ -81,9 +153,9 @@ const Search = () => {
     const value = e.target.value;
     setSearchTerm(value);
     if (value.trim() === '') { 
-      await handleSearch('', selectedCategories, selectedCountries,currentPage); 
+      await handleSearch('', selectedCategories, selectedCountries,1); 
     } else {
-      await handleSearch(value, selectedCategories, selectedCountries,currentPage);
+      await handleSearch(value, selectedCategories, selectedCountries,1);
     }
   };
   
@@ -127,13 +199,53 @@ const Search = () => {
   }, [selectedCompany, userInfo]);
 
   const handleCompanyClick = (company) => {
+    fetchContact(company._id); 
     setSelectedCompany(company);
-  };
+    setCompany(company.company);
+};
 
   const closeModal = () => {
     setSelectedCompany(null);
+    setemail(null);
   };
   
+  const sendmail = () =>{
+    setSelectedCompany(null); 
+    const popup = document.getElementById("mailpopmeup");
+    popup.classList.toggle("show");
+  }
+  const closePopup = () => {
+    document.querySelector('.mailpopmeup').classList.remove('show');
+    setFormData({ to_email:'', profile: '',  subject: ''});
+  };
+
+  const emailSendClient = async (e) => {
+    e.preventDefault();
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
+    try {
+      var templateParams = {
+          to_email: 'amayatp1998@gmail.com',
+          from_email: 'amayakariyad@gmail.com',
+          subject: FormData.subject,
+          profile: FormData.profile,
+      };
+      emailjs.init('7K6FgornqEudFEBY8');
+      emailjs.send('service_n3h3why', 'template_94c4nzr', templateParams).then(
+          (response) => {
+              toast.success('Email successfully sent');
+          },
+          (error) => {
+              toast.error('Failed to send reset email to the email address.');
+          },
+      );
+      closePopup();
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);         
+    }
+  };
 
   const handleAddRemoveFavorite = async () => {
     try {
@@ -155,13 +267,13 @@ const Search = () => {
       } else {
         setSelectedCategories(categories.map(category => category._id));
       }
-      await handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage);
+      await handleSearch(searchTerm, selectedCategories, selectedCountries,1);
     } else {
       const updatedCategories = selectedCategories.includes(categoryId)
         ? selectedCategories.filter(id => id !== categoryId)
         : [...selectedCategories, categoryId];
       setSelectedCategories(updatedCategories);
-      await handleSearch(searchTerm, updatedCategories, selectedCountries,currentPage);
+      await handleSearch(searchTerm, updatedCategories, selectedCountries,1);
     }    
   }; 
     
@@ -172,25 +284,26 @@ const Search = () => {
       } else {
         setSelectedCountries(countries.map(country => country._id));
       }
-      await handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage);
+      await handleSearch(searchTerm, selectedCategories, selectedCountries,1);
     } else {
       const updatedCountries = selectedCountries.includes(countryId)
         ? selectedCountries.filter(id => id !== countryId)
         : [...selectedCountries, countryId];
       setSelectedCountries(updatedCountries);
-      await handleSearch(searchTerm, selectedCategories, updatedCountries,currentPage);
+      await handleSearch(searchTerm, selectedCategories, updatedCountries,1);
     }      
   };
 
   return (
     <div style={{ display: userInfo.status === 0 ? 'none' : 'block' }}>
       <Helmet>
-          <title>PalmOil Directory</title>
-          <meta name="description" content="PalmOil Directory" />
-          <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
-              speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
-              biodiesel,palm biodiesel"/>    
+        <title>PalmOil Directory</title>
+        <meta name="description" content="PalmOil Directory" />
+        <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
+            speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
+            biodiesel,palm biodiesel"/>    
       </Helmet>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <div className="desktop-1 pt-7 respons_search">
         <div className="row">
           <div className="w-3/12 pr-3.5">
@@ -205,7 +318,7 @@ const Search = () => {
               placeholder="Products, Companies" />
             <span className="w-3/12 text-right inline-block"><i className="icon-email2"></i><button 
               className="bg-lime-500 text-white text-sm px-5 mx-1 py-2 border border-lime-500 hover:bg-green-500 rounded" 
-              onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries,currentPage)}>
+              onClick={() => handleSearch(searchTerm, selectedCategories, selectedCountries,1)}>
               Search
             </button>
             <button className="let bg-slate-50 text-sm mx-1 px-5 py-2 text-gray-800 border border-gray-200 rounded hover:text-gray-500" onClick={downloadSearchResultsAsExcel}><img src={buttonimage} alt="download" /> Export</button></span>
@@ -401,10 +514,10 @@ const Search = () => {
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.mobile}</td>
                             </tr>
                           )}
-                          {typeof selectedCompany.email === 'string' && selectedCompany.email.trim() !== '' && (
+                          {(typeof selectedCompany.email === 'string' && selectedCompany.email.trim() !== '')||(typeof email === 'string' && email.trim() !== '') && (
                             <tr>
                               <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">Email</td>
-                              <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.email}</td>
+                              <td className="text-gray-500 ml-2 ml-2 font-lato text-sm ">{selectedCompany.email} {email}</td>
                             </tr>
                           )}
                           <tr colspan="2" class="social_buttons">
@@ -426,7 +539,7 @@ const Search = () => {
                           <tr>
                             <td>&nbsp;</td>
                             <td className="float-right text-center">
-                              <span><button className="btn btn-success font-lato text-sm mt-2 mb-3" onClick={() => sendmail(11232)}>Send Mail</button></span>
+                              <span><button className="btn btn-success font-lato text-sm mt-2 mb-3" onClick={sendmail}>Send Mail</button></span>
                               <span><button className="btn btn-primary font-lato text-sm mt-2 mb-3" onClick={handleAddRemoveFavorite}>{isFavoriteCompany ? 'Remove from Favorites' : 'Add to Favorites'}</button></span>
                               <span><button className="btn btn-danger font-lato text-sm mt-2 mb-3" onClick={closeModal} data-dismiss="modal">Close</button></span>
                             </td>
@@ -441,6 +554,64 @@ const Search = () => {
           </div>
         </section>
       )}
+
+        <section className="mailpopmeup" id="mailpopmeup">
+          <div className="relative bg-white w-5/12 mx-auto p-8 md:p-12 my-10  shadow-2xl">
+            <button
+                className="close px-5 py-3 mt-2 text-sm text-center bg-white text-gray-800 font-bold text-2xl"
+                onClick={closePopup} > X 
+            </button>
+            <div>
+              <h3 className="font-bold text-2xl text-center font-raleway">{companyname}</h3>
+            </div>
+            <div className="mt-10">
+              <form className="flex flex-col flex-respn" onSubmit={emailSendClient}>
+                  <div className="mb-2 pt-3 flex">
+                      <div className='pl-5'>From: {userInfo.email}</div>
+                  </div>
+                  <div className="mb-2 pt-3 flex">
+                    <select
+                        name="to_email"
+                        id="to_email"
+                        value={FormData.to_email}
+                        onChange={(e) => setFormData({ ...FormData, to_email: e.target.value })}
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold mx-5"
+                    >
+                        <option value=''>select email</option>
+                        {email && email.split(',').map((emailItem, index) => (
+                            <option key={index} value={emailItem.trim()}>{emailItem.trim()}</option>
+                        ))}
+                    </select>
+                    {validationErrors.to_email && <p className="text-red-500 text-xs italic">{validationErrors.to_email}</p>}
+                  </div>
+                  <div className="mb-2 pt-3 flex">
+                      <input
+                        name="subject"
+                        type="text"
+                        id="subject"
+                        placeholder='Subject'
+                        value={FormData.subject}
+                        onChange={(e) => setFormData({ ...FormData, subject: e.target.value })}
+                        className="w-full rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold mx-5" />
+                        {validationErrors.subject && <p className="text-red-500 text-xs italic">{validationErrors.subject}</p>}
+                  </div>
+                  <div className="mb-5 pt-3 flex">
+                      <textarea
+                        id="profile"
+                        name="profile"
+                        placeholder='Message'
+                        value={FormData.profile}
+                        onChange={(e) => setFormData({ ...FormData, profile: e.target.value })}
+                        className="w-full rounded border h-20 px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold mx-5" />
+                      {validationErrors.profile && <p className="text-red-500 text-xs italic">{validationErrors.profile}</p>}
+                  </div>
+                  <button className="mx-5 text-raleway text-sm bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md shadow-lg hover:shadow-xl transition duration-200" type="submit">
+                  Send Inquiry Now
+                  </button>
+              </form>
+            </div>
+          </div>
+        </section>
     </div>
   );
 };

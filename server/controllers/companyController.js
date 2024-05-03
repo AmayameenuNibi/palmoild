@@ -357,19 +357,13 @@ export const searchCompanies = asyncHandler(async (req, res) => {
                 query: searchTerm,
                 path: "profile",
               },
-            },
+            },            
             {
               autocomplete: {
                 query: searchTerm,
-                path: "address",
+                path: "country",
               },
-            },
-            {
-              autocomplete: {
-                query: searchTerm,
-                path: "mobile",
-              },
-            },
+            },            
             {
               autocomplete: {
                 query: searchTerm,
@@ -379,7 +373,7 @@ export const searchCompanies = asyncHandler(async (req, res) => {
             {
               autocomplete: {
                 query: searchTerm,
-                path: "country",
+                path: "address",
               },
             },
           ],
@@ -424,12 +418,23 @@ export const searchCompanies = asyncHandler(async (req, res) => {
         address:1,
         categoryName: { $arrayElemAt: ['$category.name', 0] },
         countryName: { $arrayElemAt: ['$country.name', 0] },
+        exactMatch: {
+          $cond: {
+            if: { $or: [
+              { $eq: [ { $indexOfCP: [ "$company", searchTerm ] }, 0 ] },
+              { $eq: [ { $indexOfCP: [ "$profile", searchTerm ] }, 0 ] }
+            ]},
+            then: 1,
+            else: 0
+          }
+        }
       },
     },
     {
-      $sort: { company: 1 } 
+      $sort: { exactMatch: -1, company: 1 } 
     }
-  ];          
+  ];
+        
     
   if (searchTerm !== '') { 
     if (category_id !== '' && category_id !== 'All' && country_id !== '' && country_id !== 'All') {
@@ -475,20 +480,19 @@ export const searchCompanies = asyncHandler(async (req, res) => {
       res.status(200).json(results);
     
     } else if (category_id !== '' && category_id !== 'All') {
-        const categoryIds = category_id.split(',').map(id => id.trim()); 
-        const result = await Company.aggregate(pipeline);
-        const filteredResults = result.filter(company => categoryIds.includes(String(company.category_id)));
-        const totalItems = filteredResults.length;
-        const totalPages = Math.ceil(totalItems / perPage);
-        const skip = (page - 1) * perPage;
-        const paginatedResults = filteredResults.slice(skip, skip + perPage);
-        const results = [];
-        results.push({
-          totalPages: totalPages,
-          companies: paginatedResults
-        });
-        res.status(200).json(results);  
-
+      const categoryIds = category_id.split(',').map(id => id.trim()); 
+      const result = await Company.aggregate(pipeline);
+      const filteredResults = result.filter(company => categoryIds.includes(String(company.category_id)));
+      const totalItems = filteredResults.length;
+      const totalPages = Math.ceil(totalItems / perPage);
+      const skip = (page - 1) * perPage;
+      const paginatedResults = filteredResults.slice(skip, skip + perPage);
+      const results = [];
+      results.push({
+        totalPages: totalPages,
+        companies: paginatedResults
+      });
+      res.status(200).json(results);  
     } else { 
       const page = parseInt(req.query.page) || 1;
       const perPage = parseInt(req.query.perPage) || 50;  

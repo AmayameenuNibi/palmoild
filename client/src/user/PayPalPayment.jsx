@@ -3,11 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 import { setCredentials } from "../slices/authSlice";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useSubscribeMutation } from "../slices/usersApiSlice";
 import emailjs from '@emailjs/browser';
 import { BACKEND_URL } from "../constans";
 import { Helmet } from 'react-helmet';
+import paymentbg from '../images/subscribe.png';
+import paypal from '../images/paypal-y.png';
+import cards from '../images/cards.png';
 
 const PayPalButton = () => {
     const [formData, setFormData] = useState({
@@ -16,7 +20,14 @@ const PayPalButton = () => {
         country_id: '',
         mobile: '',
     });
-    
+    const [validationErrors, setValidationErrors] = useState({
+        company: '',
+        address: '',
+        country_id: '',
+        mobile: '',
+      });  
+    const [showFirstSection, setShowFirstSection] = useState(true);
+    const [showSecondSection, setShowSecondSection] = useState(false);
     const { userInfo } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,9 +38,70 @@ const PayPalButton = () => {
             [e.target.name]: e.target.value,
         });
     };
+    const validateForm = () => {
+        let isValid = true;       
+      
+        if (!formData.company.trim()) {
+          setValidationErrors(prevErrors => ({
+            ...prevErrors,
+            company: 'Company name is required',
+          }));
+          isValid = false;
+        } else {
+          setValidationErrors(prevErrors => ({
+            ...prevErrors,
+            company: '',
+          }));
+        }
+      
+        if (!formData.address.trim()) {
+          setValidationErrors(prevErrors => ({
+            ...prevErrors,
+            address: 'Address is required',
+          }));
+          isValid = false;
+        } else {
+          setValidationErrors(prevErrors => ({
+            ...prevErrors,
+            address: '',
+          }));
+        }
+      
+        if (!formData.country_id.trim()) {
+          setValidationErrors(prevErrors => ({
+            ...prevErrors,
+            country_id: 'Country is required',
+          }));
+          isValid = false;
+        } else {
+          setValidationErrors(prevErrors => ({
+            ...prevErrors,
+            country_id: '',
+          }));
+        }
+      
+        if (!formData.mobile.trim()) {
+          setValidationErrors(prevErrors => ({
+            ...prevErrors,
+            mobile: 'Mobile is required',
+          }));
+          isValid = false;
+        } else {
+          setValidationErrors(prevErrors => ({
+            ...prevErrors,
+            mobile: '',
+          }));
+        }
+      
+        return isValid;
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent default form submission behavior
+        const isValid = validateForm();
+        if (!isValid) {
+            return;
+        }
         try {
             const res = await updateProfile({
                 userId: userInfo._id,
@@ -43,7 +115,8 @@ const PayPalButton = () => {
                 status:0
             }).unwrap();
             dispatch(setCredentials(res));
-            toast.success("Profile updated successfully");
+            // toast.success("Profile updated successfully");
+            navigate("/subscribe");
         } catch (err) {
             toast.error(err?.data?.message || err.error);
         }
@@ -82,6 +155,19 @@ const PayPalButton = () => {
 
         fetchCountriesAndCategories();
     }, []);
+
+    const handleContinueClick = () => {
+        const isValid = validateForm();
+        if (isValid) {
+          setShowFirstSection(false);
+          setShowSecondSection(true);
+        }   
+    };
+    
+    const handleBackClick = () => {
+        setShowFirstSection(true);
+        setShowSecondSection(false);
+    };
 
     useEffect(() => {
         emailjs.init('FA8La9Btl7_yGsYcZ');
@@ -136,84 +222,143 @@ const PayPalButton = () => {
 
     return (
         <div>
-        <Helmet>
-            <title>PalmOil Directory, Subscribe</title>
-            <meta name="description" content="PalmOil Directory" />
-            <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
-                speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
-                biodiesel,palm biodiesel"/>    
-        </Helmet>
-        <div className="relative bg-white w-6/12 mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">           	  
-            <div className="mt-8">                
-                <div className="update-block" style={{ display: userInfo.company ? 'none' : 'block' }}>
-                    <div>
-                        <h3 className="text-xl text-gray-600 mb-5 font-semibold">Members Register</h3>
-                    </div>
-                    <form className="flex flex-col" onSubmit={handleSubmit}>
-                        <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="font-raleway block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Company Name" > Company Name </label>
-                            <input 
-                                type="text" 
-                                name="company" 
-                                id="company" 
-                                value={formData.company}
-                                onChange={handleInputChange}
-                                className="font-raleway bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
-                                required/>
+            <Helmet>
+                <title>PalmOil Directory, Subscribe</title>
+                <meta name="description" content="PalmOil Directory" />
+                <meta name="Keywords" CONTENT="palm oil,cpo,commodities,palm kernel oil,carotene,FFB,vegetable oil,lauric acid, milling,MPOPC,MPOB,olein,kernel,PKO,PKS,PORAM,RBD,refining,
+                    speciality fats,plantations,refinery,lipids,fatty acids,soap noodles,stearin,stearine,shortening,vanaspati,margarine,malaysia,indonesia,
+                    biodiesel,palm biodiesel"/>    
+            </Helmet>
+            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+            <section className="bg-white">    
+                <div className="container mx-auto my-0 w-6/12 pt-10" style={{ display: userInfo.company ? 'none' : 'block' }}>
+                    <h2 className="font-bold text-2xl text-center font-raleway">Complete Registation</h2>
+                    {showFirstSection && (
+                        <div className="reg-first-section">
+                            <div className="StepIndicator mt-8 mb-10">
+                            <div className="StepText">
+                                <span className="Number ">Step 2</span>
+                                <div className="Line" />
+                            </div>
+                            </div>
                         </div>
-                        <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="font-raleway block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Address" > Address </label>
-                            <input 
-                                type="text" 
-                                name="address" 
-                                id="address" 
-                                value={formData.address}
-                                onChange={handleInputChange}
-                                className="font-raleway bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
-                                required/>
-                        </div>
-                        <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="font-raleway block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Country" > Country </label>
-                            <select
-                                id="country_id"
-                                className="font-raleway bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
-                                required
-                                type="text"
-                                name="country_id"
-                                value={formData.country_id}
-                                onChange={handleInputChange}
-                            >
-                                <option className="font-raleway text-white" value="">
-                                    Country *
-                                </option>
-                                {countries.map((country) => (
-                                    <option key={country._id} value={country._id}>
-                                        {country.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="mb-6 pt-3 rounded bg-gray-200">
-                            <label className="font-raleway block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="Mobile" > Mobile </label>
-                            <input 
-                                type="text" 
-                                name="mobile" 
-                                id="mobile"                           
-                                value={formData.mobile}
-                                onChange={handleInputChange}
-                                className="font-raleway bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-green-600 transition duration-500 px-3 pb-3"
-                                required/>
-                        </div>
-                        <button className="font-raleway bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" type="submit">
-                            Next
-                        </button>           
+                    )}
+                    <form className="mt-8"  onSubmit={handleSubmit}>
+                        {showFirstSection && (
+                            <div className="reg-first-section">
+                                <div className="my-5 mr-3.5 text-center">
+                                    <input 
+                                        type="text" 
+                                        name="company" 
+                                        id="company" 
+                                        placeholder='Company  *'
+                                        value={formData.company}
+                                        onChange={handleInputChange}
+                                        className="w-8/12 rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
+                                        {validationErrors.company && <p className="text-red-500 text-xs italic">{validationErrors.company}</p>}
+                                </div>
+                                <div className="my-5 mr-3.5 text-center">
+                                    <input 
+                                        type="text" 
+                                        name="address" 
+                                        id="address" 
+                                        placeholder='Address  *'
+                                        value={formData.address}
+                                        onChange={handleInputChange}
+                                        className="w-8/12 rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
+                                        {validationErrors.address && <p className="text-red-500 text-xs italic">{validationErrors.address}</p>}
+                                </div>
+                                <div className="my-5 mr-3.5 text-center">
+                                    <select
+                                        id="country_id"
+                                        className="w-8/12 rounded border px-6 py-3 font-lato text-gray-400 text-sm focus:outline-none font-semibold"
+                                        type="text"
+                                        name="country_id"
+                                        value={formData.country_id}
+                                        onChange={handleInputChange} >
+                                        <option className="text-sm font-lato text-gray-600 font-semibold" value="">
+                                            Country *
+                                        </option>
+                                        {countries.map((country) => (
+                                            <option key={country._id} value={country._id}>
+                                            {country.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {validationErrors.country_id && <p className="text-red-500 text-xs italic">{validationErrors.country_id}</p>}
+                                </div>
+                                <div className="my-5 mr-3.5 text-center">
+                                    <input 
+                                    type="text" 
+                                    name="mobile" 
+                                    id="mobile" 
+                                    placeholder="Mobile Number  *"
+                                    value={formData.mobile}
+                                    onChange={handleInputChange}
+                                    className="w-8/12 rounded border px-6 py-3 font-lato text-gray-600 text-sm focus:outline-none font-semibold"/>
+                                    {validationErrors.mobile && <p className="text-red-500 text-xs italic">{validationErrors.mobile}</p>}
+                                </div>
+                                <div className="my-5 mr-3.5 text-center">
+                                    <button className="w-4/12 text-raleway text-sm bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
+                                        onClick={handleContinueClick} > Continue </button>
+                                </div> 
+                            </div>  
+                        )}                       
+                        <div className={`reg-second-section ${showSecondSection ? '' : 'hidden'}`}>
+                            <div className="StepIndicator mt-8 mb-10">
+                                <div className="StepText">
+                                <span className="Number ">Step 3</span>
+                                <div className="Line" />
+                                </div>
+                            </div>
+                            <div className="payment-box">
+                                <div className="box" id="freeBox">
+                                    <h4  className="font-raleway mb-3.5 text-lg text-center font-semibold text-gray-600 mt-10">Basic</h4>
+                                    <h2 className="font-bold text-2xl text-center font-raleway mb-1">Free</h2>
+                                    <p className="text-center text-sm mt-2">(only for one month)</p>
+                                    <div class="my-6 mx-6 text-center">
+                                        <input class="w-12/12 text-raleway text-sm bg-green-600 hover:bg-green-700 text-white font-semibold py-3.5 px-12 rounded shadow-lg hover:shadow-xl transition duration-200" 
+                                        type="submit" name="yt0" id="signupButton" value="Get Started" />
+                                    </div>
+                                    <hr />
+                                    <p className="text-gray-600 font-lato text-sm text-center mt-3">Description of paid option</p>
+                                    <p className="text-gray-600 font-lato text-sm text-center">Description of paid option</p>
+                                    <p className="text-gray-600 font-lato text-sm text-center">Description of paid option</p>
+                                    <p className="text-gray-600 font-lato text-sm text-center">Description of paid option</p>
+                                    <p className="text-gray-600 font-lato text-sm text-center">Description of paid option</p>     
+                                </div>
+                                <div class="box" id="paidBox">
+                                    <h4 class="font-raleway mb-3.5 text-center  text-lg font-semibold text-gray-600">Premium</h4>
+                                    <s class="text-center text-sm mt-2 px-14 ">normally $100/ year</s>
+                                    <h2 class="font-bold text-2xl text-center font-raleway mt-5 mb-1">$74.95/ year</h2>
+                                    <p class="text-center text-sm mt-2 mb-6">(billed annually)</p>
+                                    <p class="pricing-discount text-center text-sm mt-6">$26.05 savings*</p>
+                                    <div class="my-6 mx-6 text-center">
+                                    <input class="w-12/12 text-raleway text-sm bg-green-600 hover:bg-green-700 text-white font-semibold py-3.5 px-12 rounded shadow-lg hover:shadow-xl transition duration-200" 
+                                    type="submit" name="yt0" id="signupButton" value="Get Started" />
+                                    </div>
+                                    <hr />
+                                    <p class="text-gray-600 font-lato text-sm text-center mt-3">Description of paid option</p>
+                                    <p class="text-gray-600 font-lato text-sm text-center">Description of paid option</p>
+                                    <p class="text-gray-600 font-lato text-sm text-center">Description of paid option</p>
+                                    <p class="text-gray-600 font-lato text-sm text-center">Description of paid option</p>
+                                    <p class="text-gray-600 font-lato text-sm text-center">Description of paid option</p>
+                                </div>
+                            </div>
+                            <div className="my-5 mr-3.5 text-center">
+                                <a href="#" onClick={handleBackClick}>Back</a>                
+                            </div>
+                        </div>            
                     </form>
-                </div>  
-                <div className="payment-block" style={{ display: userInfo.company ? 'block' : 'none' }}>
-                    <div id="paypal-button-container"></div> 
-                </div>          
-            </div>
-        </div>  
+                </div>
+                <div className="relative bg-white w-6/12 mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl" style={{ display: userInfo.company ? 'block' : 'none' }}>           	  
+                    <div className="mt-8">                 
+                        <div className="payment-block" >
+                            <div id="paypal-button-container"></div> 
+                        </div>     
+                    </div>
+                </div>
+            </section> 
         </div>        
     );
 };

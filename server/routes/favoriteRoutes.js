@@ -14,5 +14,6 @@ router.post('/add/:id/:userid', addFavorite);
 router.delete('/delete/:id/:userid', deleteFavorite);
 router.get('/check/:id/:userid', checkFavorite);
 router.get('/:userid', getFavorite);
+router.get('company/:id', getFavorite);
 
 export default router;
